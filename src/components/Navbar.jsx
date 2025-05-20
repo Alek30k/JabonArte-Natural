@@ -1,5 +1,6 @@
 "use client";
 
+import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
@@ -16,7 +17,13 @@ const Navbar = () => {
       <div className="flex sm:hidden">
         <p>Items Menu mobile</p>
       </div>
-      <div className=""></div>
+      <div className="flex items-center justify-between gap-2 sm:gap-7">
+        <ShoppingCart
+          strokeWidth="1"
+          className="cursor-pointer"
+          onClick={() => router.push("/cart")}
+        />
+      </div>
     </div>
   );
 };
