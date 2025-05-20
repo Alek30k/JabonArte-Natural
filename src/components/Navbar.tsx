@@ -1,7 +1,8 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import MenuList from "./MenuList";
 
 const Navbar = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const Navbar = () => {
         <span>Natural</span>
       </h1>
       <div className="items-center justify-between hidden sm:flex">
-        <p>Menu desktop</p>
+        <MenuList />
       </div>
       <div className="flex sm:hidden">
         <p>Items Menu mobile</p>
@@ -23,6 +24,12 @@ const Navbar = () => {
           className="cursor-pointer"
           onClick={() => router.push("/cart")}
         />
+        <Heart
+          strokeWidth="1"
+          className="cursor-pointer"
+          onClick={() => router.push("/loved-products")}
+        />
+        <User strokeWidth="1" className="cursor-pointer" />
       </div>
     </div>
   );
