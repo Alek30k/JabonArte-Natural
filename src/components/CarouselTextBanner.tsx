@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Carousel, CarouselItem } from "./ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import { Card, CardContent } from "./ui/card";
+import Autoplay from "embla-carousel-autoplay";
 
 export const dataCarouselTop = [
   {
@@ -38,20 +39,36 @@ const CarouselTextBanner = () => {
 
   return (
     <div className="bg-gray-200 dark:bg-primary">
-      <Carousel className="w-full max-w-4xl mx-auto">
-        {dataCarouselTop.map(({ id, title, link, description }) => (
-          <CarouselItem
-            key={id}
-            onClick={() => router.push(link)}
-            className="cursor-pointer"
-          >
-            <div className="">
-              <Card className="shadow-none border-none bg-transparent">
-                <CardContent className="flex flex-col"></CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
+      <Carousel
+        className="w-full max-w-4xl mx-auto"
+        plugins={[
+          Autoplay({
+            delay: 4500,
+          }),
+        ]}
+      >
+        <CarouselContent>
+          {dataCarouselTop.map(({ id, title, link, description }) => (
+            <CarouselItem
+              key={id}
+              onClick={() => router.push(link)}
+              className="cursor-pointer"
+            >
+              <div className="">
+                <Card className="shadow-none border-none bg-transparent">
+                  <CardContent className="flex flex-col justify-center p-2 items-center">
+                    <p className="sm:text-lg text-wrap dark:text-secondary">
+                      {title}
+                    </p>
+                    <p className="text-xs sm:text-wrap dark:text-secondary">
+                      {description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
       </Carousel>
     </div>
   );
