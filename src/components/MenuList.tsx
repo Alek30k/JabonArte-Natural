@@ -23,21 +23,19 @@ const MenuList = () => {
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      JabonArte Natural
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Somos fabricantes de Jabones artesanales 100% naturales.
-                      Para hacer pedidos mándanos mensaje por inbox. Facebook:
-                      @JabonArteNatural · www.facebook.com/JabonArteNatural.
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
+                <Link
+                  className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                  href="/"
+                >
+                  <div className="mb-2 mt-4 text-lg font-medium">
+                    JabonArte Natural
+                  </div>
+                  <p className="text-sm leading-tight text-muted-foreground">
+                    Somos fabricantes de Jabones artesanales 100% naturales.
+                    Para hacer pedidos mándanos mensaje por inbox. Facebook:
+                    @JabonArteNatural · www.facebook.com/JabonArteNatural.
+                  </p>
+                </Link>
               </li>
               <ListItem href="/shop" title="Tienda">
                 Accede a toda tu información, tus pedidos y mucho más.{" "}
@@ -67,13 +65,13 @@ const MenuList = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
+        {/* <NavigationMenuItem>
+          <Link href="/docs">
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Accesorios
             </NavigationMenuLink>
           </Link>
-        </NavigationMenuItem>
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );
