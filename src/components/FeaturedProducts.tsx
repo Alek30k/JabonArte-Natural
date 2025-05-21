@@ -3,6 +3,7 @@
 import { useGetFeaturedProducts } from "@/api/useGetFeaturedProducts";
 import { ResponseType } from "@/types/response";
 import { Carousel, CarouselContent } from "./ui/carousel";
+import SkeletonSchema from "./SkeletonSchema";
 
 const FeaturedProducts = () => {
   const { loading, result }: ResponseType = useGetFeaturedProducts();
@@ -13,7 +14,11 @@ const FeaturedProducts = () => {
       <h3 className="px-6 text-3xl sm:pb-8">Productos destacados</h3>
       <Carousel>
         <CarouselContent className="ml-2 md:ml-4">
-          {loading && <p>Loading...</p>}
+          {loading && <SkeletonSchema grid={3} />}
+          {result !== null &&
+            result.map((product) => {
+              return <p key={product.id}>Product</p>;
+            })}
         </CarouselContent>
       </Carousel>
     </div>
