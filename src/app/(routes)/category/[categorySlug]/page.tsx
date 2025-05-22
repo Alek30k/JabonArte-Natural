@@ -4,6 +4,7 @@ import { useGetCategoryProduct } from "@/api/getCategoryProduct";
 import { Separator } from "@/components/ui/separator";
 import { ResponseType } from "@/types/response";
 import { useParams, useRouter } from "next/navigation";
+import FiltersControlsCategory from "./components/FiltersControlsCategory";
 
 export default function Page() {
   const params = useParams();
@@ -31,6 +32,10 @@ export default function Page() {
         </h1>
       )}
       <Separator />
+
+      <div className="sm:flex sm:justify-between">
+        <FiltersControlsCategory />
+      </div>
     </div>
   );
 }
