@@ -5,6 +5,8 @@ import { Separator } from "@/components/ui/separator";
 import { ResponseType } from "@/types/response";
 import { useParams, useRouter } from "next/navigation";
 import FiltersControlsCategory from "./components/FiltersControlsCategory";
+import SkeletonSchema from "@/components/SkeletonSchema";
+import ProductCart from "./components/ProductCart";
 
 export default function Page() {
   const params = useParams();
@@ -13,10 +15,6 @@ export default function Page() {
     useGetCategoryProduct(categorySlug);
   const router = useRouter();
 
-  console.log(result);
-
-  if (loading)
-    return <div className="p-8 text-center">Cargando productos...</div>;
   if (error)
     return <div className="p-8 text-center text-red-500">Error: {error}</div>;
   if (!result || result.length === 0)
@@ -35,6 +33,16 @@ export default function Page() {
 
       <div className="sm:flex sm:justify-between">
         <FiltersControlsCategory />
+        <div className="grid gap-5 mt-8 md:grid-cols-3 md:gap-10">
+          {loading && <SkeletonSchema grid={3} />}
+          {!result ||
+            (result.length === 0 && (
+              <div className="p-8 text-center">
+                No hay productos en esta categoría
+              </div>
+            ))}
+          {result !== null && !loading && <ProductCart />}
+        </div>
       </div>
     </div>
   );
