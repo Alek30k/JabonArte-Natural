@@ -18,6 +18,7 @@ const Navbar = () => {
           width={200}
           height={350}
           priority
+          onClick={() => router.push("/")}
         />
       </div>
       <div className="items-center justify-between hidden sm:flex">

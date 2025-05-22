@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useGetCategory } from "@/api/getProducts";
+import { CategoryType } from "@/types/category";
 import { ResponseType } from "@/types/response";
 import Link from "next/link";
 
 const ChooseCategory = () => {
   const { result, loading }: ResponseType = useGetCategory();
-  console.log(result);
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
       <h3 className="px-6 pb-4 text-3xl sm:pb-8">
@@ -15,7 +15,7 @@ const ChooseCategory = () => {
       <div className="grid gap-5 sm:grid-cols-3">
         {!loading &&
           result !== undefined &&
-          result.map((category) => (
+          result.map((category: CategoryType) => (
             <Link
               key={category.id}
               href={`/category/${category.slug}`}
@@ -26,6 +26,9 @@ const ChooseCategory = () => {
                 alt={category.categoryName}
                 className="max-w-[270px] transition duration-300 ease-in-out rounded-lg hover:scale-110"
               />
+              <p className="absolute w-full py-2 text-lg font-bold text-center text-white bottom-5 backdrop-blur-lg">
+                {category.categoryName}
+              </p>
             </Link>
           ))}
       </div>
