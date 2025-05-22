@@ -6,7 +6,8 @@ import { ResponseType } from "@/types/response";
 import { useParams, useRouter } from "next/navigation";
 import FiltersControlsCategory from "./components/FiltersControlsCategory";
 import SkeletonSchema from "@/components/SkeletonSchema";
-import ProductCart from "./components/ProductCart";
+import ProductCard from "./components/ProductCard";
+import { ProductType } from "@/types/product";
 
 export default function Page() {
   const params = useParams();
@@ -15,12 +16,12 @@ export default function Page() {
     useGetCategoryProduct(categorySlug);
   const router = useRouter();
 
-  if (error)
-    return <div className="p-8 text-center text-red-500">Error: {error}</div>;
-  if (!result || result.length === 0)
-    return (
-      <div className="p-8 text-center">No hay productos en esta categoría</div>
-    );
+  // if (error)
+  //   return <div className="p-8 text-center text-red-500">Error: {error}</div>;
+  // if (!result || result.length === 0)
+  //   return (
+  //     <div className="p-8 text-center">No hay productos en esta categoría</div>
+  //   );
 
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -35,13 +36,17 @@ export default function Page() {
         <FiltersControlsCategory />
         <div className="grid gap-5 mt-8 md:grid-cols-3 md:gap-10">
           {loading && <SkeletonSchema grid={3} />}
-          {!result ||
+          {/* {!result ||
             (result.length === 0 && (
               <div className="p-8 text-center">
                 No hay productos en esta categoría
               </div>
+            ))} */}
+          {result !== null &&
+            !loading &&
+            result.map((product: ProductType) => (
+              <ProductCard key={product.id} product={product} />
             ))}
-          {result !== null && !loading && <ProductCart />}
         </div>
       </div>
     </div>
