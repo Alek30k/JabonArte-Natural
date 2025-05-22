@@ -11,7 +11,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 const MenuList = () => {
@@ -19,7 +18,9 @@ const MenuList = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Sobre Nosotros</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="cursor-pointer">
+            Sobre Nosotros
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
@@ -50,7 +51,9 @@ const MenuList = () => {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Cafés</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="cursor-pointer">
+            Cafés
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
@@ -65,13 +68,9 @@ const MenuList = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        {/* <NavigationMenuItem>
-          <Link href="/docs">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Accesorios
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem> */}
+        <NavigationMenuItem>
+          <Link href="/docs">Accesorios</Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

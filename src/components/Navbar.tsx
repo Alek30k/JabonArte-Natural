@@ -5,15 +5,21 @@ import { useRouter } from "next/navigation";
 import MenuList from "./MenuList";
 import ItemsMenuMobile from "./ItemsMenuMobile";
 import ToggleTheme from "./ToggleTheme";
+import Image from "next/image";
 
 const Navbar = () => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm-max-w-4xl md-max-w-6xl">
-      <h1 className="text-3xl" onClick={() => router.push("/")}>
-        Jabonarte
-        <span>Natural</span>
-      </h1>
+    <div className="flex items-center justify-between p-4 mx-10 cursor-pointer sm-max-w-4xl md-max-w-6xl">
+      <div className="">
+        <Image
+          src="/logo3.png"
+          alt="Logo JabonArte Natural"
+          width={200}
+          height={350}
+          priority
+        />
+      </div>
       <div className="items-center justify-between hidden sm:flex">
         <MenuList />
       </div>
