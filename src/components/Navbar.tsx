@@ -10,7 +10,7 @@ import Image from "next/image";
 const Navbar = () => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-between p-4 mx-10 cursor-pointer sm-max-w-4xl md-max-w-6xl">
+    <div className="flex items-center justify-between  p-4 mx-10 cursor-pointer sm-max-w-4xl md-max-w-6xl">
       <div className="">
         <Image
           src="/logo3.png"
