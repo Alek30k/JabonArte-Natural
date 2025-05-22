@@ -5,6 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { formatPrice } from "@/lib/formatPrice";
 import { ProductType } from "@/types/product";
 import { Expand, ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -63,7 +64,7 @@ const ProductCard = (props: ProductCardProps) => {
         </CarouselContent>
       </Carousel>
       <p className="text-2xl text-center">{product.productName}</p>
-      <p className="font-bold text-center">{product.price}</p>
+      <p className="font-bold text-center">{formatPrice(product.price)}</p>
     </Link>
   );
 };

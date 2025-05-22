@@ -8,13 +8,27 @@ import FiltersControlsCategory from "./components/FiltersControlsCategory";
 import SkeletonSchema from "@/components/SkeletonSchema";
 import ProductCard from "./components/ProductCard";
 import { ProductType } from "@/types/product";
+import { useState } from "react";
 
 export default function Page() {
   const params = useParams();
   const categorySlug = params.categorySlug as string;
   const { result, loading, error }: ResponseType =
     useGetCategoryProduct(categorySlug);
+  const [filterOrigin, setFilterOrigin] = useState("");
+
   const router = useRouter();
+
+  const filteredProducts =
+    result !== null &&
+    !loading &&
+    (filterOrigin === ""
+      ? result
+      : result.filter(
+          (product: ProductType) => product.origin === filterOrigin
+        ));
+
+  console.log(filteredProducts);
 
   // if (error)
   //   return <div className="p-8 text-center text-red-500">Error: {error}</div>;
@@ -33,7 +47,7 @@ export default function Page() {
       <Separator />
 
       <div className="sm:flex sm:justify-between">
-        <FiltersControlsCategory />
+        <FiltersControlsCategory setFilterOrigin={setFilterOrigin} />
         <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
           {loading && <SkeletonSchema grid={3} />}
           {/* {!result ||
