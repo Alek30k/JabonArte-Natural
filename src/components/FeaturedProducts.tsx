@@ -7,6 +7,7 @@ import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import SkeletonSchema from "./SkeletonSchema";
 import { ProductType } from "@/types/product";
 import { Card, CardContent } from "./ui/card";
+import { Expand, ShoppingCart } from "lucide-react";
 
 const FeaturedProducts = () => {
   const { loading, result }: ResponseType = useGetFeaturedProducts();
@@ -35,7 +36,12 @@ const FeaturedProducts = () => {
                           src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${images[0].url}`}
                           alt="Image Featured"
                         />
-                        <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5"></div>
+                        <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
+                          <div className="flex justify-center gap-x-6">
+                            <Expand />
+                            <ShoppingCart />
+                          </div>
+                        </div>
                       </CardContent>
                     </Card>
                   </div>
