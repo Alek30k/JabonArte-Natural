@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useGetCategoryProduct } from "@/api/getCategoryProduct";
@@ -46,7 +47,7 @@ export default function Page() {
       )}
       <Separator />
 
-      <div className="sm:flex sm:justify-between">
+      <div className="sm:flex sm:justify-between ">
         <FiltersControlsCategory setFilterOrigin={setFilterOrigin} />
         <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
           {loading && <SkeletonSchema grid={3} />}
@@ -56,11 +57,28 @@ export default function Page() {
                 No hay productos en esta categoría
               </div>
             ))} */}
-          {result !== null &&
+          {filteredProducts !== null &&
             !loading &&
-            result.map((product: ProductType) => (
+            filteredProducts.map((product: ProductType) => (
               <ProductCard key={product.id} product={product} />
             ))}
+          {filteredProducts !== null &&
+            !loading &&
+            filteredProducts.length === 0 && (
+              <div className="col-span-full text-center py-12">
+                <img
+                  src="/404.png"
+                  alt="No hay productos disponibles"
+                  className="w-48 h-48 object-contain mx-auto mb-6 grayscale hover:grayscale-0 transition-all duration-300 "
+                />
+                <h3 className="text-2xl font-medium text-gray-600 dark:text-gray-400 mb-2">
+                  No hay productos disponibles con éste filtro
+                </h3>
+                <p className="text-gray-500 dark:text-gray-500 text-sm">
+                  Intenta con otros criterios de búsqueda
+                </p>
+              </div>
+            )}
         </div>
       </div>
     </div>
