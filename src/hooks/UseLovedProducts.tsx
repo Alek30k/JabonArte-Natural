@@ -7,6 +7,7 @@ interface UseLovedProductsType {
   lovedItems: ProductType[];
   addLovedItem: (data: ProductType) => void;
   removeLovedItem: (id: number) => void;
+  removeAnddAddLovedItem: (id: number) => void;
 }
 export const UseLovedProducts = create(
   persist<UseLovedProductsType>(
@@ -34,6 +35,12 @@ export const UseLovedProducts = create(
           lovedItems: [...get().lovedItems.filter((item) => item.id !== id)],
         });
         toast("Producto eliminado de la lista 💔");
+      },
+      removeAnddAddLovedItem: (id: number) => {
+        set({
+          lovedItems: [...get().lovedItems.filter((item) => item.id !== id)],
+        });
+        toast("Producto eliminado de favorito y añadido al carrito 💚");
       },
     }),
     {
