@@ -17,6 +17,7 @@ import { Expand, ShoppingCart } from "lucide-react";
 import IconButton from "./IconButton";
 import { useRouter } from "next/navigation";
 import { UseCart } from "@/hooks/UseCart";
+import Image from "next/image";
 
 const FeaturedProducts = () => {
   const { loading, result }: ResponseType = useGetFeaturedProducts();
@@ -40,10 +41,15 @@ const FeaturedProducts = () => {
                 >
                   <div className="p-1">
                     <Card className="py-4 border border-gray-200 shadow-none">
-                      <CardContent className="relative flex items-center justify-center px-6 py-2">
-                        <img
+                      <CardContent className="relative flex items-center justify-center px-6 py-2 w-full h-64 mb-4 overflow-hidden rounded-lg bg-gray-100">
+                        <Image
                           src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${images[0].url}`}
-                          alt="Image Featured"
+                          alt={productName || "Producto destacado"}
+                          fill // Llena el contenedor padre
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive
+                          placeholder="blur" // Placeholder blur
+                          blurDataURL="..." // Imagen blur base64
                         />
                         <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                           <div className="flex justify-center gap-x-6">
