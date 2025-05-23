@@ -18,8 +18,8 @@ export const UseCart = create(
         const existingItem = currentItems.find((item) => item.id === data.id);
 
         if (existingItem) {
-          return;
           toast.error("El producto ya existe en el carrito");
+          return;
         }
 
         set({

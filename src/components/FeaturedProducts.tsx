@@ -16,10 +16,12 @@ import { Card, CardContent } from "./ui/card";
 import { Expand, ShoppingCart } from "lucide-react";
 import IconButton from "./IconButton";
 import { useRouter } from "next/navigation";
+import { UseCart } from "@/hooks/UseCart";
 
 const FeaturedProducts = () => {
   const { loading, result }: ResponseType = useGetFeaturedProducts();
   const router = useRouter();
+  const { addItem } = UseCart();
 
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -52,7 +54,7 @@ const FeaturedProducts = () => {
                               }
                             />
                             <IconButton
-                              onClick={() => console.log("Add item")}
+                              onClick={() => addItem(product)}
                               icon={
                                 <ShoppingCart
                                   size={20}
