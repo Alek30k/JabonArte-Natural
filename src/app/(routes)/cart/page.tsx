@@ -140,8 +140,8 @@ export default function CartPage() {
                       Procesando...
                     </span>
                   ) : (
-                    <span className="flex items-center">
-                      <ShoppingBag className="w-4 h-4 mr-2" />
+                    <span className="flex items-center ">
+                      <ShoppingBag className="w-4 h-4 mr-2 " />
                       Finalizar compra
                     </span>
                   )}

@@ -32,7 +32,7 @@ const CartItemsComplete = (props: CartItemProps) => {
   const totalPrice = product.price * quantity;
 
   return (
-    <li className="flex py-6 border-b hover:bg-gray-50 transition-colors">
+    <li className="flex py-6 border-b ">
       {/* Imagen del producto */}
       <div
         className="cursor-pointer"
@@ -58,7 +58,7 @@ const CartItemsComplete = (props: CartItemProps) => {
       {/* Información del producto */}
       <div className="flex justify-between flex-1 px-6">
         <div className="flex-1">
-          <h2 className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white hover:text-blue-600 transition-colors">
             {product.productName}
           </h2>
 
@@ -74,7 +74,7 @@ const CartItemsComplete = (props: CartItemProps) => {
               </span>
             )}
             {product.origin && (
-              <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">
+              <span className="px-2 py-1 text-xs  bg-yellow-100 text-yellow-800 rounded-full">
                 {product.origin}
               </span>
             )}
@@ -82,7 +82,9 @@ const CartItemsComplete = (props: CartItemProps) => {
 
           {/* Controles de cantidad */}
           <div className="flex items-center gap-3 mt-4">
-            <span className="text-sm text-gray-600">Cantidad:</span>
+            <span className="text-sm text-gray-600 dark:text-white">
+              Cantidad:
+            </span>
             <div className="flex items-center border rounded-md">
               <button
                 onClick={handleDecrement}
@@ -103,18 +105,18 @@ const CartItemsComplete = (props: CartItemProps) => {
         </div>
 
         {/* Precio total y botón eliminar */}
-        <div className="flex flex-col justify-between items-end">
+        <div className="flex flex-col justify-between  items-end">
           <button
             onClick={() => removeItem(product.id)}
-            className="text-gray-400 cursor-pointer hover:text-red-500 transition-colors p-1"
+            className="text-gray-100 cursor-pointer hover:text-red-500 transition-colors p-1"
             aria-label="Eliminar producto"
           >
             <X size={20} />
           </button>
 
           <div className="text-right">
-            <p className="text-sm text-gray-500">Total:</p>
-            <p className="text-xl font-bold text-gray-900">
+            <p className="text-sm text-gray-500 dark:text-white">Total:</p>
+            <p className="text-xl font-bold text-gray-900 dark:text-green-400 ">
               ${totalPrice.toFixed(2)}
             </p>
           </div>
