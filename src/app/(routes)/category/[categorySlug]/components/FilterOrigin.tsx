@@ -12,15 +12,22 @@ const FilterOrigin = (props: FilterOriginProps) => {
   const { result, loading }: FilterTypes = useGetProductField();
 
   return (
-    <div className="my-5">
+    <div className="my-5 ">
       <p className="mb-3 font-bold">Origin</p>
       {loading && result === null && <p>Cargando origen...</p>}
 
-      <RadioGroup onValueChange={(value) => setFilterOrigin(value)}>
+      <RadioGroup
+        onValueChange={(value) => setFilterOrigin(value)}
+        className="cursor-pointer
+      "
+      >
         {result !== null &&
           result.schema.attributes.origin.enum.map((origin: string) => (
-            <div className="flex items-center space-x-2" key={origin}>
-              <RadioGroupItem value={origin} id={origin} />
+            <div
+              className="flex items-center gap-2 p-2 space-x-2 cursor-pointer"
+              key={origin}
+            >
+              <RadioGroupItem value={origin} id={origin} className="p-2" />
               <Label htmlFor={origin}>{origin}</Label>
             </div>
           ))}

@@ -65,7 +65,7 @@ export default function Page() {
           {filteredProducts !== null &&
             !loading &&
             filteredProducts.length === 0 && (
-              <div className="col-span-full text-center py-12">
+              <div className="col-span-full text-center py-12 ">
                 <img
                   src="/404.png"
                   alt="No hay productos disponibles"
