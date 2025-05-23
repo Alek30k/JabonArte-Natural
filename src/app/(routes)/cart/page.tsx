@@ -15,8 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Alert, AlertDescription } from "@/components/ui/alert";
-
+import { loadStripe } from "@stripe/stripe-js";
+import { makePaymentRequest } from "@/api/payment";
 export default function CartPage() {
   const { items, removeAll } = UseCart();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -24,11 +24,25 @@ export default function CartPage() {
   const totalPrice = items.reduce((total, product) => total + product.price, 0);
   const itemCount = items.length;
 
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISABLE_KEY || ""
+  );
+
   const handleCheckout = () => {
     setIsProcessing(true);
     // Simular procesamiento
-    setTimeout(() => {
-      console.log("COMPRAR");
+    setTimeout(async () => {
+      try {
+        const stripe = await stripePromise;
+        const res = await makePaymentRequest.post("/api/orders", {
+          products: items,
+        });
+        await stripe?.redirectToCheckout({
+          sessionId: res.data.stripeSession.id,
+        });
+      } catch (error) {
+        console.log(error);
+      }
       setIsProcessing(false);
     }, 1500);
   };
@@ -148,13 +162,6 @@ export default function CartPage() {
                 </Button>
               </CardFooter>
             </Card>
-
-            {/* <Alert className="mt-4">
-              <AlertDescription className="text-sm">
-                Los precios y disponibilidad están sujetos a cambios. El carrito
-                se guarda automáticamente para tu próxima visita.
-              </AlertDescription>
-            </Alert> */}
           </div>
         </div>
       )}
