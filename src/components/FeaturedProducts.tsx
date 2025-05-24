@@ -47,12 +47,12 @@ const FeaturedProducts = () => {
                   className="md:basis-1/2 lg:basis-1/3 group"
                 >
                   <div className="p-1">
-                    <Card className="py-4 border border-gray-200 shadow-none">
+                    <Card className="py-4 shadow-2xl bg-white/80 border border-gray-200 cursor-pointer">
                       <CardContent className="relative flex items-center justify-center px-6 py-2 w-full h-64 mb-4 overflow-hidden rounded-lg bg-gray-100">
                         <Image
                           src={imageUrl} // Usar la URL verificada
                           alt={productName || "Producto destacado"}
-                          fill // Llena el contenedor padre
+                          fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive
                           placeholder="blur" // Placeholder blur

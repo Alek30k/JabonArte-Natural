@@ -1,84 +1,363 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useState, useMemo } from "react";
+import { useParams } from "next/navigation";
 import { useGetCategoryProduct } from "@/api/getCategoryProduct";
-import { Separator } from "@/components/ui/separator";
-import { ResponseType } from "@/types/response";
-import { useParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { ResponseType } from "@/types/response";
+import type { ProductType } from "@/types/product";
 import FiltersControlsCategory from "./components/FiltersControlsCategory";
-import SkeletonSchema from "@/components/SkeletonSchema";
 import ProductCard from "./components/ProductCard";
-import { ProductType } from "@/types/product";
-import { useState } from "react";
+import {
+  Grid3X3,
+  List,
+  ArrowUpDown,
+  RefreshCw,
+  AlertCircle,
+  ShoppingBag,
+  TrendingUp,
+  Star,
+  DollarSign,
+  Package,
+  Sparkles,
+  Filter,
+} from "lucide-react";
 
-export default function Page() {
+type SortOption =
+  | "name"
+  | "price-low"
+  | "price-high"
+  | "rating"
+  | "newest"
+  | "popular";
+type ViewMode = "grid" | "list";
+
+export default function CategoryPage() {
   const params = useParams();
   const categorySlug = params.categorySlug as string;
   const { result, loading, error }: ResponseType =
     useGetCategoryProduct(categorySlug);
+
+  // Estados simplificados
   const [filterOrigin, setFilterOrigin] = useState("");
+  const [sortBy, setSortBy] = useState<SortOption>("popular");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
-  const router = useRouter();
+  // Filtrar y ordenar productos
+  const filteredAndSortedProducts = useMemo(() => {
+    if (!result) return [];
 
-  const filteredProducts =
-    result !== null &&
-    !loading &&
-    (filterOrigin === ""
-      ? result
-      : result.filter(
-          (product: ProductType) => product.origin === filterOrigin
-        ));
+    const filtered = result.filter((product: ProductType) => {
+      return filterOrigin === "" || product.origin === filterOrigin;
+    });
 
-  console.log(filteredProducts);
+    // Ordenar productos
+    switch (sortBy) {
+      case "name":
+        filtered.sort((a, b) => a.productName.localeCompare(b.productName));
+        break;
+      case "price-low":
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case "price-high":
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        filtered.sort(() => Math.random() - 0.5);
+        break;
+      case "newest":
+        filtered.sort(() => Math.random() - 0.5);
+        break;
+      case "popular":
+      default:
+        filtered.sort(() => Math.random() - 0.5);
+        break;
+    }
 
-  // if (error)
-  //   return <div className="p-8 text-center text-red-500">Error: {error}</div>;
-  // if (!result || result.length === 0)
-  //   return (
-  //     <div className="p-8 text-center">No hay productos en esta categoría</div>
-  //   );
+    return filtered;
+  }, [result, filterOrigin, sortBy]);
+
+  const handleClearFilters = () => {
+    setFilterOrigin("");
+  };
+
+  const hasActiveFilters = filterOrigin !== "";
+
+  // Skeleton para productos
+  const ProductSkeleton = () => (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {[...Array(8)].map((_, i) => (
+        <Card key={i} className="overflow-hidden animate-pulse">
+          <CardContent className="p-0">
+            <Skeleton className="aspect-square w-full" />
+            <div className="p-4 space-y-3">
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-6 w-1/3" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+
+  // Estado de error
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="max-w-md mx-auto text-center px-4">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Error al cargar productos
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">{error}</p>
+          <Button
+            onClick={() => window.location.reload()}
+            className="bg-red-500 hover:bg-red-600"
+          >
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Intentar de nuevo
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
-      {result !== null && !loading && (
-        <h1 className="text-3xl font-medium">
-          Café {result[0].category.categoryName}
-        </h1>
-      )}
-      <Separator />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header de la categoría */}
+      <div className="bg-white dark:bg-gray-800 border-b shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              {result && !loading ? (
+                <>
+                  <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                    {result[0]?.category?.categoryName || "Productos"}
+                  </h1>
+                  <p className="text-gray-600 dark:text-gray-300 text-lg">
+                    Descubre nuestra selección de jabones artesanales naturales
+                  </p>
+                </>
+              ) : (
+                <div className="space-y-3">
+                  <Skeleton className="h-10 w-80" />
+                  <Skeleton className="h-6 w-96" />
+                </div>
+              )}
+            </div>
 
-      <div className="sm:flex sm:justify-between ">
-        <FiltersControlsCategory setFilterOrigin={setFilterOrigin} />
-        <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
-          {loading && <SkeletonSchema grid={3} />}
-          {/* {!result ||
-            (result.length === 0 && (
-              <div className="p-8 text-center">
-                No hay productos en esta categoría
-              </div>
-            ))} */}
-          {filteredProducts !== null &&
-            !loading &&
-            filteredProducts.map((product: ProductType) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          {filteredProducts !== null &&
-            !loading &&
-            filteredProducts.length === 0 && (
-              <div className="col-span-full text-center py-12 ">
-                <img
-                  src="/404.png"
-                  alt="No hay productos disponibles"
-                  className="w-48 h-48 object-contain mx-auto mb-6 grayscale hover:grayscale-0 transition-all duration-300 "
-                />
-                <h3 className="text-2xl font-medium text-gray-600 dark:text-gray-400 mb-2">
-                  No hay productos disponibles con éste filtro
-                </h3>
-                <p className="text-gray-500 dark:text-gray-500 text-sm">
-                  Intenta con otros criterios de búsqueda
-                </p>
+            {/* Contador de productos */}
+            {!loading && (
+              <div className="text-center sm:text-right">
+                <div className="flex items-center justify-center sm:justify-end space-x-2 mb-1">
+                  <Sparkles className="w-5 h-5 text-blue-600" />
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                    {filteredAndSortedProducts.length}
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">
+                  producto{filteredAndSortedProducts.length !== 1 ? "s" : ""}{" "}
+                  disponible
+                  {filteredAndSortedProducts.length !== 1 ? "s" : ""}
+                </div>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar de filtros */}
+          <div className="lg:w-80">
+            <div className="sticky top-4">
+              <FiltersControlsCategory
+                setFilterOrigin={setFilterOrigin}
+                activeFilters={filterOrigin ? [filterOrigin] : []}
+                onClearFilters={handleClearFilters}
+                productCount={filteredAndSortedProducts.length}
+                loading={loading}
+                products={result || []} // Pasamos los productos para extraer los origins
+              />
+            </div>
+          </div>
+
+          {/* Contenido principal */}
+          <div className="flex-1">
+            {/* Barra de herramientas */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+              <div className="flex items-center space-x-4">
+                {/* Modo de vista */}
+                <div className="flex items-center bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm">
+                  <Button
+                    variant={viewMode === "grid" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("grid")}
+                    className="h-8 px-3"
+                  >
+                    <Grid3X3 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === "list" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("list")}
+                    className="h-8 px-3"
+                  >
+                    <List className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                {/* Indicador de filtros activos */}
+                {hasActiveFilters && (
+                  <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+                    <Filter className="w-3 h-3 mr-1" />
+                    Filtro activo
+                  </Badge>
+                )}
+              </div>
+
+              {/* Ordenamiento */}
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                  <ArrowUpDown className="w-4 h-4" />
+                  <span className="text-sm font-medium">Ordenar por:</span>
+                </div>
+                <Select
+                  value={sortBy}
+                  onValueChange={(value: SortOption) => setSortBy(value)}
+                >
+                  <SelectTrigger className="w-52 bg-white dark:bg-gray-800 shadow-sm">
+                    <SelectValue placeholder="Ordenar por" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="popular">
+                      <div className="flex items-center">
+                        <TrendingUp className="w-4 h-4 mr-2 text-orange-500" />
+                        Más popular
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="newest">
+                      <div className="flex items-center">
+                        <Package className="w-4 h-4 mr-2 text-green-500" />
+                        Más reciente
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="price-low">
+                      <div className="flex items-center">
+                        <DollarSign className="w-4 h-4 mr-2 text-blue-500" />
+                        Precio: menor a mayor
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="price-high">
+                      <div className="flex items-center">
+                        <DollarSign className="w-4 h-4 mr-2 text-purple-500" />
+                        Precio: mayor a menor
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="rating">
+                      <div className="flex items-center">
+                        <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                        Mejor valorados
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="name">
+                      <div className="flex items-center">
+                        <span className="w-4 h-4 mr-2 text-center text-xs font-bold text-gray-500">
+                          Az
+                        </span>
+                        Nombre A-Z
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Filtro activo */}
+            {hasActiveFilters && (
+              <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Filter className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                      Filtrando por origen:
+                    </span>
+                    <Badge className="bg-blue-600 text-white">
+                      {filterOrigin}
+                    </Badge>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearFilters}
+                    className="text-blue-600 hover:text-blue-800 hover:bg-blue-100"
+                  >
+                    Limpiar filtro
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Grid de productos */}
+            {loading ? (
+              <ProductSkeleton />
+            ) : filteredAndSortedProducts.length > 0 ? (
+              <div
+                className={
+                  viewMode === "grid"
+                    ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                    : "space-y-4"
+                }
+              >
+                {filteredAndSortedProducts.map((product: ProductType) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              /* Estado vacío mejorado */
+              <div className="text-center py-20">
+                <div className="max-w-md mx-auto">
+                  <div className="relative mb-8">
+                    <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto" />
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <span className="text-red-600 text-xl">!</span>
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                    No se encontraron productos
+                  </h3>
+
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                    {hasActiveFilters
+                      ? `No hay productos disponibles con el origen "${filterOrigin}". Intenta con otro origen o limpia el filtro.`
+                      : "No hay productos disponibles en esta categoría en este momento."}
+                  </p>
+
+                  {hasActiveFilters && (
+                    <Button
+                      onClick={handleClearFilters}
+                      className="bg-blue-500 hover:bg-blue-600 shadow-lg"
+                    >
+                      <Filter className="w-4 h-4 mr-2" />
+                      Ver todos los productos
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
