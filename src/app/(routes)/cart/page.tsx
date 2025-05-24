@@ -15,36 +15,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { loadStripe } from "@stripe/stripe-js";
-import { makePaymentRequest } from "@/api/payment";
+import { useRouter } from "next/navigation";
+
 export default function CartPage() {
   const { items, removeAll } = UseCart();
   const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
 
   const totalPrice = items.reduce((total, product) => total + product.price, 0);
   const itemCount = items.length;
 
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISABLE_KEY || ""
-  );
-
   const handleCheckout = () => {
     setIsProcessing(true);
-    // Simular procesamiento
-    setTimeout(async () => {
-      try {
-        const stripe = await stripePromise;
-        const res = await makePaymentRequest.post("/api/orders", {
-          products: items,
-        });
-        await stripe?.redirectToCheckout({
-          sessionId: res.data.stripeSession.id,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+
+    // Simular procesamiento y redirigir al checkout
+    setTimeout(() => {
+      router.push("/checkout");
       setIsProcessing(false);
-    }, 1500);
+    }, 2000);
   };
 
   return (
@@ -128,7 +116,7 @@ export default function CartPage() {
                 <Button
                   className="w-full"
                   onClick={handleCheckout}
-                  disabled={isProcessing}
+                  disabled={isProcessing || itemCount === 0}
                 >
                   {isProcessing ? (
                     <span className="flex items-center">
@@ -154,9 +142,9 @@ export default function CartPage() {
                       Procesando...
                     </span>
                   ) : (
-                    <span className="flex items-center ">
-                      <ShoppingBag className="w-4 h-4 mr-2 " />
-                      Finalizar compra
+                    <span className="flex items-center">
+                      <ShoppingBag className="w-4 h-4 mr-2" />
+                      Continuar con el pago
                     </span>
                   )}
                 </Button>

@@ -34,6 +34,13 @@ const FeaturedProducts = () => {
             result.map((product: ProductType) => {
               const { id, slug, images, productName, taste, origin } = product;
               // const { slug, images, productName, taste, origin } = attributes;
+
+              // Verificar si images existe y tiene al menos un elemento
+              const imageUrl =
+                images && images.length > 0
+                  ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${images[0].url}`
+                  : "/placeholder-image.jpg"; // Reemplaza con la URL de tu imagen por defecto
+
               return (
                 <CarouselItem
                   key={id}
@@ -43,7 +50,7 @@ const FeaturedProducts = () => {
                     <Card className="py-4 border border-gray-200 shadow-none">
                       <CardContent className="relative flex items-center justify-center px-6 py-2 w-full h-64 mb-4 overflow-hidden rounded-lg bg-gray-100">
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${images[0].url}`}
+                          src={imageUrl} // Usar la URL verificada
                           alt={productName || "Producto destacado"}
                           fill // Llena el contenedor padre
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
