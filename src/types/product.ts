@@ -5,6 +5,7 @@ export type ProductType = {
   description: string;
   active?: boolean;
   isFeatured: boolean;
+  features: string;
   taste?: string;
   origin?: string;
   price: number;

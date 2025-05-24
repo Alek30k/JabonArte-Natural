@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function useGetProducts() {
+export function useGetAllProducts() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

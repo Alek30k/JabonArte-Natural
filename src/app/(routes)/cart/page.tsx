@@ -91,7 +91,7 @@ export default function CartPage() {
           </div>
 
           <div>
-            <Card>
+            <Card className="p-2">
               <CardHeader>
                 <CardTitle>Resumen de pedido</CardTitle>
               </CardHeader>

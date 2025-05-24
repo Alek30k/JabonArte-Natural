@@ -220,11 +220,10 @@ export default function ProductPage() {
             <TabsTrigger value="description">Descripción</TabsTrigger>
             <TabsTrigger value="ingredients">Ingredientes</TabsTrigger>
             <TabsTrigger value="usage">Modo de Uso</TabsTrigger>
-            <TabsTrigger value="reviews">Reseñas</TabsTrigger>
           </TabsList>
 
           <TabsContent value="description" className="mt-6">
-            <Card>
+            <Card className="p-6">
               <CardHeader>
                 <CardTitle>Descripción del Producto</CardTitle>
               </CardHeader>
@@ -283,7 +282,7 @@ export default function ProductPage() {
           </TabsContent>
 
           <TabsContent value="ingredients" className="mt-6">
-            <Card>
+            <Card className="p-6">
               <CardHeader>
                 <CardTitle>Ingredientes Naturales</CardTitle>
               </CardHeader>
@@ -371,7 +370,7 @@ export default function ProductPage() {
           </TabsContent>
 
           <TabsContent value="usage" className="mt-6">
-            <Card>
+            <Card className="p-6">
               <CardHeader>
                 <CardTitle>Modo de Uso</CardTitle>
               </CardHeader>
@@ -437,9 +436,7 @@ export default function ProductPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="reviews" className="mt-6">
-            <ProductReviews productId={product.id} />
-          </TabsContent>
+          <TabsContent value="reviews" className="mt-6"></TabsContent>
         </Tabs>
       </div>
 

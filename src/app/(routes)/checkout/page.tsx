@@ -117,7 +117,7 @@ export default function CheckoutPage() {
       <div className="grid gap-8 lg:grid-cols-2">
         {/* Resumen del pedido */}
         <div>
-          <Card>
+          <Card className="p-2">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
@@ -154,7 +154,7 @@ export default function CheckoutPage() {
 
         {/* Instrucciones de pago */}
         <div className="space-y-6">
-          <Card>
+          <Card className="p-2">
             <CardHeader>
               <CardTitle className="flex items-center">
                 <CreditCard className="w-5 h-5 mr-2 text-blue-500" />

@@ -18,7 +18,7 @@ export default function OrderConfirmationPage() {
         </p>
       </div>
 
-      <Card className="mb-8">
+      <Card className="mb-8 p-4">
         <CardHeader>
           <CardTitle>¿Qué sigue ahora?</CardTitle>
         </CardHeader>
