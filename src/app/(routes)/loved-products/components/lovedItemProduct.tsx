@@ -32,7 +32,7 @@ const LovedItemProductCompact = (props: LovedItemProductProps) => {
   };
 
   return (
-    <li className="flex py-6 border-b hover:bg-gray-50 transition-colors">
+    <li className="flex py-6 border-b ">
       {/* Imagen del producto */}
       <div
         className="cursor-pointer"
@@ -59,7 +59,7 @@ const LovedItemProductCompact = (props: LovedItemProductProps) => {
       <div className="flex justify-between flex-1 px-6">
         <div className="flex-1">
           <h2
-            className="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer"
+            className="text-lg font-bold text-gray-900 dark:text-green-500 transition-colors cursor-pointer"
             onClick={() => router.push(`/product/${product.slug}`)}
           >
             {product.productName}
@@ -70,12 +70,12 @@ const LovedItemProductCompact = (props: LovedItemProductProps) => {
           {/* Características del producto */}
           <div className="flex gap-2 mt-2">
             {product.taste && (
-              <span className="px-2 py-1 text-xs bg-gray-100 rounded-full">
+              <span className="px-2 py-1 text-xs bg-gray-100 dark:text-black rounded-full">
                 {product.taste}
               </span>
             )}
             {product.origin && (
-              <span className="px-2 py-1 text-xs bg-yellow-100 rounded-full">
+              <span className="px-2 py-1 text-xs dark:text-black  bg-yellow-100 rounded-full">
                 {product.origin}
               </span>
             )}
