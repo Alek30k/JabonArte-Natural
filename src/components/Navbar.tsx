@@ -123,7 +123,7 @@ const Navbar = () => {
                   width={160}
                   height={60}
                   priority
-                  className="h-8 lg:h-12 w-auto"
+                  className="h-20 lg:h-24 w-auto hover:scale-105 transition-transform duration-200"
                 />
               </div>
             </div>
@@ -132,7 +132,7 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center space-x-8">
               {/* Products Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors">
+                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium">
                   Productos
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
@@ -157,20 +157,14 @@ const Navbar = () => {
               </DropdownMenu>
 
               <Link
-                href="/about"
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors"
-              >
-                Nosotros
-              </Link>
-              <Link
                 href="/blog"
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium"
               >
                 Blog
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium"
               >
                 Contacto
               </Link>
@@ -180,35 +174,39 @@ const Navbar = () => {
             <div className="hidden md:flex flex-1 max-w-lg mx-8">
               <form onSubmit={handleSearch} className="w-full">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <Input
                     type="text"
                     placeholder="Buscar productos naturales..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-full border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    className="pl-11 pr-4 py-2 w-full border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-lg"
                   />
                 </div>
               </form>
             </div>
 
             {/* Right Side Icons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden"
+                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                 onClick={() => router.push("/search")}
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-6 w-6" />
               </Button>
 
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="relative">
-                    <User className="h-5 w-5" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                  >
+                    <User className="h-6 w-6" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -237,18 +235,18 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative"
+                className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                 onClick={() => router.push("/loved-products")}
               >
                 <Heart
-                  className={`h-5 w-5 ${
+                  className={`h-6 w-6 transition-colors ${
                     lovedItems.length > 0
                       ? "fill-rose-500 text-rose-500"
-                      : "text-gray-700 dark:text-gray-200"
+                      : "text-gray-700 dark:text-gray-200 hover:text-rose-500"
                   }`}
                 />
                 {lovedItems.length > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500">
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500 hover:bg-rose-600 border-2 border-white dark:border-gray-900">
                     {lovedItems.length}
                   </Badge>
                 )}
@@ -258,15 +256,15 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative"
+                className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                 onClick={() => router.push("/cart")}
               >
                 {cart.items.length === 0 ? (
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors" />
                 ) : (
                   <>
-                    <BaggageClaim className="h-5 w-5" />
-                    <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-green-600">
+                    <BaggageClaim className="h-6 w-6 text-green-600" />
+                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-green-600 hover:bg-green-700 border-2 border-white dark:border-gray-900">
                       {cart.items.length}
                     </Badge>
                   </>
@@ -274,19 +272,25 @@ const Navbar = () => {
               </Button>
 
               {/* Theme Toggle */}
-              <ToggleTheme />
+              <div className="p-1">
+                <ToggleTheme />
+              </div>
 
               {/* Mobile Menu */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="lg:hidden">
-                    <Menu className="h-5 w-5" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                  >
+                    <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-80">
                   <SheetHeader>
                     <SheetTitle className="flex items-center">
-                      <Leaf className="w-5 h-5 mr-2 text-green-600" />
+                      <Leaf className="w-6 h-6 mr-2 text-green-600" />
                       JabónArteNatural
                     </SheetTitle>
                     <SheetDescription>
@@ -298,13 +302,13 @@ const Navbar = () => {
                     {/* Mobile Search */}
                     <form onSubmit={handleSearch}>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                         <Input
                           type="text"
                           placeholder="Buscar productos..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10"
+                          className="pl-11 rounded-lg"
                         />
                       </div>
                     </form>
@@ -313,7 +317,7 @@ const Navbar = () => {
                     <nav className="space-y-4">
                       <Link
                         href="/"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Inicio
@@ -328,7 +332,7 @@ const Navbar = () => {
                             <Link
                               key={category.name}
                               href={category.href}
-                              className="block text-gray-600 dark:text-gray-300 hover:text-green-600"
+                              className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {category.name}
@@ -339,21 +343,21 @@ const Navbar = () => {
 
                       <Link
                         href="/about"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Nosotros
                       </Link>
                       <Link
                         href="/blog"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Blog
                       </Link>
                       <Link
                         href="/contact"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Contacto
@@ -364,14 +368,14 @@ const Navbar = () => {
                     <div className="border-t pt-4 space-y-2">
                       <Link
                         href="/login"
-                        className="block text-gray-600 dark:text-gray-300"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Iniciar Sesión
                       </Link>
                       <Link
                         href="/register"
-                        className="block text-gray-600 dark:text-gray-300"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Registrarse
