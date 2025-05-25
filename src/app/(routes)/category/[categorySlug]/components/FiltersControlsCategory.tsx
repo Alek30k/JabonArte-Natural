@@ -29,7 +29,7 @@ type FilterProps = {
 
 const FiltersControlsCategory = ({
   setFilterOrigin,
-  activeFilters = [],
+
   onClearFilters,
   productCount = 0,
   loading = false,
@@ -41,15 +41,21 @@ const FiltersControlsCategory = ({
   const availableOrigins = useMemo(() => {
     if (!products || products.length === 0) return [];
 
-    // Obtener todos los origins únicos
+    // Obtener todos los origins únicos que son strings
     const uniqueOrigins = [
-      ...new Set(products.map((product) => product.origin).filter(Boolean)),
+      ...new Set(
+        products
+          .map((product) => product.origin)
+          .filter((origin): origin is string => typeof origin === "string")
+      ),
     ];
 
     // Contar productos por origin
     const originsWithCount = uniqueOrigins.map((origin) => {
+      // Asegurarse de que product.origin es un string antes de comparar
       const count = products.filter(
-        (product) => product.origin === origin
+        (product) =>
+          typeof product.origin === "string" && product.origin === origin
       ).length;
       return {
         id: origin.toLowerCase().replace(/\s+/g, "-"), // ID para el form
