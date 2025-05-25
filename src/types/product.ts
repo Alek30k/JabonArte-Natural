@@ -17,7 +17,11 @@ export type ProductType = {
     url: string;
   }[];
   category: {
-    slug: string;
-    categoryName: string;
+    data: {
+      attributes: {
+        slug: string;
+        categoryName: string;
+      };
+    };
   };
 };
