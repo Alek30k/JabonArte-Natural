@@ -55,38 +55,43 @@ export default function CategoryPage() {
 
   // Filtrar y ordenar productos
   const filteredAndSortedProducts = useMemo(() => {
-    if (!result) return [];
+    // Ensure result exists and is an array of ProductType
+    if (!result || !Array.isArray(result)) {
+      return [];
+    }
 
-    const filtered = result.filter((product: ProductType) => {
+    // Ensure we have a valid array of products
+    const products: ProductType[] = Array.isArray(result) ? result : [];
+
+    const filtered = products.filter((product: ProductType) => {
       return filterOrigin === "" || product.origin === filterOrigin;
     });
+
+    // Create a copy of the filtered array before sorting to avoid mutating the original
+    const sortedProducts = [...filtered];
 
     // Ordenar productos
     switch (sortBy) {
       case "name":
-        filtered.sort((a: ProductType, b: ProductType) =>
+        return sortedProducts.sort((a: ProductType, b: ProductType) =>
           a.productName.localeCompare(b.productName)
         );
-        break;
       case "price-low":
-        filtered.sort((a: ProductType, b: ProductType) => a.price - b.price);
-        break;
+        return sortedProducts.sort(
+          (a: ProductType, b: ProductType) => a.price - b.price
+        );
       case "price-high":
-        filtered.sort((a: ProductType, b: ProductType) => b.price - a.price);
-        break;
+        return sortedProducts.sort(
+          (a: ProductType, b: ProductType) => b.price - a.price
+        );
       case "rating":
-        filtered.sort(() => Math.random() - 0.5);
-        break;
+        return sortedProducts.sort(() => Math.random() - 0.5);
       case "newest":
-        filtered.sort(() => Math.random() - 0.5);
-        break;
+        return sortedProducts.sort(() => Math.random() - 0.5);
       case "popular":
       default:
-        filtered.sort(() => Math.random() - 0.5);
-        break;
+        return sortedProducts.sort(() => Math.random() - 0.5);
     }
-
-    return filtered;
   }, [result, filterOrigin, sortBy]);
 
   const handleClearFilters = () => {
@@ -144,9 +149,9 @@ export default function CategoryPage() {
             <div>
               {result && !loading ? (
                 <>
-                  <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                  {/* <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                     {result[0]?.category?.categoryName || "Productos"}
-                  </h1>
+                  </h1> */}
                   <p className="text-gray-600 dark:text-gray-300 text-lg">
                     Descubre nuestra selección de jabones artesanales naturales
                   </p>

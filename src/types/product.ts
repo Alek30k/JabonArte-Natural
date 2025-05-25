@@ -8,6 +8,9 @@ export type ProductType = {
   features: string;
   taste?: string;
   origin?: string;
+  rating?: number;
+  popularityScore?: number;
+  createdAt?: string;
   price: number;
   images: {
     id: number;
