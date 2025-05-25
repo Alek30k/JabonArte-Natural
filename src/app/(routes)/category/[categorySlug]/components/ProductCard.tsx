@@ -35,7 +35,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
   const { addItem } = UseCart();
-  const { addLoveItem, removeLovedItem, lovedItems } = UseLovedProducts();
+  const { addLovedItem, removeLovedItem, lovedItems } = UseLovedProducts();
   const router = useRouter();
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -77,7 +77,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
     if (isLoved) {
       removeLovedItem(product.id);
     } else {
-      addLoveItem(product);
+      addLovedItem(product);
     }
   };
 
@@ -152,10 +152,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
                 Oferta
               </Badge>
             )}
-            <Badge className="bg-blue-500/90 hover:bg-blue-600 text-white shadow-lg backdrop-blur-sm">
-              <Leaf className="w-3 h-3 mr-1" />
-              {product.taste}
-            </Badge>
           </div>
 
           {/* Badge de origen */}
@@ -172,7 +168,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg"
+                className="absolute cursor-pointer left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg dark:text-black"
                 onClick={prevImage}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -180,7 +176,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg"
+                className="absolute right-2 cursor-pointer dark:text-black top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg"
                 onClick={nextImage}
               >
                 <ChevronRight className="w-4 h-4" />
@@ -214,21 +210,25 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
             <Button
               variant="secondary"
               size="icon"
-              className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
+              className={`w-10 h-10 cursor-pointer rounded-full shadow-lg transition-all duration-300 ${
                 isLoved
                   ? "bg-red-500 hover:bg-red-600 text-white"
                   : "bg-white/90 hover:bg-white text-gray-700 hover:text-red-500"
               }`}
               onClick={handleToggleLove}
             >
-              <Heart className={`w-4 h-4 ${isLoved ? "fill-current" : ""}`} />
+              <Heart
+                className={`w-4 h-4 ${
+                  isLoved ? "fill-current cursor-pointer" : ""
+                }`}
+              />
             </Button>
 
             {/* Botón ver producto */}
             <Button
               variant="secondary"
               size="icon"
-              className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-blue-500 shadow-lg transition-all duration-300"
+              className="w-10 h-10 rounded-full cursor-pointer bg-white/90 hover:bg-white text-gray-700 hover:text-blue-500 shadow-lg transition-all duration-300"
               onClick={handleViewProduct}
             >
               <Eye className="w-4 h-4" />
@@ -240,7 +240,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
                 justAdded
                   ? "bg-green-500 hover:bg-green-600"
-                  : "bg-blue-500 hover:bg-blue-600 hover:scale-110"
+                  : "bg-blue-500 hover:bg-blue-600 hover:scale-110 cursor-pointer"
               }`}
               onClick={handleAddToCart}
               disabled={isAddingToCart}

@@ -11,11 +11,11 @@ import {
   Search,
   Menu,
   ChevronDown,
-  Leaf,
+  Gift,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ToggleTheme from "./ToggleTheme";
-import Image from "next/image";
+import Logo from "./logo";
 import { UseCart } from "@/hooks/UseCart";
 import { UseLovedProducts } from "@/hooks/UseLovedProducts";
 import { Button } from "./ui/button";
@@ -37,13 +37,14 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import Link from "next/link";
+import Image from "next/image";
 
 const categories = [
-  { name: "Jabones Naturales", href: "/productos/jabones-naturales" },
-  { name: "Jabones Medicinales", href: "/productos/jabones-medicinales" },
-  { name: "Aceites Esenciales", href: "/productos/aceites-esenciales" },
-  { name: "Kits de Regalo", href: "/productos/kits-regalo" },
-  { name: "Ofertas", href: "/ofertas" },
+  { name: "Regalos Personalizados", href: "/productos/personalizados" },
+  { name: "Regalos Románticos", href: "/productos/romanticos" },
+  { name: "Regalos de Cumpleaños", href: "/productos/cumpleanos" },
+  { name: "Regalos Corporativos", href: "/productos/corporativos" },
+  { name: "Ofertas Especiales", href: "/ofertas" },
 ];
 
 const userMenuItems = [
@@ -73,20 +74,26 @@ const Navbar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      // Redirigir a la página de búsqueda con el query
+      router.push(`/buscar?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
     }
+  };
+
+  const handleMobileSearch = () => {
+    // Para móvil, redirigir directamente a la página de búsqueda
+    router.push("/buscar");
   };
 
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-green-600 text-white text-sm py-2 px-4">
+      <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
-              <Leaf className="w-4 h-4 mr-1" />
-              100% Natural y Orgánico
+              <Gift className="w-4 h-4 mr-1" />
+              Regalos únicos y especiales
             </span>
             <span className="hidden md:block">
               Envío gratis en compras +$15.000
@@ -117,14 +124,22 @@ const Navbar = () => {
                 className="flex-shrink-0 cursor-pointer"
                 onClick={() => router.push("/")}
               >
-                <Image
-                  src="/logo3.png"
-                  alt="JabónArteNatural"
-                  width={160}
-                  height={60}
-                  priority
-                  className="h-20 lg:h-24 w-auto hover:scale-105 transition-transform duration-200"
-                />
+                {/* <Logo className="hover:scale-105 transition-transform duration-200" /> */}
+                <div className="flex items-center">
+                  <div
+                    className="flex-shrink-0 cursor-pointer"
+                    onClick={() => router.push("/")}
+                  >
+                    <Image
+                      src="/logo3.png"
+                      alt="JabónArteNatural"
+                      width={160}
+                      height={60}
+                      priority
+                      className="h-20 lg:h-24 w-auto hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -132,8 +147,8 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center space-x-8">
               {/* Products Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium">
-                  Productos
+                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors">
+                  Regalos
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
@@ -150,7 +165,7 @@ const Navbar = () => {
                       href="/productos"
                       className="cursor-pointer font-medium"
                     >
-                      Ver Todos los Productos
+                      Ver Todos los Regalos
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -158,55 +173,62 @@ const Navbar = () => {
 
               <Link
                 href="/blog"
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors"
               >
                 Blog
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors font-medium"
+                className="text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors"
               >
                 Contacto
               </Link>
             </div>
 
-            {/* Search Bar */}
+            {/* Search Bar - Desktop */}
             <div className="hidden md:flex flex-1 max-w-lg mx-8">
               <form onSubmit={handleSearch} className="w-full">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <Input
                     type="text"
-                    placeholder="Buscar productos naturales..."
+                    placeholder="Buscar el regalo perfecto..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-11 pr-4 py-2 w-full border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-lg"
+                    className="pl-10 pr-4 py-2 w-full border-gray-300 focus:border-pink-500 focus:ring-pink-500"
                   />
+                  {searchQuery && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                    >
+                      ×
+                    </Button>
+                  )}
                 </div>
               </form>
             </div>
 
             {/* Right Side Icons */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                onClick={() => router.push("/search")}
+                className="md:hidden"
+                onClick={handleMobileSearch}
               >
-                <Search className="h-6 w-6" />
+                <Search className="h-5 w-5" />
               </Button>
 
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                  >
-                    <User className="h-6 w-6" />
+                  <Button variant="ghost" size="sm" className="relative">
+                    <User className="h-5 w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -235,18 +257,18 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                className="relative"
                 onClick={() => router.push("/loved-products")}
               >
                 <Heart
-                  className={`h-6 w-6 transition-colors ${
+                  className={`h-5 w-5 ${
                     lovedItems.length > 0
                       ? "fill-rose-500 text-rose-500"
-                      : "text-gray-700 dark:text-gray-200 hover:text-rose-500"
+                      : "text-gray-700 dark:text-gray-200"
                   }`}
                 />
                 {lovedItems.length > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500 hover:bg-rose-600 border-2 border-white dark:border-gray-900">
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500">
                     {lovedItems.length}
                   </Badge>
                 )}
@@ -256,15 +278,15 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                className="relative"
                 onClick={() => router.push("/cart")}
               >
                 {cart.items.length === 0 ? (
-                  <ShoppingCart className="h-6 w-6 text-gray-700 dark:text-gray-200 hover:text-green-600 transition-colors" />
+                  <ShoppingCart className="h-5 w-5" />
                 ) : (
                   <>
-                    <BaggageClaim className="h-6 w-6 text-green-600" />
-                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-green-600 hover:bg-green-700 border-2 border-white dark:border-gray-900">
+                    <BaggageClaim className="h-5 w-5" />
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-pink-600">
                       {cart.items.length}
                     </Badge>
                   </>
@@ -272,29 +294,23 @@ const Navbar = () => {
               </Button>
 
               {/* Theme Toggle */}
-              <div className="p-1">
-                <ToggleTheme />
-              </div>
+              <ToggleTheme />
 
               {/* Mobile Menu */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                  >
-                    <Menu className="h-6 w-6" />
+                  <Button variant="ghost" size="sm" className="lg:hidden">
+                    <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-80">
                   <SheetHeader>
                     <SheetTitle className="flex items-center">
-                      <Leaf className="w-6 h-6 mr-2 text-green-600" />
-                      JabónArteNatural
+                      <Heart className="w-5 h-5 mr-2 text-pink-600" />
+                      Regalos del Corazón
                     </SheetTitle>
                     <SheetDescription>
-                      Productos naturales para tu bienestar
+                      Regalos únicos para momentos especiales
                     </SheetDescription>
                   </SheetHeader>
 
@@ -302,14 +318,25 @@ const Navbar = () => {
                     {/* Mobile Search */}
                     <form onSubmit={handleSearch}>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                         <Input
                           type="text"
-                          placeholder="Buscar productos..."
+                          placeholder="Buscar regalos..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-11 rounded-lg"
+                          className="pl-10"
                         />
+                        {searchQuery && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSearchQuery("")}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+                          >
+                            ×
+                          </Button>
+                        )}
                       </div>
                     </form>
 
@@ -317,7 +344,7 @@ const Navbar = () => {
                     <nav className="space-y-4">
                       <Link
                         href="/"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Inicio
@@ -325,14 +352,14 @@ const Navbar = () => {
 
                       <div>
                         <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-                          Productos
+                          Regalos
                         </h3>
                         <div className="space-y-2 ml-4">
                           {categories.map((category) => (
                             <Link
                               key={category.name}
                               href={category.href}
-                              className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
+                              className="block text-gray-600 dark:text-gray-300 hover:text-pink-600"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {category.name}
@@ -343,21 +370,21 @@ const Navbar = () => {
 
                       <Link
                         href="/about"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Nosotros
                       </Link>
                       <Link
                         href="/blog"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Blog
                       </Link>
                       <Link
                         href="/contact"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-green-600 transition-colors"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Contacto
@@ -368,14 +395,14 @@ const Navbar = () => {
                     <div className="border-t pt-4 space-y-2">
                       <Link
                         href="/login"
-                        className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
+                        className="block text-gray-600 dark:text-gray-300"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Iniciar Sesión
                       </Link>
                       <Link
                         href="/register"
-                        className="block text-gray-600 dark:text-gray-300 hover:text-green-600 transition-colors"
+                        className="block text-gray-600 dark:text-gray-300"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Registrarse

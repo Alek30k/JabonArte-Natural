@@ -16,7 +16,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import type { ResponseType } from "@/types/response";
 import type { ProductType } from "@/types/product";
-import ProductCard from "../app/(routes)/category/[categorySlug]/components/ProductCard";
+import ProductCard from "../category/[categorySlug]/components/ProductCard";
 import {
   Grid3X3,
   List,
@@ -290,10 +290,10 @@ const AllProducts = () => {
             {/* Origen */}
             <Select value={selectedOrigin} onValueChange={setSelectedOrigin}>
               <SelectTrigger className="w-48 bg-white dark:bg-gray-800">
-                <SelectValue placeholder="Todos los orígenes" />
+                <SelectValue placeholder="Subcategorías" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todos los orígenes</SelectItem>
+                <SelectItem value="all">Subcategorías</SelectItem>
                 {origins.map((origin) => (
                   <SelectItem key={origin} value={origin}>
                     {origin}

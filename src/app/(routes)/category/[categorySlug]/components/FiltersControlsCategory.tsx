@@ -177,7 +177,7 @@ const FiltersControlsCategory = ({
               <Grid3X3 className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-lg font-bold">Filtrar por Origen</span>
+              <span className="text-lg font-bold">Filtros</span>
               {hasActiveFilter && (
                 <Badge className="ml-2 bg-white/20 text-white border-white/30 hover:bg-white/30">
                   1 seleccionado
