@@ -18,7 +18,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
-  Star,
   Shield,
   Truck,
   RotateCcw,
@@ -27,18 +26,16 @@ import {
   ChevronRight,
   Leaf,
   Award,
-  Users,
 } from "lucide-react";
 import SkeletonProduct from "./components/SkeletonProduct";
 import CarouselProduct from "./components/CarouselProduct";
 import InfoProduct from "./components/InfoProduct";
 import RelatedProducts from "./components/RelatedProducts";
-import ProductReviews from "./components/ProductReviews";
-import ProductFAQ from "./components/ProductFAQ";
 
 export default function ProductPage() {
   const params = useParams();
-  const { productSlug } = params;
+  // const { productSlug } = params;
+  const productSlug = params.productSlug as string;
   const [isVisible, setIsVisible] = useState(false);
 
   const { result, loading }: ResponseType = useGetProductBySlug(productSlug);
@@ -52,30 +49,6 @@ export default function ProductPage() {
   }
 
   const product = result[0];
-
-  // Datos simulados para mejorar la experiencia
-  const productFeatures = [
-    {
-      icon: <Leaf className="w-5 h-5 text-green-600" />,
-      title: "100% Natural",
-      description: "Ingredientes orgánicos certificados",
-    },
-    {
-      icon: <Award className="w-5 h-5 text-blue-600" />,
-      title: "Artesanal",
-      description: "Hecho a mano con técnicas tradicionales",
-    },
-    {
-      icon: <Shield className="w-5 h-5 text-purple-600" />,
-      title: "Libre de Químicos",
-      description: "Sin parabenos ni sulfatos",
-    },
-    {
-      icon: <Users className="w-5 h-5 text-orange-600" />,
-      title: "Para Toda la Familia",
-      description: "Apto para pieles sensibles",
-    },
-  ];
 
   const guarantees = [
     {
