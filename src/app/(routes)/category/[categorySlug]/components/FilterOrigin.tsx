@@ -34,7 +34,6 @@ type FilterProps = {
 
 const FilterFeature = ({
   setFilter,
-  activeFilters = [],
   onClearFilters,
   productCount = 0,
   loading = false,
