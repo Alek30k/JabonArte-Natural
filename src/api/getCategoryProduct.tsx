@@ -13,8 +13,15 @@ export function useGetCategoryProduct(slug: string | string[]) {
         const json = await res.json();
         setResult(json.data);
         setLoading(false);
-      } catch (error: any) {
-        setError(error);
+      } catch (error: unknown) {
+        // Changed 'any' to 'unknown'
+        // Check if the error is an instance of Error before accessing 'message'
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          // Handle other types of errors or set a generic message
+          setError("An unknown error occurred");
+        }
         setLoading(false);
       }
     })();

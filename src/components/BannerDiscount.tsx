@@ -4,11 +4,10 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
-import { Copy, Check, Sparkles, Gift, Clock, Leaf } from "lucide-react";
+import { Sparkles, Gift, Clock, Leaf } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const BannerDiscount = () => {
-  const [copied, setCopied] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -41,12 +40,6 @@ const BannerDiscount = () => {
 
     return () => clearInterval(timer);
   }, []);
-
-  const copyCode = () => {
-    navigator.clipboard.writeText("JABONARTENATURAL");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const discountTiers = [
     {

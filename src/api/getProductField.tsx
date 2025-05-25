@@ -20,8 +20,15 @@ export function useGetProducts() {
         } else {
           setError("Error al cargar los productos");
         }
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error: unknown) {
+        // Cambiado 'any' a 'unknown'
+        // Verificamos si el error es una instancia de Error antes de acceder a 'message'
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          // Manejar otros tipos de errores si es necesario, o establecer un mensaje genérico
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }

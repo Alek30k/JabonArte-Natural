@@ -14,8 +14,15 @@ export function useGetFeaturedProducts() {
         const json = await res.json();
         setResult(json.data);
         setLoading(false);
-      } catch (error: any) {
-        setError(error);
+      } catch (error: unknown) {
+        // Usamos 'unknown' según tu configuración
+        // Verificamos si el error es una instancia de Error antes de acceder a 'message'
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          // Manejar otros tipos de errores si es necesario, o establecer un mensaje genérico
+          setError("An unknown error occurred");
+        }
         setLoading(false);
       }
     })();

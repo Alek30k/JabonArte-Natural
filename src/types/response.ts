@@ -1,11 +1,7 @@
-// export type ResponseType<T> = {
-//   result: T;
-//   loading: boolean;
-//   error: string;
-// };
+import { ProductType } from "./product";
 
 export type ResponseType = {
-  result: any;
+  result: ProductType[] | null; // Cambiado de 'any' a 'ProductType[] | null'
   loading: boolean;
   error: string;
 };

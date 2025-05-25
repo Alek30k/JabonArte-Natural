@@ -49,6 +49,11 @@ type ViewMode = "grid" | "list";
 const AllProducts = () => {
   const { result, loading, error }: ResponseType = useGetAllProducts();
 
+  // Verificación de tipo explícita
+  const products = (
+    result && Array.isArray(result) ? result : []
+  ) as ProductType[];
+
   // Estados para filtros y búsqueda
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -61,22 +66,33 @@ const AllProducts = () => {
 
   // Extraer categorías y orígenes únicos
   const { categories, origins, priceStats } = useMemo(() => {
-    if (!result)
+    if (
+      !products ||
+      !Array.isArray(products) ||
+      (Array.isArray(products) && products.length === 0)
+    )
       return {
         categories: [],
         origins: [],
         priceStats: { min: 0, max: 100000 },
       };
 
-    const cats = [
+    // Acceder a categoryName a través de data.attributes y asegurar que cats es string[]
+    const cats: string[] = [
       ...new Set(
-        result.map((p: ProductType) => p.category?.categoryName).filter(Boolean)
+        products
+          .map((p: ProductType) => p.category?.data?.attributes?.categoryName)
+          .filter(Boolean) as string[]
       ),
     ];
-    const origs = [
-      ...new Set(result.map((p: ProductType) => p.origin).filter(Boolean)),
+    // Asegurar que origs es string[] después de filtrar
+    const origs: string[] = [
+      ...new Set(
+        products.map((p: ProductType) => p.origin).filter(Boolean) as string[]
+      ),
     ];
-    const prices = result.map((p: ProductType) => p.price);
+    // Asegurar que origs es string[] después de filtrar
+    const prices = products.map((p: ProductType) => p.price);
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
 
@@ -85,19 +101,24 @@ const AllProducts = () => {
       origins: origs,
       priceStats: { min: minPrice, max: maxPrice },
     };
-  }, [result]);
+  }, [products]);
 
   // Filtrar y ordenar productos
   const filteredAndSortedProducts = useMemo(() => {
-    if (!result) return [];
+    if (
+      !products ||
+      !Array.isArray(products) ||
+      (Array.isArray(products) && products.length === 0)
+    )
+      return [];
 
-    const filtered = result.filter((product: ProductType) => {
+    const filtered = products.filter((product: ProductType) => {
       const matchesSearch = product.productName
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
       const matchesCategory =
         selectedCategory === "" ||
-        product.category?.categoryName === selectedCategory;
+        product.category?.data?.attributes?.categoryName === selectedCategory;
       const matchesOrigin =
         selectedOrigin === "" || product.origin === selectedOrigin;
       const matchesPrice =
@@ -109,29 +130,31 @@ const AllProducts = () => {
     // Ordenar productos
     switch (sortBy) {
       case "name":
-        filtered.sort((a, b) => a.productName.localeCompare(b.productName));
+        filtered.sort((a: ProductType, b: ProductType) =>
+          a.productName.localeCompare(b.productName)
+        );
         break;
       case "price-low":
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a: ProductType, b: ProductType) => a.price - b.price);
         break;
       case "price-high":
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a: ProductType, b: ProductType) => b.price - a.price);
         break;
       case "rating":
-        filtered.sort(() => Math.random() - 0.5);
+        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper rating sort if data is available
         break;
       case "newest":
-        filtered.sort(() => Math.random() - 0.5);
+        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper date sort if data is available
         break;
       case "popular":
       default:
-        filtered.sort(() => Math.random() - 0.5);
+        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper popularity sort if data is available
         break;
     }
 
     return filtered;
   }, [
-    result,
+    products,
     searchQuery,
     selectedCategory,
     selectedOrigin,
@@ -290,10 +313,10 @@ const AllProducts = () => {
             {/* Origen */}
             <Select value={selectedOrigin} onValueChange={setSelectedOrigin}>
               <SelectTrigger className="w-48 bg-white dark:bg-gray-800">
-                <SelectValue placeholder="Subcategorías" />
+                <SelectValue placeholder="Todas las subcategorías" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Subcategorías</SelectItem>
+                <SelectItem value="all">Todas las subcategorías</SelectItem>
                 {origins.map((origin) => (
                   <SelectItem key={origin} value={origin}>
                     {origin}
@@ -343,7 +366,8 @@ const AllProducts = () => {
             <div className="flex flex-wrap gap-2">
               {searchQuery && (
                 <Badge className="bg-blue-100 text-blue-800 border-blue-200">
-                  <Search className="w-3 h-3 mr-1" />"{searchQuery}"
+                  <Search className="w-3 h-3 mr-1" />
+                  &quot;{searchQuery}&quot; {/* Corregido aquí */}
                   <Button
                     variant="ghost"
                     size="sm"

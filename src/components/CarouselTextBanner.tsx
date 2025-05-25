@@ -22,8 +22,6 @@ import {
   Star,
   ChevronLeft,
   ChevronRight,
-  Play,
-  Pause,
 } from "lucide-react";
 
 export const dataCarouselTop = [
@@ -86,13 +84,14 @@ const CarouselTextBanner = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [autoplayPlugin] = useState(
     Autoplay({
       delay: 5000,
       stopOnInteraction: false,
     })
   );
+
+  console.log(count, current);
 
   useEffect(() => {
     if (!api) return;
@@ -129,7 +128,7 @@ const CarouselTextBanner = () => {
           }}
         >
           <CarouselContent>
-            {dataCarouselTop.map((item, index) => (
+            {dataCarouselTop.map((item) => (
               <CarouselItem key={item.id} className="cursor-pointer group">
                 <div
                   onClick={() => router.push(item.link)}
