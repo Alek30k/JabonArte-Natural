@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ToggleTheme from "./ToggleTheme";
-import Logo from "./logo";
 import { UseCart } from "@/hooks/UseCart";
 import { UseLovedProducts } from "@/hooks/UseLovedProducts";
 import { Button } from "./ui/button";
