@@ -7,11 +7,7 @@ import { Star, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface RelatedProductsProps {
-  currentProductId: string | number;
-}
-
-const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
+const RelatedProducts = () => {
   // Datos simulados de productos relacionados
   const relatedProducts = [
     {

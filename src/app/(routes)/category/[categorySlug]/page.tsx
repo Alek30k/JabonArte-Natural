@@ -64,7 +64,7 @@ export default function CategoryPage() {
     // Ordenar productos
     switch (sortBy) {
       case "name":
-        filtered.sort((a, b) => a.productName.localeCompare(b.productName));
+        filtered.sort((a, b: ) => a.productName.localeCompare(b.productName));
         break;
       case "price-low":
         filtered.sort((a, b) => a.price - b.price);
