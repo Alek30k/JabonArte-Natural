@@ -9,7 +9,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
+  // BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +28,7 @@ import {
   Award,
 } from "lucide-react";
 import SkeletonProduct from "./components/SkeletonProduct";
-import CarouselProduct from "./components/CarouselProduct";
+// import CarouselProduct from "./components/CarouselProduct";
 import InfoProduct from "./components/InfoProduct";
 import RelatedProducts from "./components/RelatedProducts";
 
@@ -87,7 +87,7 @@ export default function ProductPage() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{product.productName}</BreadcrumbPage>
+              {/* <BreadcrumbPage>{product.productName}</BreadcrumbPage> */}
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -98,7 +98,7 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <CarouselProduct images={product.images} />
+            {/* <CarouselProduct images={product.images} /> */}
 
             {/* Product Badges */}
             <div className="flex flex-wrap gap-2">
@@ -201,10 +201,10 @@ export default function ProductPage() {
                 <CardTitle>Descripción del Producto</CardTitle>
               </CardHeader>
               <CardContent className="prose dark:prose-invert max-w-none">
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {/* <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                   {product.description ||
                     "Nuestro jabón artesanal está elaborado con ingredientes 100% naturales, cuidadosamente seleccionados para brindar una experiencia única de limpieza y cuidado. Cada barra es hecha a mano siguiendo técnicas tradicionales que preservan las propiedades beneficiosas de cada ingrediente."}
-                </p>
+                </p> */}
 
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
