@@ -59,8 +59,8 @@ export default function CartPage() {
           </Button>
         </div>
       ) : (
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2">
+        <div className="grid gap-8 lg:grid-cols-3 w-full">
+          <div className="lg:col-span-2 w-full">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-medium">Productos</h2>
               <Button
@@ -90,7 +90,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          <div>
+          <div className="w-full">
             <Card className="p-2">
               <CardHeader>
                 <CardTitle>Resumen de pedido</CardTitle>
