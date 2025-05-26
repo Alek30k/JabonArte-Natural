@@ -102,48 +102,54 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-4xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
-      <div className="mb-6">
-        <Button variant="ghost" asChild className="mb-4">
+    <div className="max-w-4xl px-3 sm:px-4 py-6 sm:py-8 mx-auto lg:px-8">
+      <div className="mb-4 sm:mb-6">
+        <Button variant="ghost" asChild className="mb-3 sm:mb-4 -ml-2">
           <Link href="/cart">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Volver al carrito
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold sm:text-3xl">Finalizar compra</h1>
-        <p className="text-muted-foreground">Pedido #{orderNumber}</p>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">
+          Finalizar compra
+        </h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
+          Pedido #{orderNumber}
+        </p>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="space-y-6 lg:grid lg:gap-8 lg:grid-cols-2 lg:space-y-0">
         {/* Resumen del pedido */}
-        <div>
-          <Card className="p-2">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <CheckCircle className="w-5 h-5 mr-2 text-green-500" />
+        <div className="order-2 lg:order-1">
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500" />
                 Resumen del pedido
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="pt-0">
+              <div className="space-y-3 sm:space-y-4">
                 {items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between items-start"
+                    className="flex justify-between items-start gap-3"
                   >
-                    <div className="flex-1">
-                      <h4 className="font-medium">{item.productName}</h4>
-                      <p className="text-sm text-muted-foreground">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm sm:text-base line-clamp-2">
+                        {item.productName}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         Cantidad: 1
                       </p>
                     </div>
-                    <span className="font-medium">
+                    <span className="font-medium text-sm sm:text-base flex-shrink-0">
                       {formatPrice(item.price)}
                     </span>
                   </div>
                 ))}
                 <Separator />
-                <div className="flex justify-between font-semibold text-lg">
+                <div className="flex justify-between font-semibold text-base sm:text-lg">
                   <span>Total a pagar:</span>
                   <span>{formatPrice(totalPrice)}</span>
                 </div>
@@ -153,29 +159,33 @@ export default function CheckoutPage() {
         </div>
 
         {/* Instrucciones de pago */}
-        <div className="space-y-6">
-          <Card className="p-2">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <CreditCard className="w-5 h-5 mr-2 text-blue-500" />
+        <div className="order-1 lg:order-2 space-y-4 sm:space-y-6">
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center text-lg sm:text-xl">
+                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-500" />
                 Instrucciones de pago
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-0 space-y-4">
               <Alert>
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
+                <AlertDescription className="text-sm">
                   Realiza la transferencia bancaria con los siguientes datos y
                   envíanos el comprobante.
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-3">
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">CBU</p>
-                      <p className="font-mono text-lg">{mercadoPagoData.cbu}</p>
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+                        CBU
+                      </p>
+                      <p className="font-mono text-sm sm:text-base break-all">
+                        {mercadoPagoData.cbu}
+                      </p>
                     </div>
                     <Button
                       variant="outline"
@@ -183,6 +193,7 @@ export default function CheckoutPage() {
                       onClick={() =>
                         copyToClipboard(mercadoPagoData.cbu, "CBU")
                       }
+                      className="flex-shrink-0"
                     >
                       {copied === "CBU" ? (
                         <CheckCircle className="w-4 h-4" />
@@ -193,11 +204,13 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Alias</p>
-                      <p className="font-mono text-lg">
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Alias
+                      </p>
+                      <p className="font-mono text-sm sm:text-base break-all">
                         {mercadoPagoData.alias}
                       </p>
                     </div>
@@ -207,6 +220,7 @@ export default function CheckoutPage() {
                       onClick={() =>
                         copyToClipboard(mercadoPagoData.alias, "Alias")
                       }
+                      className="flex-shrink-0"
                     >
                       {copied === "Alias" ? (
                         <CheckCircle className="w-4 h-4" />
@@ -217,35 +231,47 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm font-medium text-gray-600">Titular</p>
-                  <p className="text-lg">{mercadoPagoData.titular}</p>
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Titular
+                  </p>
+                  <p className="text-sm sm:text-base break-words">
+                    {mercadoPagoData.titular}
+                  </p>
                 </div>
 
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm font-medium text-gray-600">CUIT</p>
-                  <p className="text-lg">{mercadoPagoData.cuit}</p>
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+                    CUIT
+                  </p>
+                  <p className="text-sm sm:text-base">{mercadoPagoData.cuit}</p>
                 </div>
 
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center">
-                    <Building className="w-4 h-4 mr-2 text-gray-600" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Banco</p>
-                      <p className="text-lg">{mercadoPagoData.banco}</p>
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <Building className="w-4 h-4 mt-0.5 text-gray-600 dark:text-gray-400 flex-shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Banco
+                      </p>
+                      <p className="text-sm sm:text-base break-words">
+                        {mercadoPagoData.banco}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-medium text-blue-900 mb-2">Importante:</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
-                  <li>
+              <div className="p-3 sm:p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 text-sm sm:text-base">
+                  Importante:
+                </h4>
+                <ul className="text-xs sm:text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                  <li className="break-words">
                     • Incluye el número de pedido:{" "}
                     <strong>{orderNumber}</strong>
                   </li>
-                  <li>
+                  <li className="break-words">
                     • El monto exacto:{" "}
                     <strong>{formatPrice(totalPrice)}</strong>
                   </li>
@@ -255,7 +281,7 @@ export default function CheckoutPage() {
 
               <Alert>
                 <Clock className="h-4 w-4" />
-                <AlertDescription>
+                <AlertDescription className="text-sm">
                   Tu pedido se procesará una vez que confirmemos el pago. Tiempo
                   estimado: 24-48 horas hábiles.
                 </AlertDescription>
@@ -298,7 +324,7 @@ export default function CheckoutPage() {
               )}
             </Button>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button variant="outline" className="flex-1" asChild>
                 <a
                   href="https://wa.me/1234567890"
