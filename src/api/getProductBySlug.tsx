@@ -1,27 +1,33 @@
+// @/api/getProductBySlug.ts
 import { useEffect, useState } from "react";
+import type { ResponseType } from "@/types/response";
+import type { ProductType } from "@/types/product";
 
-export function useGetProductBySlug(slug: string | string[]) {
+export function useGetProductBySlug(slug: string | string[]): ResponseType {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products?filters[slug][$eq]=${slug}&populate=*`;
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [result, setResult] = useState<ProductType[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+          },
+        });
+        if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
         const json = await res.json();
-        setResult(json.data);
+        setResult(json.data as ProductType[]);
         setLoading(false);
       } catch (error: unknown) {
-        // Cambiado 'any' a 'unknown'
-        // Verificamos si el error es una instancia de Error antes de acceder a 'message'
         if (error instanceof Error) {
           setError(error.message);
         } else {
-          // Manejar otros tipos de errores si es necesario, o establecer un mensaje genérico
           setError("An unknown error occurred");
         }
+        setResult(null);
         setLoading(false);
       }
     })();
