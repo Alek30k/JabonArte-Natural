@@ -77,7 +77,7 @@ const CartItemsComplete = (props: CartItemProps) => {
           </p>
 
           {/* Controles de cantidad y precio total - móvil */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-300">
                 Cantidad:
@@ -102,7 +102,7 @@ const CartItemsComplete = (props: CartItemProps) => {
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="flex pt-6 items-center w-full justify-between  text-right">
               <p className="text-xs text-gray-500 dark:text-gray-400">Total:</p>
               <p className="text-lg font-bold text-gray-900 dark:text-green-400">
                 ${totalPrice.toFixed(2)}
