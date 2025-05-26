@@ -84,12 +84,12 @@ export default function ProductPage() {
 
   return (
     <div
-      className={`transition-opacity duration-500 ${
+      className={`min-h-screen overflow-hidden transition-opacity duration-500 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -108,25 +108,25 @@ export default function ProductPage() {
       </div>
 
       {/* Main Product Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-12">
           {/* Product Images */}
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             <CarouselProduct images={product.images ?? []} />
 
             {/* Product Badges */}
             {product && (
-              <div className="flex flex-wrap gap-2">
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
-                  <Leaf className="w-3 h-3 mr-1" />
+              <div className="flex flex-wrap gap-2 max-w-full">
+                <Badge className="bg-green-100 text-green-800 hover:bg-green-200 text-xs sm:text-sm">
+                  <Leaf className="w-3 h-3 mr-1 flex-shrink-0" />
                   100% Natural
                 </Badge>
-                <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">
-                  <Award className="w-3 h-3 mr-1" />
+                <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 text-xs sm:text-sm">
+                  <Award className="w-3 h-3 mr-1 flex-shrink-0" />
                   Artesanal
                 </Badge>
-                <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200">
-                  <Shield className="w-3 h-3 mr-1" />
+                <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 text-xs sm:text-sm">
+                  <Shield className="w-3 h-3 mr-1 flex-shrink-0" />
                   Libre de Químicos
                 </Badge>
               </div>
@@ -138,16 +138,20 @@ export default function ProductPage() {
             <InfoProduct product={product} />
 
             {/* Trust Indicators */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
               {guarantees.map((guarantee, index) => (
                 <div
                   key={index}
-                  className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                  className="flex items-center space-x-2 sm:space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg min-w-0"
                 >
-                  <div className="text-green-600">{guarantee.icon}</div>
-                  <div>
-                    <div className="font-medium text-sm">{guarantee.title}</div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300">
+                  <div className="text-green-600 flex-shrink-0">
+                    {guarantee.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-medium text-xs sm:text-sm truncate">
+                      {guarantee.title}
+                    </div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300 truncate">
                       {guarantee.description}
                     </div>
                   </div>
@@ -156,13 +160,13 @@ export default function ProductPage() {
             </div>
 
             {/* Social Actions */}
-            <div className="flex items-center space-x-4 pt-4 border-t">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
-                <Heart className="w-5 h-5" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 pt-4 border-t">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors w-full sm:w-auto">
+                <Heart className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm">Agregar a favoritos</span>
               </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors">
-                <Share2 className="w-5 h-5" />
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors w-full sm:w-auto">
+                <Share2 className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm">Compartir</span>
               </button>
             </div>
@@ -203,12 +207,18 @@ export default function ProductPage() {
       </div> */}
 
       {/* Product Details Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12">
         <Tabs defaultValue="description" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="description">Descripción</TabsTrigger>
-            <TabsTrigger value="ingredients">Ingredientes</TabsTrigger>
-            <TabsTrigger value="usage">Modo de Uso</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 text-xs sm:text-sm">
+            <TabsTrigger value="description" className="px-2 sm:px-4">
+              Descripción
+            </TabsTrigger>
+            <TabsTrigger value="ingredients" className="px-2 sm:px-4">
+              Ingredientes
+            </TabsTrigger>
+            <TabsTrigger value="usage" className="px-2 sm:px-4">
+              Modo de Uso
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="description" className="mt-6">
@@ -222,7 +232,7 @@ export default function ProductPage() {
                     "Nuestro jabón artesanal está elaborado con ingredientes 100% naturales, cuidadosamente seleccionados para brindar una experiencia única de limpieza y cuidado. Cada barra es hecha a mano siguiendo técnicas tradicionales que preservan las propiedades beneficiosas de cada ingrediente."}
                 </p> */}
 
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-x-auto">
                   <div>
                     <h4 className="font-semibold mb-3">Beneficios:</h4>
                     <ul className="space-y-2 text-sm">
