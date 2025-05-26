@@ -28,7 +28,7 @@ import {
   Award,
 } from "lucide-react";
 import SkeletonProduct from "./components/SkeletonProduct";
-// import CarouselProduct from "./components/CarouselProduct";
+import CarouselProduct from "./components/CarouselProduct";
 import InfoProduct from "./components/InfoProduct";
 import RelatedProducts from "./components/RelatedProducts";
 
@@ -98,7 +98,7 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            {/* <CarouselProduct images={product.images} /> */}
+            <CarouselProduct images={product.images} />
 
             {/* Product Badges */}
             <div className="flex flex-wrap gap-2">
