@@ -68,7 +68,7 @@ const BannerDiscount = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/10 dark:via-emerald-900/20 dark:to-teal-900/20" />
       <div className='absolute inset-0 bg-[url(&apos;data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fillRule="evenodd"%3E%3Cg fill="%2316a34a" fillOpacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&apos;)] opacity-30' />
 
-      <div className="relative max-w-6xl mx-auto">
+      <div className="relative max-w-6xl overflow-x-hidden  mx-auto">
         {/* Main Banner Card */}
         <Card className="border-0 shadow-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
           <CardContent className="p-8 sm:p-12">
