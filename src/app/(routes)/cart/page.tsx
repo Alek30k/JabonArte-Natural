@@ -74,7 +74,7 @@ export default function CartPage() {
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 w-full max-w-full overflow-x-hidden">
               {items.map((item) => (
                 <CartItems key={item.id} product={item} />
               ))}
