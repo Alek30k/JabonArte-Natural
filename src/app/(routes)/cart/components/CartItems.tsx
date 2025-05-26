@@ -72,9 +72,19 @@ const CartItemsComplete = (props: CartItemProps) => {
             </button>
           </div>
 
-          <p className="text-lg font-semibold text-green-600 mb-2">
-            ${product.price}
-          </p>
+          {/* Características del producto - móvil */}
+          <div className="flex flex-wrap gap-1 mb-3">
+            {product.taste && (
+              <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                {product.taste}
+              </span>
+            )}
+            {product.origin && (
+              <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">
+                {product.origin}
+              </span>
+            )}
+          </div>
 
           {/* Controles de cantidad y precio total - móvil */}
           <div className="flex flex-col items-center justify-between">
