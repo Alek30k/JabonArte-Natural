@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetProductBySlug } from "@/api/getProductBySlug";
-import type { ResponseType } from "@/types/response";
+import type { ProductType } from "@/types/product";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import {
@@ -34,11 +34,15 @@ import RelatedProducts from "./components/RelatedProducts";
 
 export default function ProductPage() {
   const params = useParams();
-  // const { productSlug } = params;
   const productSlug = params.productSlug as string;
   const [isVisible, setIsVisible] = useState(false);
 
-  const { result, loading }: ResponseType = useGetProductBySlug(productSlug);
+  // Tipado explícito para el hook
+  const {
+    result,
+    loading,
+  }: { result: ProductType[] | null; loading: boolean } =
+    useGetProductBySlug(productSlug);
 
   useEffect(() => {
     setIsVisible(true);
@@ -48,22 +52,15 @@ export default function ProductPage() {
     return <SkeletonProduct />;
   }
 
-  // Verificación más explícita de tipos
-  if (!result) {
+  // Verificación de que result existe y tiene productos
+  if (!result || !Array.isArray(result) || result.length === 0) {
     return <SkeletonProduct />;
   }
 
-  // Type guard para asegurar que result es un array
-  const resultArray = Array.isArray(result) ? result : [];
-
-  if (resultArray.length === 0) {
-    return <SkeletonProduct />;
-  }
-
-  const product = resultArray[0];
+  const product: ProductType = result[0];
 
   // Verificación adicional de que el producto tiene la estructura esperada
-  if (!product || typeof product !== "object") {
+  if (!product || !product.id || !product.productName) {
     return <SkeletonProduct />;
   }
 
@@ -115,7 +112,7 @@ export default function ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <CarouselProduct images={product.images || []} />
+            <CarouselProduct images={product.images ?? []} />
 
             {/* Product Badges */}
             {product && (
