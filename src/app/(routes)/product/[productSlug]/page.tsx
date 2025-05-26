@@ -44,16 +44,23 @@ export default function ProductPage() {
     setIsVisible(true);
   }, []);
 
-  if (loading || result === null) {
+  if (loading) {
     return <SkeletonProduct />;
   }
 
-  // Verificar que result existe y tiene elementos
-  if (!result || !Array.isArray(result) || result.length === 0) {
+  // Verificación más explícita de tipos
+  if (!result) {
     return <SkeletonProduct />;
   }
 
-  const product = result[0];
+  // Type guard para asegurar que result es un array
+  const resultArray = Array.isArray(result) ? result : [];
+
+  if (resultArray.length === 0) {
+    return <SkeletonProduct />;
+  }
+
+  const product = resultArray[0];
 
   // Verificación adicional de que el producto tiene la estructura esperada
   if (!product || typeof product !== "object") {
