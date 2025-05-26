@@ -3,13 +3,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "1337", // Puerto de tu backend
-        pathname: "/uploads/**",
+        protocol: "https",
+        hostname: "jabonarte.onrender.com",
+        pathname: "/uploads/**", // o '/*' si quieres permitir todo
       },
     ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

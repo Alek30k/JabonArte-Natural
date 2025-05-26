@@ -32,7 +32,7 @@ const CartItemsComplete = (props: CartItemProps) => {
   const totalPrice = product.price * quantity;
 
   return (
-    <li className="flex py-6 border-b ">
+    <li className="flex py-6 border-b w-full max-w-full overflow-x-hidden">
       {/* Imagen del producto */}
       <div
         className="cursor-pointer"
