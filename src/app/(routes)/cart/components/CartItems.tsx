@@ -32,10 +32,10 @@ const CartItemsComplete = (props: CartItemProps) => {
   const totalPrice = product.price * quantity;
 
   return (
-    <li className="flex py-6 border-b w-full max-w-full overflow-x-hidden">
+    <li className="flex py-6 border-b w-full overflow-hidden">
       {/* Imagen del producto */}
       <div
-        className="cursor-pointer"
+        className="w-24 h-24 sm:w-32 sm:h-32 bg-gray-100 shadow-sm rounded cursor-pointer"
         onClick={() => router.push(`/product/${product.slug}`)}
       >
         <div className="relative w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-md bg-gray-100 shadow-sm">
@@ -43,9 +43,9 @@ const CartItemsComplete = (props: CartItemProps) => {
             <Image
               src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.images[0].url}`}
               alt={product.productName || "Producto"}
-              fill
-              className="object-cover hover:scale-105 transition-transform duration-200"
-              sizes="(max-width: 640px) 96px, 128px"
+              width={128}
+              height={128}
+              className="object-cover hover:scale-105 transition-transform duration-200 rounded"
             />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200">
@@ -56,9 +56,9 @@ const CartItemsComplete = (props: CartItemProps) => {
       </div>
 
       {/* Información del producto */}
-      <div className="flex justify-between flex-1 px-6">
+      <div className="flex justify-between flex-1 px-6 overflow-hidden">
         <div className="flex-1">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white hover:text-blue-600 transition-colors">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white hover:text-blue-600 transition-colors truncate">
             {product.productName}
           </h2>
 
