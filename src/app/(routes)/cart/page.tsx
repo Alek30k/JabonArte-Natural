@@ -60,7 +60,7 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="grid gap-8 lg:grid-cols-3 w-full">
-          <div className="lg:col-span-2 w-full">
+          <div className="lg:col-span-2 w-full max-w-full overflow-x-hidden">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-medium">Productos</h2>
               <Button
