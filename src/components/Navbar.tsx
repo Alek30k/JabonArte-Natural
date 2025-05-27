@@ -101,8 +101,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar - Optimizada para móvil */}
-      {/* <div className="bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4"> */}
       <div
         className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
           isFloating
@@ -151,7 +149,10 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
             {/* Logo - Optimizado para móvil */}
-            <div className="flex items-center pl-3 flex-shrink-0 ">
+            <div
+              className="flex items-center pl-3 flex-shrink-0 dark:bg-gradient-to-t from-slate-100 to-gray-900/95 rounded-md
+            "
+            >
               <div className="cursor-pointer " onClick={() => router.push("/")}>
                 <Image
                   src="/rdc4.png"
@@ -159,7 +160,7 @@ const Navbar = () => {
                   width={1920}
                   height={960}
                   priority
-                  className="h-[55px] sm:h-12 md:h-[65px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
+                  className="h-[55px] sm:h-12 md:h-[65px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200 "
                 />
               </div>
             </div>
