@@ -138,7 +138,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             {/* Logo - Optimizado para móvil */}
-            <div className="flex items-center flex-shrink-0">
+            <div className="flex items-center pl-3 flex-shrink-0">
               <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <Image
                   src="/logo3.png"
@@ -388,17 +388,9 @@ const Navbar = () => {
 
                     {/* Mobile Navigation */}
                     <nav className="space-y-4">
-                      <Link
-                        href="/"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Inicio
-                      </Link>
-
                       <div>
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3 py-2">
-                          Regalos
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3 pl-4">
+                          Novedades
                         </h3>
                         <div className="space-y-3 ml-4">
                           {categories.map((category) => (
@@ -420,28 +412,6 @@ const Navbar = () => {
                           </Link>
                         </div>
                       </div>
-
-                      <Link
-                        href="/about"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Nosotros
-                      </Link>
-                      <Link
-                        href="/blog"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Blog
-                      </Link>
-                      <Link
-                        href="/contact"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Contacto
-                      </Link>
                     </nav>
 
                     {/* Mobile User Actions */}
