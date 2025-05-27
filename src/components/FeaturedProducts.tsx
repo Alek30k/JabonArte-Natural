@@ -39,7 +39,7 @@ const FeaturedProducts = () => {
                 // Verificar si images existe y tiene al menos un elemento
                 const imageUrl =
                   images && images.length > 0
-                    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${images[0].url}`
+                    ? `${images[0].url}`
                     : "/placeholder.svg?height=400&width=400";
 
                 return (
