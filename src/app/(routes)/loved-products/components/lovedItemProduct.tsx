@@ -41,7 +41,7 @@ const LovedItemProductCompact = (props: LovedItemProductProps) => {
         <div className="relative w-24 h-24 sm:w-32 sm:h-32 overflow-hidden rounded-md bg-gray-100 shadow-sm">
           {product.images && product.images.length > 0 ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.images[0].url}`}
+              src={`${product.images[0].url}`}
               alt={product.productName || "Producto"}
               fill
               className="object-cover hover:scale-105 transition-transform duration-200"
