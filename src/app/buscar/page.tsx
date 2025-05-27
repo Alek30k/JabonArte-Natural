@@ -75,7 +75,7 @@ export default function SearchPage() {
     const cats: string[] = [
       ...new Set(
         products
-          .map((p: ProductType) => p.category?.data.attributes.categoryName)
+          .map((p: ProductType) => p.category?.categoryName)
           .filter(Boolean) as string[]
       ),
     ];
@@ -102,13 +102,13 @@ export default function SearchPage() {
         product.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.taste?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.origin?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category?.data.attributes.categoryName
+        product.category?.categoryName
           ?.toLowerCase()
           .includes(searchQuery.toLowerCase());
 
       const matchesCategory =
         selectedCategory === "" ||
-        product.category?.data.attributes.categoryName === selectedCategory;
+        product.category?.categoryName === selectedCategory;
       const matchesOrigin =
         selectedOrigin === "" || product.origin === selectedOrigin;
 

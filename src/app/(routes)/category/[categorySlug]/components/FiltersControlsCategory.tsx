@@ -176,32 +176,6 @@ const FiltersControlsCategory = ({
 
   return (
     <Card className="sticky top-4 shadow-lg border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-      <CardHeader className="pb-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-t-lg">
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center space-x-3">
-            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-              <Grid3X3 className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-lg font-bold">Filtros</span>
-              {hasActiveFilter && (
-                <Badge className="ml-2 bg-white/20 text-white border-white/30 hover:bg-white/30">
-                  1 seleccionado
-                </Badge>
-              )}
-            </div>
-          </CardTitle>
-        </div>
-
-        {/* Contador de productos */}
-        {productCount > 0 && (
-          <div className="text-white/90 text-sm font-medium">
-            <Filter className="w-4 h-4 inline mr-1" />
-            {productCount} productos disponibles
-          </div>
-        )}
-      </CardHeader>
-
       <CardContent className="p-6">
         {/* Botón limpiar filtros */}
         {hasActiveFilter && (
@@ -226,8 +200,7 @@ const FiltersControlsCategory = ({
             <>
               <div className="mb-4">
                 <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
-                  <MapPin className="w-4 h-4 mr-2 text-blue-600" />
-                  Selecciona el origen del producto
+                  Categorías principales:
                 </h4>
               </div>
 
