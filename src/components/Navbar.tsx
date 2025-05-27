@@ -150,17 +150,26 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
             {/* Logo - Optimizado para móvil */}
             <div
-              className="flex items-center pl-3 flex-shrink-0 dark:bg-gradient-to-t from-slate-100 to-gray-900/95 rounded-md
+              className="flex items-center pl-3 flex-shrink-0 
             "
             >
               <div className="cursor-pointer " onClick={() => router.push("/")}>
+                <Image
+                  src="/rdc5.png"
+                  alt="RDC Mobile"
+                  width={1920}
+                  height={960}
+                  priority
+                  className="block md:hidden h-[45px] ml-6 sm:h-[50px] w-auto hover:scale-110 transition-transform duration-200"
+                />
+
                 <Image
                   src="/rdc4.png"
                   alt="RDC"
                   width={1920}
                   height={960}
                   priority
-                  className="h-[55px] sm:h-12 md:h-[65px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200 "
+                  className="hidden md:block h-[55px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
                 />
               </div>
             </div>
