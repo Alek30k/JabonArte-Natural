@@ -1,5 +1,5 @@
-import EnvironmentChecker from "../../components/EnvironmentChecker";
-import ProductionImageTest from "../../components/ProductionImageTest";
+import EnvironmentChecker from "../components/EnvironmentChecker";
+import ProductionImageTest from "../components/ProductionImageTest";
 
 export default function TestEnvPage() {
   return (
