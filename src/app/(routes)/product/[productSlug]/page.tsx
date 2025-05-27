@@ -116,7 +116,7 @@ export default function ProductPage() {
 
             {/* Product Badges */}
             {product && (
-              <div className="flex flex-wrap gap-2 max-w-full">
+              <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
                 <Badge className="bg-green-100 text-green-800 hover:bg-green-200 text-xs sm:text-sm">
                   <Leaf className="w-3 h-3 mr-1 flex-shrink-0" />
                   100% Natural

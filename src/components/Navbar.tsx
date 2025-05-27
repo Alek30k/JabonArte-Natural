@@ -301,7 +301,7 @@ const Navbar = () => {
               </Button>
 
               {/* Theme Toggle - Oculto en móviles muy pequeños */}
-              <div className="hidden xs:block">
+              <div className="hidden lg:block lg:pl-4">
                 <ToggleTheme />
               </div>
 

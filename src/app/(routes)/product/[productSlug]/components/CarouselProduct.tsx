@@ -203,10 +203,10 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
               />
 
               {/* Overlay con controles */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-black/0  group-hover:bg-black/5 transition-colors duration-300" />
 
               {/* Badges */}
-              <div className="absolute top-4 left-4 space-y-2">
+              <div className="absolute space-x-1 top-4 left-4 space-y-2">
                 <Badge className="bg-green-500 hover:bg-green-600 text-white">
                   100% Natural
                 </Badge>
@@ -216,7 +216,7 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
               </div>
 
               {/* Acciones superiores */}
-              <div className="absolute top-4 right-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute  top-4 right-4 space-x-1 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                 <Button
                   variant="secondary"
                   size="icon"
@@ -282,16 +282,6 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
               )}
             </div>
           </Card>
-
-          {/* Información adicional */}
-          <div className="mt-3 text-center text-sm text-gray-600 dark:text-gray-300">
-            <p>Pasa el mouse sobre la imagen para hacer zoom</p>
-            {images.length > 1 && (
-              <p className="text-xs mt-1">
-                Haz clic en las imágenes pequeñas para cambiar la vista
-              </p>
-            )}
-          </div>
         </div>
       </div>
     </div>
