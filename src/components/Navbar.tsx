@@ -141,12 +141,12 @@ const Navbar = () => {
             <div className="flex items-center pl-3 flex-shrink-0">
               <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <Image
-                  src="/logo3.png"
+                  src="/rdc.png"
                   alt="JabónArteNatural"
                   width={120}
-                  height={45}
+                  height={100}
                   priority
-                  className="h-16 sm:h-12 lg:h-16 w-auto hover:scale-105 transition-transform duration-200"
+                  className="h-16 sm:h-12 lg:h-16 w-auto hover:scale-125 transition-transform duration-200"
                 />
               </div>
             </div>
