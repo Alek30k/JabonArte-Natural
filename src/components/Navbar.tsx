@@ -12,6 +12,9 @@ import {
   Menu,
   ChevronDown,
   Gift,
+  X,
+  Phone,
+  HelpCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ToggleTheme from "./ToggleTheme";
@@ -60,6 +63,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   // Detectar scroll para cambiar el estilo de la navbar
   useEffect(() => {
@@ -73,35 +77,51 @@ const Navbar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Redirigir a la página de búsqueda con el query
       router.push(`/buscar?q=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
+      setShowMobileSearch(false);
     }
   };
 
-  const handleMobileSearch = () => {
-    // Para móvil, redirigir directamente a la página de búsqueda
-    router.push("/buscar");
+  const toggleMobileSearch = () => {
+    setShowMobileSearch(!showMobileSearch);
+    if (!showMobileSearch) {
+      // Focus en el input cuando se abre
+      setTimeout(() => {
+        const input = document.getElementById("mobile-search-input");
+        input?.focus();
+      }, 100);
+    }
   };
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm py-2 px-4">
+      {/* Top Bar - Optimizada para móvil */}
+      <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="flex items-center">
-              <Gift className="w-4 h-4 mr-1" />
-              Regalos únicos y especiales
+              <Gift className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              <span className="hidden xs:inline">Regalos únicos</span>
+              <span className="xs:hidden">Regalos</span>
             </span>
-            <span className="hidden md:block">
+            <span className="hidden sm:block">
               Envío gratis en compras +$15.000
             </span>
+            <span className="sm:hidden text-xs">Envío gratis +$15k</span>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="hidden sm:block">📞 +54 11 1234-5678</span>
-            <Link href="/help" className="hover:underline">
-              Ayuda
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <Link
+              href="tel:+541112345678"
+              className="hidden xs:flex items-center hover:underline"
+            >
+              <Phone className="w-3 h-3 mr-1" />
+              <span className="hidden sm:inline">+54 11 1234-5678</span>
+              <span className="sm:hidden">Llamar</span>
+            </Link>
+            <Link href="/help" className="flex items-center hover:underline">
+              <HelpCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-0" />
+              <span className="hidden sm:inline ml-1">Ayuda</span>
             </Link>
           </div>
         </div>
@@ -115,36 +135,24 @@ const Navbar = () => {
             : "bg-white dark:bg-gray-900 shadow-sm"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
-            <div className="flex items-center">
-              <div
-                className="flex-shrink-0 cursor-pointer"
-                onClick={() => router.push("/")}
-              >
-                {/* <Logo className="hover:scale-105 transition-transform duration-200" /> */}
-                <div className="flex items-center">
-                  <div
-                    className="flex-shrink-0 cursor-pointer"
-                    onClick={() => router.push("/")}
-                  >
-                    <Image
-                      src="/logo3.png"
-                      alt="JabónArteNatural"
-                      width={160}
-                      height={60}
-                      priority
-                      className="h-20 lg:h-24 w-auto hover:scale-105 transition-transform duration-200"
-                    />
-                  </div>
-                </div>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+            {/* Logo - Optimizado para móvil */}
+            <div className="flex items-center flex-shrink-0">
+              <div className="cursor-pointer" onClick={() => router.push("/")}>
+                <Image
+                  src="/logo3.png"
+                  alt="JabónArteNatural"
+                  width={120}
+                  height={45}
+                  priority
+                  className="h-16 sm:h-12 lg:h-16 w-auto hover:scale-105 transition-transform duration-200"
+                />
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {/* Products Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors">
                   Regalos
@@ -204,30 +212,30 @@ const Navbar = () => {
                       onClick={() => setSearchQuery("")}
                       className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
                     >
-                      ×
+                      <X className="h-3 w-3" />
                     </Button>
                   )}
                 </div>
               </form>
             </div>
 
-            {/* Right Side Icons */}
-            <div className="flex items-center space-x-4">
+            {/* Right Side Icons - Optimizados para móvil */}
+            <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
                 size="sm"
-                className="md:hidden"
-                onClick={handleMobileSearch}
+                className="md:hidden p-2"
+                onClick={toggleMobileSearch}
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
 
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="relative">
-                    <User className="h-5 w-5" />
+                  <Button variant="ghost" size="sm" className="p-2">
+                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -256,7 +264,7 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative"
+                className="hidden md:flex relative p-2"
                 onClick={() => router.push("/loved-products")}
               >
                 <Heart
@@ -267,8 +275,8 @@ const Navbar = () => {
                   }`}
                 />
                 {lovedItems.length > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500">
-                    {lovedItems.length}
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-rose-500 text-white">
+                    {lovedItems.length > 9 ? "9+" : lovedItems.length}
                   </Badge>
                 )}
               </Button>
@@ -277,45 +285,47 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative"
+                className="relative p-2"
                 onClick={() => router.push("/cart")}
               >
                 {cart.items.length === 0 ? (
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                 ) : (
                   <>
-                    <BaggageClaim className="h-5 w-5" />
-                    <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 text-xs bg-pink-600">
-                      {cart.items.length}
+                    <BaggageClaim className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-xs bg-pink-600 text-white">
+                      {cart.items.length > 9 ? "9+" : cart.items.length}
                     </Badge>
                   </>
                 )}
               </Button>
 
-              {/* Theme Toggle */}
-              <ToggleTheme />
+              {/* Theme Toggle - Oculto en móviles muy pequeños */}
+              <div className="hidden xs:block">
+                <ToggleTheme />
+              </div>
 
               {/* Mobile Menu */}
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="lg:hidden">
-                    <Menu className="h-5 w-5" />
+                  <Button variant="ghost" size="sm" className="lg:hidden p-2">
+                    <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-80">
-                  <SheetHeader>
-                    <SheetTitle className="flex items-center">
+                <SheetContent side="right" className="w-80 sm:w-96">
+                  <SheetHeader className="text-left">
+                    <SheetTitle className="flex items-center text-lg">
                       <Heart className="w-5 h-5 mr-2 text-pink-600" />
-                      Regalos del Corazón
+                      JabonArte Natural
                     </SheetTitle>
-                    <SheetDescription>
+                    <SheetDescription className="text-sm">
                       Regalos únicos para momentos especiales
                     </SheetDescription>
                   </SheetHeader>
 
                   <div className="mt-6 space-y-6">
-                    {/* Mobile Search */}
-                    <form onSubmit={handleSearch}>
+                    {/* Mobile Search in Menu */}
+                    {/* <form onSubmit={handleSearch}>
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                         <Input
@@ -323,7 +333,7 @@ const Navbar = () => {
                           placeholder="Buscar regalos..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10"
+                          className="pl-10 pr-10"
                         />
                         {searchQuery && (
                           <Button
@@ -333,57 +343,101 @@ const Navbar = () => {
                             onClick={() => setSearchQuery("")}
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
                           >
-                            ×
+                            <X className="h-3 w-3" />
                           </Button>
                         )}
                       </div>
-                    </form>
+                    </form> */}
+
+                    {/* Theme Toggle in Mobile Menu */}
+                    <div className="border-t pt-4 ">
+                      <div className="flex items-center justify-between mx-4">
+                        <span className="text-gray-900 dark:text-gray-100">
+                          Cambiar Apariencia
+                        </span>
+                        <ToggleTheme />
+                      </div>
+                    </div>
+                    {/* Wishlist y Carrito en móvil */}
+                    <div className="border-t pt-4">
+                      <div className="space-y-3">
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start p-3 h-auto"
+                          onClick={() => {
+                            router.push("/loved-products");
+                            setIsMobileMenuOpen(false);
+                          }}
+                        >
+                          <Heart
+                            className={`h-5 w-5 mr-3 ${
+                              lovedItems.length > 0
+                                ? "fill-rose-500 text-rose-500"
+                                : "text-gray-700 dark:text-gray-200"
+                            }`}
+                          />
+                          <span className="flex-1 text-left">Favoritos</span>
+                          {lovedItems.length > 0 && (
+                            <Badge className="bg-rose-500 text-white">
+                              {lovedItems.length > 9 ? "9+" : lovedItems.length}
+                            </Badge>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
 
                     {/* Mobile Navigation */}
                     <nav className="space-y-4">
                       <Link
                         href="/"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Inicio
                       </Link>
 
                       <div>
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3 py-2">
                           Regalos
                         </h3>
-                        <div className="space-y-2 ml-4">
+                        <div className="space-y-3 ml-4">
                           {categories.map((category) => (
                             <Link
                               key={category.name}
                               href={category.href}
-                              className="block text-gray-600 dark:text-gray-300 hover:text-pink-600"
+                              className="block text-gray-600 dark:text-gray-300 hover:text-pink-600 py-1"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {category.name}
                             </Link>
                           ))}
+                          <Link
+                            href="/productos"
+                            className="block text-pink-600 font-medium py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Ver Todos los Regalos
+                          </Link>
                         </div>
                       </div>
 
                       <Link
                         href="/about"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Nosotros
                       </Link>
                       <Link
                         href="/blog"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Blog
                       </Link>
                       <Link
                         href="/contact"
-                        className="block text-lg font-medium text-gray-900 dark:text-gray-100"
+                        className="block text-lg font-medium text-gray-900 dark:text-gray-100 py-2"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Contacto
@@ -391,28 +445,145 @@ const Navbar = () => {
                     </nav>
 
                     {/* Mobile User Actions */}
-                    <div className="border-t pt-4 space-y-2">
+                    <div className="border-t pt-4 space-y-3">
+                      <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                        Mi Cuenta
+                      </h4>
                       <Link
                         href="/login"
-                        className="block text-gray-600 dark:text-gray-300"
+                        className="block text-gray-600 dark:text-gray-300 py-1"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Iniciar Sesión
                       </Link>
                       <Link
                         href="/register"
-                        className="block text-gray-600 dark:text-gray-300"
+                        className="block text-gray-600 dark:text-gray-300 py-1"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Registrarse
                       </Link>
+                      {userMenuItems.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="block text-gray-600 dark:text-gray-300 py-1"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Theme Toggle in Mobile Menu */}
+                    <div className="border-t pt-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-900 dark:text-gray-100">
+                          Tema
+                        </span>
+                        <ToggleTheme />
+                      </div>
                     </div>
                   </div>
+                  {/* Wishlist y Carrito en móvil */}
+                  {/* <div className="border-t pt-4">
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">
+                      Mis Compras
+                    </h4>
+                    <div className="space-y-3">
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start p-3 h-auto"
+                        onClick={() => {
+                          router.push("/loved-products");
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        <Heart
+                          className={`h-5 w-5 mr-3 ${
+                            lovedItems.length > 0
+                              ? "fill-rose-500 text-rose-500"
+                              : "text-gray-700 dark:text-gray-200"
+                          }`}
+                        />
+                        <span className="flex-1 text-left">
+                          Lista de Deseos
+                        </span>
+                        {lovedItems.length > 0 && (
+                          <Badge className="bg-rose-500 text-white">
+                            {lovedItems.length > 9 ? "9+" : lovedItems.length}
+                          </Badge>
+                        )}
+                      </Button>
+
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start p-3 h-auto"
+                        onClick={() => {
+                          router.push("/cart");
+                          setIsMobileMenuOpen(false);
+                        }}
+                      >
+                        {cart.items.length === 0 ? (
+                          <ShoppingCart className="h-5 w-5 mr-3" />
+                        ) : (
+                          <BaggageClaim className="h-5 w-5 mr-3" />
+                        )}
+                        <span className="flex-1 text-left">Mi Carrito</span>
+                        {cart.items.length > 0 && (
+                          <Badge className="bg-pink-600 text-white">
+                            {cart.items.length > 9 ? "9+" : cart.items.length}
+                          </Badge>
+                        )}
+                      </Button>
+                    </div>
+                  </div> */}
                 </SheetContent>
               </Sheet>
             </div>
           </div>
         </div>
+
+        {/* Mobile Search Bar - Expandible */}
+        {showMobileSearch && (
+          <div className="md:hidden border-t bg-white dark:bg-gray-900 px-3 py-3">
+            <form onSubmit={handleSearch}>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="mobile-search-input"
+                  type="text"
+                  placeholder="Buscar el regalo perfecto..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 pr-20 py-2 w-full border-gray-300 focus:border-pink-500 focus:ring-pink-500"
+                />
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex space-x-1">
+                  {searchQuery && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSearchQuery("")}
+                      className="h-6 w-6 p-0 hover:bg-gray-100"
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  )}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={toggleMobileSearch}
+                    className="h-6 w-6 p-0 hover:bg-gray-100"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
       </nav>
     </>
   );
