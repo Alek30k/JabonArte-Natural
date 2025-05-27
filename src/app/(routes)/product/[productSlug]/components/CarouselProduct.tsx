@@ -54,7 +54,7 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
   }
 
   const currentImage = images[selectedImageIndex];
-  const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+  // const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
   // Número máximo de thumbnails visibles
   const maxVisibleThumbnails = 4;
@@ -120,7 +120,7 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
                 >
                   <div className="relative aspect-square">
                     <Image
-                      src={`${baseUrl}${image.url}`}
+                      src={`${image.url}`}
                       alt={`Thumbnail ${actualIndex + 1}`}
                       fill
                       className="object-cover transition-transform duration-200 hover:scale-110"
@@ -185,7 +185,7 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
               onMouseLeave={handleMouseLeave}
             >
               <Image
-                src={`${baseUrl}${currentImage.url}`}
+                src={`${currentImage.url}`}
                 alt={`Producto imagen ${selectedImageIndex + 1}`}
                 fill
                 className={`object-cover transition-transform duration-300 ${
@@ -244,7 +244,7 @@ const CarouselProduct = ({ images }: CarouselProductProps) => {
                   <DialogContent className="max-w-4xl w-full p-0">
                     <div className="relative aspect-square">
                       <Image
-                        src={`${baseUrl}${currentImage.url}`}
+                        src={`${currentImage.url}`}
                         alt={`Producto imagen ${selectedImageIndex + 1}`}
                         fill
                         className="object-contain"
