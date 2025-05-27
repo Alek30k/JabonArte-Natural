@@ -202,12 +202,12 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
       )}
 
       {/* Imagen Principal */}
-      <div className="flex-1">
-        <div className="relative group">
-          <Card className="overflow-hidden bg-gray-50 dark:bg-gray-800">
+      <div className="flex-1 ">
+        <div className="relative group ">
+          <Card className="overflow-hidden bg-gray-50 dark:bg-gray-800 ">
             <div
               ref={imageRef}
-              className="relative aspect-square cursor-zoom-in"
+              className="relative aspect-square cursor-zoom-in "
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -240,10 +240,10 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               />
 
               {/* Overlay con controles */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 " />
 
               {/* Badges */}
-              <div className="absolute top-4 left-4 space-y-2">
+              <div className="absolute top-4 left-4 space-x-2 space-y-2">
                 <Badge className="bg-green-500 hover:bg-green-600 text-white">
                   100% Natural
                 </Badge>
@@ -278,7 +278,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                       <Expand className="w-4 h-4" />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl w-full p-0">
+                  <DialogContent className="max-w-4xl w-full p-0 ">
                     <div className="relative aspect-square">
                       <Image
                         src={
@@ -309,7 +309,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
 
         {/* Thumbnails horizontales para móvil */}
         {images.length > 1 && (
-          <div className="md:hidden mt-4 flex space-x-2 overflow-x-auto pb-2">
+          <div className="md:hidden mt-4 p-1 flex space-x-2 overflow-x-auto pb-2">
             {images.map((image, index) => (
               <Card
                 key={image.id}
