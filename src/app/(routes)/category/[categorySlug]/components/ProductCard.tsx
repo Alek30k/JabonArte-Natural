@@ -17,15 +17,10 @@ import {
   ShoppingCart,
   Heart,
   Eye,
-  Star,
-  Zap,
-  Leaf,
   Award,
   ChevronLeft,
   ChevronRight,
-  Plus,
   Check,
-  Sparkles,
   ShoppingCartIcon,
 } from "lucide-react";
 
@@ -48,9 +43,9 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
   const hasMultipleImages = product.images && product.images.length > 1;
 
   // Datos simulados para mejorar la card
-  const rating = 4.5 + Math.random() * 0.5; // Rating entre 4.5 y 5
-  const reviewCount = Math.floor(Math.random() * 50) + 10; // Entre 10 y 60 reviews
-  const isNew = Math.random() > 0.7; // 30% chance de ser nuevo
+  // const rating = 4.5 + Math.random() * 0.5; // Rating entre 4.5 y 5
+  // const reviewCount = Math.floor(Math.random() * 50) + 10; // Entre 10 y 60 reviews
+  // const isNew = Math.random() > 0.7; // 30% chance de ser nuevo
   const isOnSale = Math.random() > 0.8; // 20% chance de estar en oferta
   const originalPrice = isOnSale ? product.price * 1.3 : null;
 
