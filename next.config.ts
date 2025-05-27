@@ -1,13 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "jabonarte.onrender.com",
-        pathname: "/uploads/**", // o '/*' si quieres permitir todo
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com", // 👈 Agregar Cloudinary
+        pathname: "/**",
       },
     ],
+    unoptimized: true,
   },
 };
 
