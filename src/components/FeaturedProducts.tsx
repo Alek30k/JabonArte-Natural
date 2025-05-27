@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { UseCart } from "@/hooks/UseCart";
 import Image from "next/image";
 
-// 👈 Definir el tipo para las imágenes
 interface ImageType {
   id: number;
   url: string;
@@ -32,7 +31,7 @@ const FeaturedProducts = () => {
   const router = useRouter();
   const { addItem } = UseCart();
 
-  // 👈 Usar ImageType[] en lugar de any[]
+  // 👈 Función agregada para obtener URL de imagen de Cloudinary
   const getCloudinaryImageUrl = (images: ImageType[] | undefined) => {
     if (!images || images.length === 0) return null;
 
@@ -58,7 +57,7 @@ const FeaturedProducts = () => {
     return null;
   };
 
-  // Filtrar solo productos con imágenes de Cloudinary
+  // 👈 Filtrar solo productos con imágenes de Cloudinary
   const productsWithCloudinaryImages =
     result?.filter((product: ProductType) => {
       const cloudinaryUrl = getCloudinaryImageUrl(product.images);
@@ -69,38 +68,11 @@ const FeaturedProducts = () => {
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
       <h3 className="px-6 text-3xl sm:pb-8">Productos destacados</h3>
 
-      {/* Mensaje informativo en desarrollo */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="mx-6 mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-          <p className="text-sm text-green-800">
-            <strong>
-              Mostrando solo productos con imágenes de Cloudinary:
-            </strong>{" "}
-            {productsWithCloudinaryImages.length} de {result?.length || 0}{" "}
-            productos
-          </p>
-        </div>
-      )}
-
       <Carousel>
         <CarouselContent className="md:ml-4">
           {loading && <SkeletonSchema grid={3} />}
 
-          {/* Mostrar mensaje si no hay productos con Cloudinary */}
-          {!loading && productsWithCloudinaryImages.length === 0 && (
-            <div className="w-full flex items-center justify-center p-8">
-              <div className="text-center">
-                <p className="text-gray-600 mb-2">
-                  No hay productos con imágenes de Cloudinary disponibles
-                </p>
-                <p className="text-sm text-gray-500">
-                  Sube imágenes en Strapi Admin para que aparezcan aquí
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Mapear solo productos filtrados */}
+          {/* 👈 Mapear solo productos filtrados */}
           {productsWithCloudinaryImages.map((product: ProductType) => {
             const { id, slug, images, productName } = product;
 
@@ -126,13 +98,6 @@ const FeaturedProducts = () => {
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                       />
-
-                      {/* Indicador de Cloudinary */}
-                      <div className="absolute top-2 left-2">
-                        <div className="text-xs px-2 py-1 rounded text-white bg-green-600">
-                          ☁️ Cloudinary
-                        </div>
-                      </div>
 
                       <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
                         <div className="flex justify-center gap-x-6">
@@ -165,13 +130,6 @@ const FeaturedProducts = () => {
                         >
                           {productName}
                         </h3>
-
-                        {/* Badge de estado */}
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded">
-                            ✅ Imagen optimizada
-                          </span>
-                        </div>
                       </div>
                     </div>
                   </Card>
