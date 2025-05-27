@@ -295,7 +295,7 @@ export default function CategoryPage() {
             {hasActiveFilters && (
               <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                  {/* <div className="flex items-center space-x-2">
                     <Filter className="w-4 h-4 text-blue-600" />
                     <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
                       Filtrando por origen:
@@ -303,7 +303,7 @@ export default function CategoryPage() {
                     <Badge className="bg-blue-600 text-white">
                       {filterOrigin}
                     </Badge>
-                  </div>
+                  </div> */}
                   <Button
                     variant="ghost"
                     size="sm"

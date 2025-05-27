@@ -26,6 +26,7 @@ import {
   Plus,
   Check,
   Sparkles,
+  ShoppingCartIcon,
 } from "lucide-react";
 
 type ProductCardProps = {
@@ -138,22 +139,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
           {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-          {/* Badges superiores */}
-          <div className="absolute top-3 left-3 space-y-2">
-            {isNew && (
-              <Badge className="bg-green-500 hover:bg-green-600 text-white shadow-lg">
-                <Sparkles className="w-3 h-3 mr-1" />
-                Nuevo
-              </Badge>
-            )}
-            {isOnSale && (
-              <Badge className="bg-red-500 hover:bg-red-600 text-white shadow-lg">
-                <Zap className="w-3 h-3 mr-1" />
-                Oferta
-              </Badge>
-            )}
-          </div>
-
           {/* Badge de origen */}
           <div className="absolute top-3 right-3">
             <Badge className="bg-amber-500/90 hover:bg-amber-600 text-white shadow-lg backdrop-blur-sm">
@@ -240,7 +225,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
                 justAdded
                   ? "bg-green-500 hover:bg-green-600"
-                  : "bg-blue-500 hover:bg-blue-600 hover:scale-110 cursor-pointer"
+                  : "bg-orange-400 hover:bg-orange-500 hover:scale-110 cursor-pointer"
               }`}
               onClick={handleAddToCart}
               disabled={isAddingToCart}
@@ -250,7 +235,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               ) : justAdded ? (
                 <Check className="w-4 h-4" />
               ) : (
-                <Plus className="w-4 h-4" />
+                <ShoppingCartIcon className="w-4 h-4" />
               )}
             </Button>
           </div>
@@ -259,7 +244,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
         {/* Información del producto */}
         <div className="p-4 space-y-3">
           {/* Rating y reviews */}
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <div className="flex items-center space-x-1">
               <div className="flex items-center space-x-1">
                 {[...Array(5)].map((_, i) => (
@@ -281,7 +266,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               <Leaf className="w-3 h-3 mr-1" />
               Natural
             </Badge>
-          </div>
+          </div> */}
 
           {/* Nombre del producto */}
           <Link href={`/product/${product.slug}`}>
