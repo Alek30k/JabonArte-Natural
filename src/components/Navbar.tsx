@@ -97,7 +97,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top Bar - Optimizada para móvil */}
-      <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4">
+      <div className="bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="flex items-center">

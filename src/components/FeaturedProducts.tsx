@@ -49,7 +49,7 @@ const FeaturedProducts = () => {
                   >
                     <div className="h-full">
                       {/* Card con altura fija y mejor estructura */}
-                      <Card className="h-80 flex flex-col shadow-2xl bg-white/60 border border-gray-200 cursor-pointer overflow-hidden">
+                      <Card className="h-80 flex flex-col shadow-2xl bg-white/60 border border-gray-300 cursor-pointer overflow-hidden ">
                         {/* Contenedor de imagen optimizado */}
                         <div className="relative w-full h-64 bg-gray-100 overflow-hidden">
                           <Image
@@ -65,14 +65,14 @@ const FeaturedProducts = () => {
 
                           {/* Overlay con botones */}
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200">
-                            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <div className="absolute bottom-1 lg:bottom-4 left-1/2 transform -translate-x-1/2 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                               <div className="flex justify-center gap-x-3">
                                 <IconButton
                                   onClick={() => router.push(`product/${slug}`)}
                                   icon={
                                     <Expand
                                       size={20}
-                                      className="text-gray-600"
+                                      className="text-orange-600  "
                                     />
                                   }
                                 />
@@ -81,7 +81,7 @@ const FeaturedProducts = () => {
                                   icon={
                                     <ShoppingCart
                                       size={20}
-                                      className="text-gray-600"
+                                      className="text-orange-600"
                                     />
                                   }
                                 />
