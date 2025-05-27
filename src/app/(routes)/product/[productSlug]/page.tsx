@@ -1,455 +1,267 @@
 "use client";
 
-import { useGetProductBySlug } from "@/api/getProductBySlug";
-import type { ProductType } from "@/types/product";
+// import { useGetProductBySlugFixed } from "@/api/useGetProductBySlugFixed";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  // BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Suspense } from "react";
+// import CarouselProductDebug from "@/components/CarouselProductDebug";
+// import ApiStatusChecker from "@/components/ApiStatusChecker";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  Shield,
-  Truck,
-  RotateCcw,
-  Heart,
-  Share2,
-  ChevronRight,
-  Leaf,
-  Award,
-} from "lucide-react";
-import SkeletonProduct from "./components/SkeletonProduct";
-import CarouselProduct from "./components/CarouselProduct";
-import InfoProduct from "./components/InfoProduct";
-import RelatedProducts from "./components/RelatedProducts";
+import { ShoppingCart, Heart, Share2 } from "lucide-react";
+import { UseCart } from "@/hooks/UseCart";
+import ApiStatusChecker from "./components/ApiStatusChecker";
+import CarouselProductDebug from "./components/CarouselProductDebug";
+import { useGetProductBySlugFixed } from "@/api/useGetProductBySlugFixed";
 
-export default function ProductPage() {
+function ProductPageContent() {
   const params = useParams();
   const productSlug = params.productSlug as string;
-  const [isVisible, setIsVisible] = useState(false);
+  const { addItem } = UseCart();
 
-  // Tipado explícito para el hook
-  const {
-    result,
+  const { loading, result, error } = useGetProductBySlugFixed(productSlug);
+
+  console.log("🔍 Product Page Debug:", {
+    productSlug,
     loading,
-  }: { result: ProductType[] | null; loading: boolean } =
-    useGetProductBySlug(productSlug);
+    result,
+    error,
+    params,
+  });
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
+  // Loading state
   if (loading) {
-    return <SkeletonProduct />;
+    return (
+      <div className="min-h-screen p-8">
+        <ApiStatusChecker />
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-blue-800">
+              🔄 Cargando producto: <strong>{productSlug}</strong>
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="aspect-square bg-gray-200 animate-pulse rounded-lg"></div>
+            <div className="space-y-4">
+              <div className="h-8 bg-gray-200 animate-pulse rounded"></div>
+              <div className="h-4 bg-gray-200 animate-pulse rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 animate-pulse rounded w-1/2"></div>
+              <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  // Verificación de que result existe y tiene productos
-  if (!result || !Array.isArray(result) || result.length === 0) {
-    return <SkeletonProduct />;
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen p-8">
+        <ApiStatusChecker />
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-8">
+            <h1 className="text-2xl font-bold text-red-800 mb-4">
+              ❌ Error al cargar el producto
+            </h1>
+            <p className="text-red-600 mb-4">{error}</p>
+            <div className="space-y-2 text-sm text-red-500 mb-6">
+              <p>
+                <strong>Slug buscado:</strong> {productSlug}
+              </p>
+              <p>
+                <strong>Backend URL:</strong>{" "}
+                {process.env.NEXT_PUBLIC_BACKEND_URL}
+              </p>
+              <p>
+                <strong>Token disponible:</strong>{" "}
+                {process.env.NEXT_PUBLIC_STRAPI_API_TOKEN ? "Sí" : "No"}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <Button onClick={() => window.location.reload()} className="mr-2">
+                🔄 Reintentar
+              </Button>
+              <Button onClick={() => window.history.back()} variant="outline">
+                ← Volver atrás
+              </Button>
+            </div>
+
+            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded text-left">
+              <h3 className="font-bold text-yellow-800 mb-2">
+                🔧 Posibles soluciones:
+              </h3>
+              <ul className="text-sm text-yellow-700 space-y-1">
+                <li>• Verificar que el producto existe en Strapi</li>
+                <li>• Comprobar que la API de Strapi esté funcionando</li>
+                <li>• Revisar el token de API en las variables de entorno</li>
+                <li>• Verificar que el slug sea correcto</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  const product: ProductType = result[0];
-
-  // Verificación adicional de que el producto tiene la estructura esperada
-  if (!product || !product.id || !product.productName) {
-    return <SkeletonProduct />;
+  // No product found
+  if (!result || result.length === 0) {
+    return (
+      <div className="min-h-screen p-8">
+        <ApiStatusChecker />
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8">
+            <h1 className="text-2xl font-bold text-yellow-800 mb-4">
+              🔍 Producto no encontrado
+            </h1>
+            <p className="text-yellow-600 mb-4">
+              No se encontró un producto con el identificador:{" "}
+              <strong>{productSlug}</strong>
+            </p>
+            <Button onClick={() => window.history.back()} className="mt-4">
+              ← Volver atrás
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  const guarantees = [
-    {
-      icon: <Truck className="w-5 h-5" />,
-      title: "Envío Gratis",
-      description: "En compras +$15.000",
-    },
-    {
-      icon: <RotateCcw className="w-5 h-5" />,
-      title: "Devolución Fácil",
-      description: "30 días para devolver",
-    },
-    {
-      icon: <Shield className="w-5 h-5" />,
-      title: "Compra Segura",
-      description: "Pago 100% protegido",
-    },
-  ];
+  const product = result[0];
 
   return (
-    <div
-      className={`min-h-screen overflow-hidden transition-opacity duration-500 ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Inicio</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/productos">Productos</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              {/* <BreadcrumbPage>{product.productName}</BreadcrumbPage> */}
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
+    <div className="min-h-screen p-4 md:p-8">
+      <ApiStatusChecker />
+      <div className="max-w-6xl mx-auto">
+        {/* Success message */}
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <h3 className="font-bold text-green-800 mb-2">
+            ✅ Producto cargado exitosamente
+          </h3>
+          <div className="text-sm text-green-700 space-y-1">
+            <p>
+              <strong>ID:</strong> {product.id}
+            </p>
+            <p>
+              <strong>Slug:</strong> {product.slug}
+            </p>
+            <p>
+              <strong>Nombre:</strong> {product.productName}
+            </p>
+            <p>
+              <strong>Imágenes:</strong> {product.images?.length || 0}
+            </p>
+          </div>
+        </div>
 
-      {/* Main Product Section */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-12">
-          {/* Product Images */}
-          <div className="space-y-4 min-w-0">
-            <CarouselProduct images={product.images ?? []} />
-
-            {/* Product Badges */}
-            {product && (
-              <div className="flex flex-wrap items-center justify-center gap-2 max-w-full">
-                <Badge className="bg-green-100 text-green-800 hover:bg-green-200 text-xs sm:text-sm">
-                  <Leaf className="w-3 h-3 mr-1 flex-shrink-0" />
-                  100% Natural
-                </Badge>
-                <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 text-xs sm:text-sm">
-                  <Award className="w-3 h-3 mr-1 flex-shrink-0" />
-                  Artesanal
-                </Badge>
-                <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 text-xs sm:text-sm">
-                  <Shield className="w-3 h-3 mr-1 flex-shrink-0" />
-                  Libre de Químicos
-                </Badge>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Galería de imágenes con debug */}
+          <div>
+            {product.images && product.images.length > 0 ? (
+              <CarouselProductDebug images={product.images} />
+            ) : (
+              <Card className="aspect-square bg-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                  <span className="text-gray-400 block mb-2">
+                    Sin imagen disponible
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    Imágenes recibidas: {JSON.stringify(product.images)}
+                  </span>
+                </div>
+              </Card>
             )}
           </div>
 
-          {/* Product Info */}
+          {/* Información del producto */}
           <div className="space-y-6">
-            <InfoProduct product={product} />
-
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
-              {guarantees.map((guarantee, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-2 sm:space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg min-w-0"
-                >
-                  <div className="text-green-600 flex-shrink-0">
-                    {guarantee.icon}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="font-medium text-xs sm:text-sm truncate">
-                      {guarantee.title}
-                    </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300 truncate">
-                      {guarantee.description}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {product.productName}
+              </h1>
+              {product.description && (
+                <p className="text-gray-600 leading-relaxed">
+                  {product.description}
+                </p>
+              )}
             </div>
 
-            {/* Social Actions */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 pt-4 border-t">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors w-full sm:w-auto">
-                <Heart className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">Agregar a favoritos</span>
-              </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors w-full sm:w-auto">
-                <Share2 className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">Compartir</span>
-              </button>
+            <div className="flex flex-wrap gap-2">
+              <Badge className="bg-green-500 text-white">100% Natural</Badge>
+              <Badge className="bg-blue-500 text-white">Artesanal</Badge>
+              {product.isFeatured && (
+                <Badge className="bg-purple-500 text-white">Destacado</Badge>
+              )}
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Product Features */}
-      {/* <div className="bg-gray-50 dark:bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              ¿Por qué elegir nuestros jabones?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Cada jabón está cuidadosamente elaborado con los mejores
-              ingredientes naturales
-            </p>
-          </div>
+            {product.price && (
+              <div className="text-2xl font-bold text-green-600">
+                ${product.price}
+              </div>
+            )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {productFeatures.map((feature, index) => (
-              <Card
-                key={index}
-                className="text-center hover:shadow-lg transition-shadow"
+            <div className="space-y-4">
+              <Button
+                onClick={() => addItem(product)}
+                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                size="lg"
               >
-                <CardContent className="p-6">
-                  <div className="flex justify-center mb-4">{feature.icon}</div>
-                  <h4 className="font-semibold mb-2">{feature.title}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {feature.description}
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Agregar al carrito
+              </Button>
+
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Favoritos
+                </Button>
+                <Button variant="outline" size="sm" className="flex-1">
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Compartir
+                </Button>
+              </div>
+            </div>
+
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-semibold mb-2">Información del producto</h3>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <p>
+                    <strong>ID:</strong> {product.id}
                   </p>
-                </CardContent>
-              </Card>
-            ))}
+                  <p>
+                    <strong>Slug:</strong> {product.slug}
+                  </p>
+                  {product.createdAt && (
+                    <p>
+                      <strong>Creado:</strong>{" "}
+                      {new Date(product.createdAt).toLocaleDateString()}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </div> */}
-
-      {/* Product Details Tabs */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12">
-        <Tabs defaultValue="description" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 text-xs sm:text-sm">
-            <TabsTrigger value="description" className="px-2 sm:px-4">
-              Descripción
-            </TabsTrigger>
-            <TabsTrigger value="ingredients" className="px-2 sm:px-4">
-              Ingredientes
-            </TabsTrigger>
-            <TabsTrigger value="usage" className="px-2 sm:px-4">
-              Modo de Uso
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="description" className="mt-6">
-            <Card className="p-6">
-              <CardHeader>
-                <CardTitle>Descripción del Producto</CardTitle>
-              </CardHeader>
-              <CardContent className="prose dark:prose-invert max-w-none">
-                {/* <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {product.description ||
-                    "Nuestro jabón artesanal está elaborado con ingredientes 100% naturales, cuidadosamente seleccionados para brindar una experiencia única de limpieza y cuidado. Cada barra es hecha a mano siguiendo técnicas tradicionales que preservan las propiedades beneficiosas de cada ingrediente."}
-                </p> */}
-
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-x-auto">
-                  <div>
-                    <h4 className="font-semibold mb-3">Beneficios:</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Hidrata profundamente la piel
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Aroma natural y relajante
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Libre de químicos agresivos
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Apto para pieles sensibles
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-3">Características:</h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-blue-600" />
-                        Peso: 100g aproximadamente
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-blue-600" />
-                        Duración: 4-6 semanas de uso
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-blue-600" />
-                        pH balanceado
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-blue-600" />
-                        Biodegradable
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="ingredients" className="mt-6">
-            <Card className="p-6">
-              <CardHeader>
-                <CardTitle>Ingredientes Naturales</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Alert className="mb-6">
-                  <Leaf className="h-4 w-4" />
-                  <AlertDescription>
-                    Todos nuestros ingredientes son de origen natural y
-                    orgánico, libres de químicos sintéticos.
-                  </AlertDescription>
-                </Alert>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold mb-3">
-                      Ingredientes Principales:
-                    </h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">
-                            Aceite de Oliva Extra Virgen
-                          </span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Hidrata y nutre la piel profundamente
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">Aceite de Coco</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Propiedades antibacterianas naturales
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">Manteca de Karité</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Suaviza y protege la piel
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-3">Aceites Esenciales:</h4>
-                    <ul className="space-y-3">
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">Lavanda</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Relajante y aromático
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">Eucalipto</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Refrescante y purificante
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex items-start space-x-3">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
-                        <div>
-                          <span className="font-medium">Menta</span>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            Energizante y revitalizante
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="usage" className="mt-6">
-            <Card className="p-6">
-              <CardHeader>
-                <CardTitle>Modo de Uso</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-blue-600 font-bold">1</span>
-                      </div>
-                      <h4 className="font-semibold mb-2">Humedecer</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Moja el jabón y tus manos con agua tibia
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-blue-600 font-bold">2</span>
-                      </div>
-                      <h4 className="font-semibold mb-2">Frotar</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Frota suavemente hasta crear espuma
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span className="text-blue-600 font-bold">3</span>
-                      </div>
-                      <h4 className="font-semibold mb-2">Enjuagar</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
-                        Enjuaga con agua y seca suavemente
-                      </p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div>
-                    <h4 className="font-semibold mb-3">
-                      Consejos de Conservación:
-                    </h4>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Mantén el jabón en un lugar seco entre usos
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Usa una jabonera con drenaje
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Evita la exposición directa al sol
-                      </li>
-                      <li className="flex items-center">
-                        <ChevronRight className="w-4 h-4 mr-2 text-green-600" />
-                        Almacena en lugar fresco y ventilado
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="reviews" className="mt-6"></TabsContent>
-        </Tabs>
-      </div>
-
-      {/* FAQ Section */}
-      {/* <div className="bg-gray-50 dark:bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ProductFAQ />
-        </div>
-      </div> */}
-
-      {/* Related Products */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <RelatedProducts />
       </div>
     </div>
+  );
+}
+
+export default function ProductPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p>Cargando producto...</p>
+          </div>
+        </div>
+      }
+    >
+      <ProductPageContent />
+    </Suspense>
   );
 }
