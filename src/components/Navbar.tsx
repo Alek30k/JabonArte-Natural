@@ -142,7 +142,7 @@ const Navbar = () => {
               <div className="cursor-pointer " onClick={() => router.push("/")}>
                 <Image
                   src="/rdc4.png"
-                  alt="JabónArteNatural"
+                  alt="RDC"
                   width={1920}
                   height={960}
                   priority
