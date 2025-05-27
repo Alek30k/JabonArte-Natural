@@ -234,7 +234,11 @@ const Navbar = () => {
               {/* User Menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="p-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="p-2 cursor-pointer"
+                  >
                     <User className="h-4 w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -264,11 +268,11 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="hidden md:flex relative p-2"
+                className="hidden md:flex relative p-2 cursor-pointer"
                 onClick={() => router.push("/loved-products")}
               >
                 <Heart
-                  className={`h-5 w-5 ${
+                  className={`h-5 w-5 cursor-pointer ${
                     lovedItems.length > 0
                       ? "fill-rose-500 text-rose-500"
                       : "text-gray-700 dark:text-gray-200"
@@ -285,7 +289,7 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="relative p-2"
+                className="relative p-2 cursor-pointer"
                 onClick={() => router.push("/cart")}
               >
                 {cart.items.length === 0 ? (
@@ -301,7 +305,7 @@ const Navbar = () => {
               </Button>
 
               {/* Theme Toggle - Oculto en móviles muy pequeños */}
-              <div className="hidden lg:block lg:pl-4">
+              <div className="hidden lg:block lg:pl-4 ">
                 <ToggleTheme />
               </div>
 

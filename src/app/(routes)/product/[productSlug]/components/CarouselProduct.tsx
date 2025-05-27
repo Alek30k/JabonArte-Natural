@@ -30,11 +30,12 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Función para construir URLs de imágenes correctamente
+  // Agregar más logging para debug en producción
   const getImageUrl = (imageUrl: string) => {
     if (!imageUrl) return "/placeholder.svg?height=400&width=400";
 
     console.log("🖼️ Procesando URL de imagen:", imageUrl);
+    console.log("🌍 Backend URL:", process.env.NEXT_PUBLIC_BACKEND_URL);
 
     // Si ya es una URL completa (Cloudinary o externa)
     if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
