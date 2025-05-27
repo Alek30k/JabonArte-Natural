@@ -1,6 +1,6 @@
 // import ApiDataInspector from "../../components/ApiDataInspector"
 
-import ApiDataInspector from "../components/ApiDataInspector";
+import ApiDataInspector from "../[productSlug]/components/ApiDataInspector";
 
 export default function DebugApiPage() {
   return (
