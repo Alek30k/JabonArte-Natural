@@ -127,7 +127,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
         <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
           <Link href={`/product/${product.slug}`}>
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${product.images[currentImageIndex]?.url}`}
+              src={`${product.images[currentImageIndex]?.url}`}
               alt={product.productName}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"

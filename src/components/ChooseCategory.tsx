@@ -79,7 +79,7 @@ const ChooseCategory = () => {
                     {/* Image Container */}
                     <div className="relative h-64 sm:h-72 overflow-hidden">
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${category.mainImage.url}`}
+                        src={`${category.mainImage.url}`}
                         alt={category.categoryName}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
