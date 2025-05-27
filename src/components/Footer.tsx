@@ -113,7 +113,7 @@ const Footer = () => {
             <div className="flex items-center mb-4">
               <Leaf className="w-8 h-8 text-green-600 mr-2" />
               <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                JabónArteNatural
+                Regalos del corazón
               </span>
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed">
@@ -345,7 +345,7 @@ const Footer = () => {
                 href="/"
                 className="font-semibold hover:text-green-600 transition-colors"
               >
-                JabónArteNatural
+                Regalos del Corazón
               </Link>
               . Todos los derechos reservados.
             </p>

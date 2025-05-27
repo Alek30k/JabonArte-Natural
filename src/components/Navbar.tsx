@@ -136,17 +136,17 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
             {/* Logo - Optimizado para móvil */}
-            <div className="flex items-center pl-3 flex-shrink-0">
-              <div className="cursor-pointer" onClick={() => router.push("/")}>
+            <div className="flex items-center pl-3 flex-shrink-0 ">
+              <div className="cursor-pointer " onClick={() => router.push("/")}>
                 <Image
-                  src="/rdc.png"
+                  src="/rdc4.png"
                   alt="JabónArteNatural"
-                  width={120}
-                  height={100}
+                  width={1920}
+                  height={960}
                   priority
-                  className="h-16 sm:h-12 lg:h-16 w-auto hover:scale-125 transition-transform duration-200"
+                  className="h-[55px] sm:h-12 md:h-[75px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
                 />
               </div>
             </div>
