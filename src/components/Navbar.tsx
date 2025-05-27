@@ -60,7 +60,9 @@ const Navbar = () => {
   const router = useRouter();
   const cart = UseCart();
   const { lovedItems } = UseLovedProducts();
+  const [scrollY, setScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isFloating, setIsFloating] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -68,7 +70,10 @@ const Navbar = () => {
   // Detectar scroll para cambiar el estilo de la navbar
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setIsScrolled(currentScrollY > 10);
+      setIsFloating(currentScrollY > 100);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -97,7 +102,14 @@ const Navbar = () => {
   return (
     <>
       {/* Top Bar - Optimizada para móvil */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4">
+      {/* <div className="bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4"> */}
+      <div
+        className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
+          isFloating
+            ? "opacity-0 -translate-y-full"
+            : "opacity-100 translate-y-0"
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="flex items-center">
@@ -127,13 +139,14 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Main Navbar */}
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+          isFloating
+            ? " bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30"
+            : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
             : "bg-white dark:bg-gray-900 shadow-sm"
-        }`}
+        } ${isFloating ? "" : ""}`}
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
@@ -146,7 +159,7 @@ const Navbar = () => {
                   width={1920}
                   height={960}
                   priority
-                  className="h-[55px] sm:h-12 md:h-[75px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
+                  className="h-[55px] sm:h-12 md:h-[65px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
                 />
               </div>
             </div>
@@ -328,31 +341,6 @@ const Navbar = () => {
                   </SheetHeader>
 
                   <div className="mt-6 space-y-6">
-                    {/* Mobile Search in Menu */}
-                    {/* <form onSubmit={handleSearch}>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                        <Input
-                          type="text"
-                          placeholder="Buscar regalos..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10 pr-10"
-                        />
-                        {searchQuery && (
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setSearchQuery("")}
-                            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
-                    </form> */}
-
                     {/* Theme Toggle in Mobile Menu */}
                     <div className="border-t pt-4 ">
                       <div className="flex items-center justify-between mx-4">
@@ -459,59 +447,6 @@ const Navbar = () => {
                       </div>
                     </div>
                   </div>
-                  {/* Wishlist y Carrito en móvil */}
-                  {/* <div className="border-t pt-4">
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">
-                      Mis Compras
-                    </h4>
-                    <div className="space-y-3">
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start p-3 h-auto"
-                        onClick={() => {
-                          router.push("/loved-products");
-                          setIsMobileMenuOpen(false);
-                        }}
-                      >
-                        <Heart
-                          className={`h-5 w-5 mr-3 ${
-                            lovedItems.length > 0
-                              ? "fill-rose-500 text-rose-500"
-                              : "text-gray-700 dark:text-gray-200"
-                          }`}
-                        />
-                        <span className="flex-1 text-left">
-                          Lista de Deseos
-                        </span>
-                        {lovedItems.length > 0 && (
-                          <Badge className="bg-rose-500 text-white">
-                            {lovedItems.length > 9 ? "9+" : lovedItems.length}
-                          </Badge>
-                        )}
-                      </Button>
-
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-start p-3 h-auto"
-                        onClick={() => {
-                          router.push("/cart");
-                          setIsMobileMenuOpen(false);
-                        }}
-                      >
-                        {cart.items.length === 0 ? (
-                          <ShoppingCart className="h-5 w-5 mr-3" />
-                        ) : (
-                          <BaggageClaim className="h-5 w-5 mr-3" />
-                        )}
-                        <span className="flex-1 text-left">Mi Carrito</span>
-                        {cart.items.length > 0 && (
-                          <Badge className="bg-pink-600 text-white">
-                            {cart.items.length > 9 ? "9+" : cart.items.length}
-                          </Badge>
-                        )}
-                      </Button>
-                    </div>
-                  </div> */}
                 </SheetContent>
               </Sheet>
             </div>
