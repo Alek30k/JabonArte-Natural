@@ -101,51 +101,50 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs mb-5  sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
-          isFloating
-            ? "opacity-0 -translate-y-full"
-            : "opacity-100 translate-y-0"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <span className="flex items-center">
-              <Gift className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-              <span className="hidden xs:inline">Regalos únicos</span>
-              <span className="xs:hidden">Regalos</span>
-            </span>
-            <span className="hidden sm:block">
-              Envío gratis en compras +$15.000
-            </span>
-            <span className="sm:hidden text-xs">Envío gratis +$15k</span>
-          </div>
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <Link
-              href="tel:+541112345678"
-              className="hidden xs:flex items-center hover:underline"
-            >
-              <Phone className="w-3 h-3 mr-1" />
-              <span className="hidden sm:inline">+54 11 1234-5678</span>
-              <span className="sm:hidden">Llamar</span>
-            </Link>
-            <Link href="/help" className="flex items-center hover:underline">
-              <HelpCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-0" />
-              <span className="hidden sm:inline ml-1">Ayuda</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-
       <nav
-        className={`fixed top-8 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed  left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
-            ? " bg-white/80  dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30"
+            ? " bg-white/80  dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-7"
             : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
-            : "bg-white dark:bg-gray-900 shadow-sm"
+            : "bg-white dark:bg-gray-900 shadow-sm pb-3"
         } ${isFloating ? "" : ""}`}
       >
+        <div
+          className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs mb-5  sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
+            isFloating
+              ? "opacity-0 -translate-y-full"
+              : "opacity-100 translate-y-0"
+          }`}
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <span className="flex items-center">
+                <Gift className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                <span className="hidden xs:inline">Regalos únicos</span>
+                <span className="xs:hidden">Regalos</span>
+              </span>
+              <span className="hidden sm:block">
+                Envío gratis en compras +$15.000
+              </span>
+              <span className="sm:hidden text-xs">Envío gratis +$15k</span>
+            </div>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <Link
+                href="tel:+541112345678"
+                className="hidden xs:flex items-center hover:underline"
+              >
+                <Phone className="w-3 h-3 mr-1" />
+                <span className="hidden sm:inline">+54 11 1234-5678</span>
+                <span className="sm:hidden">Llamar</span>
+              </Link>
+              <Link href="/help" className="flex items-center hover:underline">
+                <HelpCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-0" />
+                <span className="hidden sm:inline ml-1">Ayuda</span>
+              </Link>
+            </div>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
             {/* Logo - Optimizado para móvil */}
