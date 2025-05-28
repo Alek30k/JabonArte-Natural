@@ -342,7 +342,7 @@ const Navbar = () => {
                   <SheetHeader className="text-left">
                     <SheetTitle className="flex items-center text-lg">
                       <Heart className="w-5 h-5 mr-2 text-pink-600" />
-                      Regalos del corazón 💚
+                      Regalos del corazón
                     </SheetTitle>
                     <SheetDescription className="text-sm">
                       Regalos únicos para momentos especiales
