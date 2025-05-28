@@ -140,7 +140,7 @@ const Navbar = () => {
       <nav
         className={`fixed top-8 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
-            ? " bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30"
+            ? " bg-white/80  dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30"
             : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
             : "bg-white dark:bg-gray-900 shadow-sm"

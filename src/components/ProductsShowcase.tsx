@@ -72,7 +72,7 @@ const ProductsShowcase = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8 mb-16">
           {displayProducts.map((product: ProductType, index) => {
             const { id, slug, images, productName, price } = product;
             const originalImageUrl =
@@ -135,7 +135,7 @@ const ProductsShowcase = () => {
                     {/* Quick Add Button */}
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
                       <Button
-                        className="w-full  cursor-pointer bg-white/95 hover:bg-white  text-orange-800 shadow-lg backdrop-blur-sm"
+                        className="hidden md:flex w-full  cursor-pointer bg-white/95 hover:bg-white  text-orange-800 shadow-lg backdrop-blur-sm"
                         onClick={(e) => {
                           e.stopPropagation();
                           addItem(product);
@@ -148,7 +148,7 @@ const ProductsShowcase = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-6">
+                  <div className="p-4 md:p-6">
                     <div className="space-y-4">
                       {/* Product Name */}
                       <h2 className="font-bold text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
