@@ -72,7 +72,7 @@ const ProductsShowcase = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
           {displayProducts.map((product: ProductType, index) => {
             const { id, slug, images, productName, price } = product;
             const originalImageUrl =
@@ -151,18 +151,18 @@ const ProductsShowcase = () => {
                   <div className="p-6">
                     <div className="space-y-4">
                       {/* Product Name */}
-                      <h3 className="font-bold text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
+                      <h2 className="font-bold text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
                         {productName}
-                      </h3>
+                      </h2>
 
                       {/* Price */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center md:justify-between ">
                         {price ? (
                           <div className="flex items-center gap-2">
                             <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">
                               ${price}
                             </span>
-                            <span className="text-sm text-gray-500 line-through">
+                            <span className="hidden md:flex text-sm text-gray-500 line-through">
                               ${(price * 1.3).toFixed(2)}
                             </span>
                           </div>
@@ -174,7 +174,7 @@ const ProductsShowcase = () => {
 
                         <Badge
                           variant="secondary"
-                          className="bg-green-100 text-green-800"
+                          className="hidden md:flex bg-green-100 text-green-800"
                         >
                           Disponible
                         </Badge>
