@@ -50,8 +50,8 @@ const ChooseCategory = () => {
         </div>
 
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Explora nuestras categorías cuidadosamente seleccionadas para
-          encontrar ese regalo especial que hará sonreír a tus seres queridos
+          Explora nuestras categorías para encontrar ese regalo especial que
+          hará sonreír a tus seres queridos
         </p>
       </div>
 
