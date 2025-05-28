@@ -232,7 +232,7 @@ const AllProducts = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-24 md:mt-32">
         {/* Filtros y búsqueda */}
         <div className="mb-8 space-y-4">
           {/* Filtros en línea */}
