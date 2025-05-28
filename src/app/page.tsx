@@ -1,4 +1,4 @@
-import BannerDiscount from "@/components/BannerDiscount";
+// import BannerDiscount from "@/components/BannerDiscount";
 import BannerProduct from "@/components/BannerProduct";
 // import CarouselTextBanner from "@/components/CarouselTextBanner";
 import ChooseCategory from "@/components/ChooseCategory";
@@ -10,7 +10,7 @@ export default function Home() {
     <main className="">
       {/* <CarouselTextBanner /> */}
       <FeaturedProducts />
-      <BannerDiscount />
+      {/* <BannerDiscount /> */}
       <ChooseCategory />
       <ProductsShowcase />
       <BannerProduct />

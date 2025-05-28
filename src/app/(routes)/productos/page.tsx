@@ -245,22 +245,6 @@ const AllProducts = () => {
                 naturales
               </p>
             </div>
-
-            {!loading && (
-              <div className="text-center sm:text-right">
-                <div className="flex items-center justify-center sm:justify-end space-x-2 mb-1">
-                  <Sparkles className="w-5 h-5 text-blue-600" />
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    {filteredAndSortedProducts.length}
-                  </span>
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  producto{filteredAndSortedProducts.length !== 1 ? "s" : ""}{" "}
-                  encontrado
-                  {filteredAndSortedProducts.length !== 1 ? "s" : ""}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
