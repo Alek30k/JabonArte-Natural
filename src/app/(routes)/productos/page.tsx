@@ -268,28 +268,6 @@ const AllProducts = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filtros y búsqueda */}
         <div className="mb-8 space-y-4">
-          {/* Barra de búsqueda */}
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-white dark:bg-gray-800"
-            />
-            {searchQuery && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-              >
-                <X className="w-3 h-3" />
-              </Button>
-            )}
-          </div>
-
           {/* Filtros en línea */}
           <div className="flex flex-wrap gap-4 items-center">
             {/* Categoría */}
@@ -342,26 +320,6 @@ const AllProducts = () => {
         {/* Barra de herramientas */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div className="flex items-center space-x-4">
-            {/* Modo de vista */}
-            <div className="flex items-center bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm">
-              <Button
-                variant={viewMode === "grid" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-                className="h-8 px-3"
-              >
-                <Grid3X3 className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-                className="h-8 px-3"
-              >
-                <List className="w-4 h-4" />
-              </Button>
-            </div>
-
             {/* Filtros activos */}
             <div className="flex flex-wrap gap-2">
               {searchQuery && (

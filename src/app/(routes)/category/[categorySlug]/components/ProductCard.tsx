@@ -294,7 +294,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
           </div>
 
           {/* Botón de acción rápida */}
-          <Button
+          {/* <Button
             className={`w-full transition-all duration-300 ${
               justAdded
                 ? "bg-green-500 hover:bg-green-600"
@@ -314,12 +314,12 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
                 <span>¡Agregado!</span>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 ">
                 <ShoppingCart className="w-4 h-4" />
                 <span>Agregar al carrito</span>
               </div>
             )}
-          </Button>
+          </Button> */}
         </div>
       </CardContent>
     </Card>

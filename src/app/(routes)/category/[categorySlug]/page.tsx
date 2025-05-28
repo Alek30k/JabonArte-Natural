@@ -141,48 +141,8 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen mt-40 bg-gray-50 dark:bg-gray-900">
       {/* Header de la categoría */}
-      <div className="bg-white dark:bg-gray-800 border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              {result && !loading ? (
-                <>
-                  {/* <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                    {result[0]?.category?.categoryName || "Productos"}
-                  </h1> */}
-                  <p className="text-gray-600 dark:text-gray-300 text-lg">
-                    Descubre nuestra selección de jabones artesanales naturales
-                  </p>
-                </>
-              ) : (
-                <div className="space-y-3">
-                  <Skeleton className="h-10 w-80" />
-                  <Skeleton className="h-6 w-96" />
-                </div>
-              )}
-            </div>
-
-            {/* Contador de productos */}
-            {!loading && (
-              <div className="text-center sm:text-right">
-                <div className="flex items-center justify-center sm:justify-end space-x-2 mb-1">
-                  <Sparkles className="w-5 h-5 text-blue-600" />
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                    {filteredAndSortedProducts.length}
-                  </span>
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  producto{filteredAndSortedProducts.length !== 1 ? "s" : ""}{" "}
-                  disponible
-                  {filteredAndSortedProducts.length !== 1 ? "s" : ""}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -206,24 +166,6 @@ export default function CategoryPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
               <div className="flex items-center space-x-4">
                 {/* Modo de vista */}
-                <div className="flex items-center bg-white dark:bg-gray-800 border rounded-lg p-1 shadow-sm">
-                  <Button
-                    variant={viewMode === "grid" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("grid")}
-                    className="h-8 px-3"
-                  >
-                    <Grid3X3 className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant={viewMode === "list" ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setViewMode("list")}
-                    className="h-8 px-3"
-                  >
-                    <List className="w-4 h-4" />
-                  </Button>
-                </div>
 
                 {/* Indicador de filtros activos */}
                 {hasActiveFilters && (

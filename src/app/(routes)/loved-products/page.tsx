@@ -11,7 +11,7 @@ const PageSimple = () => {
   const router = useRouter();
 
   return (
-    <div className="max-w-4xl py-8 mx-auto px-4 sm:py-16 sm:px-6">
+    <div className="max-w-4xl py-8 mt-24 mx-auto px-4 sm:py-16 sm:px-6">
       {/* Header */}
       <div className="mb-8">
         <button

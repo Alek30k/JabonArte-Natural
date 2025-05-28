@@ -10,8 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Heart } from "lucide-react";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
 
 const ChooseCategory = () => {
   const { result, loading }: ResponseType = useGetCategory();
@@ -37,12 +35,6 @@ const ChooseCategory = () => {
       </CardContent>
     </Card>
   );
-
-  const router = useRouter();
-
-  const handlePageProducts = () => {
-    router.replace("/productos");
-  };
 
   return (
     <section className="max-w-7xl py-8 mx-auto sm:py-16 px-4 sm:px-6 lg:px-8">
@@ -135,25 +127,6 @@ const ChooseCategory = () => {
             ))
           : null}
       </div>
-
-      {/* Bottom CTA */}
-      {!loading &&
-        categories &&
-        Array.isArray(categories) &&
-        categories.length > 0 && (
-          <div className="text-center mt-12">
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              ¿No encuentras lo que buscas?
-            </p>
-            <Button
-              className="inline-flex items-center cursor-pointer px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium rounded-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105"
-              onClick={handlePageProducts}
-            >
-              Ver todos los productos
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
-        )}
 
       {/* Empty State */}
       {!loading &&

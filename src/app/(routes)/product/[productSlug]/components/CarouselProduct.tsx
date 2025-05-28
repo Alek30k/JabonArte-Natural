@@ -115,7 +115,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   );
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 mt-20">
       {/* Thumbnails Column - Solo si hay más de 1 imagen y no es móvil */}
       {images.length > 1 && (
         <div className="hidden md:flex flex-col w-20 sm:w-24">
