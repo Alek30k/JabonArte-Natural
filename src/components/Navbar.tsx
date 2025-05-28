@@ -102,7 +102,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
+        className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs mb-5  sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
           isFloating
             ? "opacity-0 -translate-y-full"
             : "opacity-100 translate-y-0"
@@ -138,7 +138,7 @@ const Navbar = () => {
       </div>
 
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed top-8 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
             ? " bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30"
             : isScrolled
@@ -343,7 +343,7 @@ const Navbar = () => {
                   <SheetHeader className="text-left">
                     <SheetTitle className="flex items-center text-lg">
                       <Heart className="w-5 h-5 mr-2 text-pink-600" />
-                      JabonArte Natural
+                      Regalos del corazón 💚
                     </SheetTitle>
                     <SheetDescription className="text-sm">
                       Regalos únicos para momentos especiales
