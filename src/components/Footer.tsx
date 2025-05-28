@@ -76,35 +76,6 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 mt-16">
-      {/* Newsletter Section */}
-      <div className="bg-green-600 dark:bg-green-700">
-        <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-2">
-              Suscríbete a nuestro newsletter
-            </h3>
-            <p className="text-green-100 mb-6 max-w-2xl mx-auto">
-              Recibe ofertas exclusivas, tips de cuidado natural y novedades
-              sobre nuestros productos artesanales
-            </p>
-            <div className="max-w-md mx-auto flex gap-2">
-              <Input
-                type="email"
-                placeholder="Tu email"
-                className="bg-white text-gray-900"
-              />
-              <Button
-                variant="secondary"
-                className="bg-white text-green-600 hover:bg-gray-100"
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                Suscribirse
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
