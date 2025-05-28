@@ -83,7 +83,7 @@ const ChooseCategory = () => {
 
                       {/* Hover Overlay */}
                       <div
-                        className={`absolute inset-0 bg-pink-500/20 transition-opacity duration-300 ${
+                        className={`absolute inset-0 bg-orange-500/20 transition-opacity duration-300 ${
                           hoveredCategory === category.id
                             ? "opacity-100"
                             : "opacity-0"
@@ -100,7 +100,7 @@ const ChooseCategory = () => {
 
                       {/* Content */}
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-pink-200 transition-colors">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-orange-200 transition-colors">
                           {category.categoryName}
                         </h3>
 
@@ -112,7 +112,7 @@ const ChooseCategory = () => {
                           <div
                             className={`flex items-center justify-center w-8 h-8 bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 ${
                               hoveredCategory === category.id
-                                ? "bg-pink-500 scale-110 rotate-45"
+                                ? "bg-orange-500 scale-110 rotate-45"
                                 : "group-hover:bg-white/30"
                             }`}
                           >
@@ -146,7 +146,7 @@ const ChooseCategory = () => {
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
             >
               Contáctanos
             </Link>

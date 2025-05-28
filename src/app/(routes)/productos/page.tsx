@@ -237,31 +237,13 @@ const AllProducts = () => {
         <div className="mb-8 space-y-4">
           {/* Filtros en línea */}
           <div className="flex flex-wrap gap-4 items-center">
-            {/* Categoría */}
-            <Select
-              value={selectedCategory}
-              onValueChange={setSelectedCategory}
-            >
-              <SelectTrigger className="w-48 bg-white dark:bg-gray-800">
-                <SelectValue placeholder="Todas las categorías" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todas las categorías</SelectItem>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
             {/* Origen */}
             <Select value={selectedOrigin} onValueChange={setSelectedOrigin}>
-              <SelectTrigger className="w-48 bg-white dark:bg-gray-800">
-                <SelectValue placeholder="Todas las subcategorías" />
+              <SelectTrigger className="w-52 bg-white dark:bg-gray-800">
+                <SelectValue placeholder="Categorías principales" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todas las subcategorías</SelectItem>
+                <SelectItem value="all">Categorías principales</SelectItem>
                 {origins.map((origin) => (
                   <SelectItem key={origin} value={origin}>
                     {origin}
