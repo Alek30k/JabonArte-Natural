@@ -16,11 +16,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import OrderSummary from "./components/OrderSummary";
 
 export default function CartPage() {
   const { items, removeAll } = UseCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
+
+  // const totalPrice = product.price * quantity;
 
   const totalPrice = items.reduce((total, product) => total + product.price, 0);
   const itemCount = items.length;
@@ -106,9 +109,10 @@ export default function CartPage() {
                     <span>Calculado en el siguiente paso</span>
                   </div>
                   <Separator />
-                  <div className="flex justify-between font-medium">
-                    <span>Total</span>
-                    <span>{formatPrice(totalPrice)}</span>
+                  <div className="">
+                    <OrderSummary />
+
+                    {/* <span>{formatPrice(totalPrice)}</span> */}
                   </div>
                 </div>
               </CardContent>

@@ -5,7 +5,7 @@ import type { ProductType } from "@/types/product";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Minus, Plus, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface CartItemProps {
   product: ProductType;
@@ -14,19 +14,35 @@ interface CartItemProps {
 const CartItemsComplete = (props: CartItemProps) => {
   const { product } = props;
   const router = useRouter();
-  const { removeItem, addItem } = UseCart();
-  const [quantity, setQuantity] = useState(1);
+  const { removeItem, addItem, updateItemQuantity } = UseCart();
+  const [quantity, setQuantity] = useState(product.quantity || 1);
+
+  // Sync local quantity with cart context on mount
+  useEffect(() => {
+    updateItemQuantity(product.id, quantity);
+  }, [quantity, product.id, updateItemQuantity]);
 
   const handleIncrement = () => {
-    setQuantity((prev) => prev + 1);
-    addItem(product);
+    setQuantity((prev) => {
+      const newQuantity = prev + 1;
+      updateItemQuantity(product.id, newQuantity);
+      addItem({ ...product, quantity: 1 }); // Add one more unit
+      return newQuantity;
+    });
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-      // Aquí podrías implementar una función para decrementar cantidad
+      setQuantity((prev) => {
+        const newQuantity = prev - 1;
+        updateItemQuantity(product.id, newQuantity);
+        return newQuantity;
+      });
     }
+  };
+
+  const handleRemove = () => {
+    removeItem(product.id);
   };
 
   const totalPrice = product.price * quantity;
@@ -64,7 +80,7 @@ const CartItemsComplete = (props: CartItemProps) => {
               {product.productName}
             </h2>
             <button
-              onClick={() => removeItem(product.id)}
+              onClick={handleRemove}
               className="text-gray-400 hover:text-red-500 transition-colors p-1 flex-shrink-0"
               aria-label="Eliminar producto"
             >
@@ -112,7 +128,7 @@ const CartItemsComplete = (props: CartItemProps) => {
               </div>
             </div>
 
-            <div className="flex pt-6 items-center w-full justify-between  text-right">
+            <div className="flex pt-6 items-center w-full justify-between text-right">
               <p className="text-xs text-gray-500 dark:text-gray-400">Total:</p>
               <p className="text-lg font-bold text-gray-900 dark:text-green-400">
                 ${totalPrice.toFixed(2)}
@@ -176,7 +192,7 @@ const CartItemsComplete = (props: CartItemProps) => {
         {/* Precio total y botón eliminar - desktop */}
         <div className="flex flex-col justify-between items-end ml-4">
           <button
-            onClick={() => removeItem(product.id)}
+            onClick={handleRemove}
             className="text-gray-400 hover:text-red-500 transition-colors p-1"
             aria-label="Eliminar producto"
           >

@@ -12,6 +12,7 @@ export type ProductType = {
   popularityScore?: number;
   createdAt?: string;
   price: number;
+  quantity?: number;
   images: {
     id: number;
     url: string;
