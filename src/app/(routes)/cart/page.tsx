@@ -39,7 +39,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="max-w-6xl mt-20 overflow-x-hidden  px-4 py-8 mx-auto sm:px-6 lg:px-8">
+    <div className="max-w-6xl mt-40 overflow-x-hidden  px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold sm:text-3xl">Carrito de compras</h1>
         <span className="text-sm text-muted-foreground">
