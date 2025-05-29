@@ -39,14 +39,7 @@ import {
 } from "./ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ClerkLoaded,
-  ClerkLoading,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -113,7 +106,7 @@ const Navbar = () => {
       <nav
         className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-7"
+            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-13"
             : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
             : "bg-white dark:bg-gray-900 shadow-sm pb-3"
