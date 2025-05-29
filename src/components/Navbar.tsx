@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useEffect } from "react";
 import {
   BaggageClaim,
@@ -40,6 +39,14 @@ import {
 } from "./ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -67,6 +74,9 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
+  // Clerk hook to check if user is logged in
+  const { isSignedIn } = useUser();
+
   // Detectar scroll para cambiar el estilo de la navbar
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +101,6 @@ const Navbar = () => {
   const toggleMobileSearch = () => {
     setShowMobileSearch(!showMobileSearch);
     if (!showMobileSearch) {
-      // Focus en el input cuando se abre
       setTimeout(() => {
         const input = document.getElementById("mobile-search-input");
         input?.focus();
@@ -102,16 +111,16 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed  left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
-            ? " bg-white/80  dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-7"
+            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-7"
             : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
             : "bg-white dark:bg-gray-900 shadow-sm pb-3"
-        } ${isFloating ? "" : ""}`}
+        }`}
       >
         <div
-          className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs mb-5  sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
+          className={`bg-gradient-to-r from-orange-500 to-orange-500 text-white text-xs mb-5 sm:text-sm py-1.5 sm:py-2 px-4 transition-all duration-500 ${
             isFloating
               ? "opacity-0 -translate-y-full"
               : "opacity-100 translate-y-0"
@@ -146,13 +155,10 @@ const Navbar = () => {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 ">
-            {/* Logo - Optimizado para móvil */}
-            <div
-              className="flex items-center pl-3 flex-shrink-0 
-            "
-            >
-              <div className="cursor-pointer " onClick={() => router.push("/")}>
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+            {/* Logo */}
+            <div className="flex items-center pl-3 flex-shrink-0">
+              <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <Image
                   src="/rdc5.png"
                   alt="RDC Mobile"
@@ -161,7 +167,6 @@ const Navbar = () => {
                   priority
                   className="block md:hidden h-[45px] ml-6 sm:h-[50px] w-auto hover:scale-110 transition-transform duration-200"
                 />
-
                 <Image
                   src="/rdc4.png"
                   alt="RDC"
@@ -241,7 +246,7 @@ const Navbar = () => {
               </form>
             </div>
 
-            {/* Right Side Icons - Optimizados para móvil */}
+            {/* Right Side Icons */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Search Icon for Mobile */}
               <Button
@@ -254,19 +259,79 @@ const Navbar = () => {
               </Button>
 
               {/* User Menu */}
-              <DropdownMenu>
+              {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
                     className="p-2 cursor-pointer"
                   >
-                    <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    {isSignedIn ? (
+                      <UserButton
+                        afterSignOutUrl="/"
+                        appearance={{
+                          elements: {
+                            avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
+                          },
+                        }}
+                      />
+                    ) : (
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
+                  {isSignedIn ? (
+                    <>
+                      {userMenuItems.map((item) => (
+                        <DropdownMenuItem key={item.name} asChild>
+                          <Link href={item.href} className="cursor-pointer">
+                            {item.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link href="/sign-in" className="cursor-pointer">
+                          Iniciar Sesión
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/sign-up" className="cursor-pointer">
+                          Registrarse
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu> */}
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  {isSignedIn ? (
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="p-2 cursor-pointer"
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  )}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem asChild>
-                    <Link href="/login" className="cursor-pointer">
+                    <Link href="/sign-in" className="cursor-pointer">
                       Iniciar Sesión
                     </Link>
                   </DropdownMenuItem>
@@ -326,8 +391,8 @@ const Navbar = () => {
                 )}
               </Button>
 
-              {/* Theme Toggle - Oculto en móviles muy pequeños */}
-              <div className="hidden lg:block lg:pl-4 ">
+              {/* Theme Toggle */}
+              <div className="hidden lg:block lg:pl-4">
                 <ToggleTheme />
               </div>
 
@@ -351,7 +416,7 @@ const Navbar = () => {
 
                   <div className="mt-6 space-y-6">
                     {/* Theme Toggle in Mobile Menu */}
-                    <div className="border-t pt-4 ">
+                    <div className="border-t pt-4">
                       <div className="flex items-center justify-between mx-4">
                         <span className="text-gray-900 dark:text-gray-100">
                           Cambiar Apariencia
@@ -420,30 +485,37 @@ const Navbar = () => {
                       <h4 className="font-medium text-gray-900 dark:text-gray-100">
                         Mi Cuenta
                       </h4>
-                      <Link
-                        href="/login"
-                        className="block text-gray-600 dark:text-gray-300 py-1"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Iniciar Sesión
-                      </Link>
-                      <Link
-                        href="/register"
-                        className="block text-gray-600 dark:text-gray-300 py-1"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Registrarse
-                      </Link>
-                      {userMenuItems.map((item) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className="block text-gray-600 dark:text-gray-300 py-1"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
+                      {isSignedIn ? (
+                        <>
+                          {userMenuItems.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="block text-gray-600 dark:text-gray-300 py-1"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            href="/sign-in"
+                            className="block text-gray-600 dark:text-gray-300 py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Iniciar Sesión
+                          </Link>
+                          <Link
+                            href="/sign-up"
+                            className="block text-gray-600 dark:text-gray-300 py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Registrarse
+                          </Link>
+                        </>
+                      )}
                     </div>
 
                     {/* Theme Toggle in Mobile Menu */}
@@ -462,7 +534,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Search Bar - Expandible */}
+        {/* Mobile Search Bar */}
         {showMobileSearch && (
           <div className="md:hidden border-t bg-white dark:bg-gray-900 px-3 py-3">
             <form onSubmit={handleSearch}>
