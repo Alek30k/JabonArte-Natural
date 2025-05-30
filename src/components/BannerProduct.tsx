@@ -215,10 +215,10 @@ const BannerProduct = () => {
                 <Image
                   src="/slider.png"
                   alt="Jabones artesanales naturales personalizados"
-                  fill
+                  width={500}
+                  height={300}
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
                 />
 
                 {/* Overlay Gradient */}

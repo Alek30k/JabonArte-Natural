@@ -55,7 +55,8 @@ const FeaturedProducts = () => {
                           <Image
                             src={imageUrl || "/placeholder.svg"}
                             alt={productName || "Producto destacado"}
-                            fill
+                            width={500}
+                            height={300}
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             placeholder="blur"

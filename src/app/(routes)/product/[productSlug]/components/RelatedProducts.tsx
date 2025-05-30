@@ -2,12 +2,7 @@
 
 import { useGetRelatedProducts } from "@/api/useGetRelatedProducts";
 import type { ProductType } from "@/types/product";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
@@ -100,9 +95,11 @@ function ProductCard({ product }: { product: ProductType }) {
             <Image
               src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
               alt={product.productName}
-              fill
+              width={500}
+              height={300}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              loading="lazy"
             />
 
             {/* Badges de información */}
