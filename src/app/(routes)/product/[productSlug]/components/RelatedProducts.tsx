@@ -96,7 +96,7 @@ function ProductCard({ product }: { product: ProductType }) {
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
       <CardHeader className="p-0 ">
         <Link href={`/product/${product.slug}`}>
-          <div className="relative w-full h-48 overflow-hidden">
+          <div className="relative w-full h-32 overflow-hidden">
             <Image
               src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
               alt={product.productName}
@@ -120,11 +120,9 @@ function ProductCard({ product }: { product: ProductType }) {
             </div>
           </div>
           <CardContent className="p-3">
-            <h3 className="text-lg  font-semibold  mb-2">
-              {product.productName}
-            </h3>
+            <h3 className="text-lg  font-semibold ">{product.productName}</h3>
             {product.features && (
-              <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">
+              <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 ">
                 {product.features}
               </p>
             )}
@@ -150,9 +148,6 @@ function SkeletonCard() {
         <Skeleton className="h-3 w-2/3" />
         <Skeleton className="h-4 w-1/2" />
       </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <Skeleton className="h-10 w-full" />
-      </CardFooter>
     </Card>
   );
 }
