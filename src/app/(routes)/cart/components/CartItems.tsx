@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Minus, Plus, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { formatPrice } from "@/lib/formatPrice";
 
 interface CartItemProps {
   product: ProductType;
@@ -92,11 +93,11 @@ const CartItemsComplete = (props: CartItemProps) => {
 
           {/* Características del producto - móvil */}
           <div className="flex flex-wrap gap-1 mb-3">
-            {product.taste && (
+            {/* {product.taste && (
               <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
                 {product.taste}
               </span>
-            )}
+            )} */}
             {product.origin && (
               <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">
                 {product.origin}
@@ -148,16 +149,16 @@ const CartItemsComplete = (props: CartItemProps) => {
           </h2>
 
           <p className="text-xl font-semibold text-green-600 mt-1">
-            ${product.price}
+            {formatPrice(product.price)}
           </p>
 
           {/* Características del producto - desktop */}
           <div className="flex flex-wrap gap-2 mt-2">
-            {product.taste && (
+            {/* {product.taste && (
               <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
                 {product.taste}
               </span>
-            )}
+            )} */}
             {product.origin && (
               <span className="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded-full">
                 {product.origin}

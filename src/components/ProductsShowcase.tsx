@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { useGetFeaturedProductsUniversal } from "@/api/useGetFeaturedProductsUniversal";
+import { formatPrice } from "@/lib/formatPrice";
 
 const ProductsShowcase = () => {
   const { loading, result }: ResponseType = useGetFeaturedProductsUniversal();
@@ -160,10 +161,7 @@ const ProductsShowcase = () => {
                         {price ? (
                           <div className="flex items-center gap-2">
                             <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">
-                              ${price}
-                            </span>
-                            <span className="hidden md:flex text-sm text-gray-500 line-through">
-                              ${(price * 1.3).toFixed(2)}
+                              {formatPrice(price)}
                             </span>
                           </div>
                         ) : (

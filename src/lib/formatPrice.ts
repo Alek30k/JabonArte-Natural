@@ -1,10 +1,10 @@
 export function formatPrice(price: number) {
-  const priceFormated = new Intl.NumberFormat("es-ES", {
+  const priceFormatted = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
+    currencyDisplay: "narrowSymbol", // Usa solo "$" sin "ARS"
+    minimumFractionDigits: 0,
   });
 
-  const finalPrice = priceFormated.format(price);
-
-  return finalPrice;
+  return priceFormatted.format(price);
 }

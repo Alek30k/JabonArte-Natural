@@ -246,11 +246,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               <span className="text-lg font-bold text-gray-900 dark:text-white">
                 {formatPrice(product.price)}
               </span>
-              {originalPrice && (
-                <span className="text-sm text-gray-500 line-through">
-                  {formatPrice(originalPrice)}
-                </span>
-              )}
             </div>
             {isOnSale && (
               <Badge className="sm:hidden bg-red-100 text-red-800 hover:bg-red-200">
