@@ -107,11 +107,6 @@ function ProductCard({ product }: { product: ProductType }) {
 
             {/* Badges de información */}
             <div className="absolute top-2 left-2 flex flex-col gap-1">
-              {product.taste && (
-                <span className="px-2 py-1 text-xs bg-black/70 text-white rounded-full">
-                  {product.taste}
-                </span>
-              )}
               {product.origin && (
                 <span className="px-2 py-1 text-xs bg-yellow-600/80 text-white rounded-full">
                   {product.origin}
