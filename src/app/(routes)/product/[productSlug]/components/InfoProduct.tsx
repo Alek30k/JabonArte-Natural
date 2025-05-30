@@ -46,7 +46,13 @@ const InfoProductAnimated = (props: InfoProductProps) => {
         </div>
       </div>
       <Separator className="my-4" />
-      <p>{product.features}</p>
+      <p className="font-semibold ">Lo que tenés que saber de este producto</p>
+      <br />
+      <ul className="list-disc">
+        <li>
+          <p>{product.features}</p>
+        </li>
+      </ul>
       <Separator className="my-4" />
       <p className="my-4 text-2xl">{formatPrice(product.price)}</p>
       <div className="flex items-center gap-3">
