@@ -2,7 +2,6 @@
 
 import { useGetRelatedProducts } from "@/api/useGetRelatedProducts";
 import type { ProductType } from "@/types/product";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -42,16 +41,7 @@ export default function RelatedProducts({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Productos Relacionados</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Basado en la categoría "{category}"
-          </p>
         </div>
-        {products && products.length > 0 && (
-          <div className="text-sm text-gray-500">
-            {products.length} producto{products.length !== 1 ? "s" : ""}{" "}
-            encontrado{products.length !== 1 ? "s" : ""}
-          </div>
-        )}
       </div>
 
       {loading ? (
@@ -77,7 +67,7 @@ export default function RelatedProducts({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product: ProductType) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -104,49 +94,46 @@ function ProductCard({ product }: { product: ProductType }) {
 
   return (
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
-      <CardHeader className="p-0">
-        <div className="relative w-full h-48 overflow-hidden">
-          <Image
-            src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
-            alt={product.productName}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
+      <CardHeader className="p-0 ">
+        <Link href={`/product/${product.slug}`}>
+          <div className="relative w-full h-48 overflow-hidden">
+            <Image
+              src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
+              alt={product.productName}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            />
 
-          {/* Badges de información */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
-            {product.taste && (
-              <span className="px-2 py-1 text-xs bg-black/70 text-white rounded-full">
-                {product.taste}
-              </span>
-            )}
-            {product.origin && (
-              <span className="px-2 py-1 text-xs bg-yellow-600/80 text-white rounded-full">
-                {product.origin}
-              </span>
-            )}
+            {/* Badges de información */}
+            <div className="absolute top-2 left-2 flex flex-col gap-1">
+              {product.taste && (
+                <span className="px-2 py-1 text-xs bg-black/70 text-white rounded-full">
+                  {product.taste}
+                </span>
+              )}
+              {product.origin && (
+                <span className="px-2 py-1 text-xs bg-yellow-600/80 text-white rounded-full">
+                  {product.origin}
+                </span>
+              )}
+            </div>
           </div>
-        </div>
+          <CardContent className="p-3">
+            <h3 className="text-lg  font-semibold  mb-2">
+              {product.productName}
+            </h3>
+            {product.features && (
+              <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">
+                {product.features}
+              </p>
+            )}
+            <p className="text-lg font-bold text-orange-600">
+              {formatPrice(product.price)}
+            </p>
+          </CardContent>
+        </Link>
       </CardHeader>
-      <CardContent className="p-4">
-        <h3 className="text-lg font-semibold truncate mb-2">
-          {product.productName}
-        </h3>
-        {product.features && (
-          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">
-            {product.features}
-          </p>
-        )}
-        <p className="text-lg font-bold text-green-600">
-          {formatPrice(product.price)}
-        </p>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <Button asChild variant="outline" className="w-full">
-          <Link href={`/productos/${product.slug}`}>Ver Producto</Link>
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

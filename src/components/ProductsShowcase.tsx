@@ -152,7 +152,7 @@ const ProductsShowcase = () => {
                   <div className="p-4 md:p-6">
                     <div className="space-y-4">
                       {/* Product Name */}
-                      <h2 className="font-bold text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
+                      <h2 className=" text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
                         {productName}
                       </h2>
 
@@ -160,7 +160,7 @@ const ProductsShowcase = () => {
                       <div className="flex items-center md:justify-between ">
                         {price ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl font-bold text-pink-600 dark:text-pink-400">
+                            <span className="text-2xl  hover:text-pink-600 dark:text-pink-400">
                               {formatPrice(price)}
                             </span>
                           </div>

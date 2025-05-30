@@ -175,7 +175,7 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors">
+                <DropdownMenuTrigger className="flex items-center text-gray-700 dark:text-gray-200 hover:text-orange-600 transition-colors">
                   Regalos
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
@@ -201,13 +201,13 @@ const Navbar = () => {
 
               <Link
                 href="/blog"
-                className="text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-orange-600 transition-colors"
               >
                 Blog
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-700 dark:text-gray-200 hover:text-pink-600 transition-colors"
+                className="text-gray-700 dark:text-gray-200 hover:text-orange-600 transition-colors"
               >
                 Contacto
               </Link>
