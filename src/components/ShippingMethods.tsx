@@ -204,7 +204,7 @@ export default function ShippingMethods() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto p-3">
       <CardHeader>
         <CardTitle>Calcular Costos de Envío</CardTitle>
       </CardHeader>

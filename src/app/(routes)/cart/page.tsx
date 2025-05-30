@@ -97,7 +97,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          <div className="w-full">
+          <div className="w-full  flex flex-col gap-5">
             <Card className="p-4">
               <CardHeader>
                 <CardTitle>Resumen de pedido</CardTitle>

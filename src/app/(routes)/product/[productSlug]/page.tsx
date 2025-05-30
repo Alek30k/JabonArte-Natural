@@ -192,11 +192,6 @@ export default function ProductPage() {
                 <CardTitle>Descripción del Producto</CardTitle>
               </CardHeader>
               <CardContent className="prose dark:prose-invert max-w-none">
-                {/* <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {product.description ||
-                    "Nuestro jabón artesanal está elaborado con ingredientes 100% naturales, cuidadosamente seleccionados para brindar una experiencia única de limpieza y cuidado. Cada barra es hecha a mano siguiendo técnicas tradicionales que preservan las propiedades beneficiosas de cada ingrediente."}
-                </p> */}
-
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-x-auto">
                   <div>
                     <h4 className="font-semibold mb-3">Beneficios:</h4>
