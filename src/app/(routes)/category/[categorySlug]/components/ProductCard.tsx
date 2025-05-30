@@ -14,7 +14,6 @@ import { UseLovedProducts } from "@/hooks/UseLovedProducts";
 import { formatPrice } from "@/lib/formatPrice";
 import type { ProductType } from "@/types/product";
 import {
-  ShoppingCart,
   Heart,
   Eye,
   Award,
@@ -42,10 +41,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
   const isLoved = lovedItems.some((item) => item.id === product.id);
   const hasMultipleImages = product.images && product.images.length > 1;
 
-  // Datos simulados para mejorar la card
-  // const rating = 4.5 + Math.random() * 0.5; // Rating entre 4.5 y 5
-  // const reviewCount = Math.floor(Math.random() * 50) + 10; // Entre 10 y 60 reviews
-  // const isNew = Math.random() > 0.7; // 30% chance de ser nuevo
   const isOnSale = Math.random() > 0.8; // 20% chance de estar en oferta
   const originalPrice = isOnSale ? product.price * 1.3 : null;
 
@@ -118,7 +113,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardContent className="p-0">
+      <CardContent className="p-0 ">
         {/* Imagen del producto */}
         <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
           <Link href={`/product/${product.slug}`}>
@@ -238,31 +233,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
 
         {/* Información del producto */}
         <div className="p-4 space-y-3">
-          {/* Rating y reviews */}
-          {/* <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1">
-              <div className="flex items-center space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-3 h-3 ${
-                      i < Math.floor(rating)
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-xs text-gray-600 dark:text-gray-400">
-                ({reviewCount})
-              </span>
-            </div>
-            <Badge variant="outline" className="text-xs">
-              <Leaf className="w-3 h-3 mr-1" />
-              Natural
-            </Badge>
-          </div> */}
-
           {/* Nombre del producto */}
           <Link href={`/product/${product.slug}`}>
             <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer group-hover:text-blue-600">
@@ -283,7 +253,7 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               )}
             </div>
             {isOnSale && (
-              <Badge className="bg-red-100 text-red-800 hover:bg-red-200">
+              <Badge className="sm:hidden bg-red-100 text-red-800 hover:bg-red-200">
                 -
                 {Math.round(
                   ((originalPrice! - product.price) / originalPrice!) * 100
@@ -292,34 +262,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               </Badge>
             )}
           </div>
-
-          {/* Botón de acción rápida */}
-          {/* <Button
-            className={`w-full transition-all duration-300 ${
-              justAdded
-                ? "bg-green-500 hover:bg-green-600"
-                : "bg-blue-500 hover:bg-blue-600 hover:shadow-lg transform hover:scale-[1.02]"
-            }`}
-            onClick={handleAddToCart}
-            disabled={isAddingToCart}
-          >
-            {isAddingToCart ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Agregando...</span>
-              </div>
-            ) : justAdded ? (
-              <div className="flex items-center space-x-2">
-                <Check className="w-4 h-4" />
-                <span>¡Agregado!</span>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-2 ">
-                <ShoppingCart className="w-4 h-4" />
-                <span>Agregar al carrito</span>
-              </div>
-            )}
-          </Button> */}
         </div>
       </CardContent>
     </Card>

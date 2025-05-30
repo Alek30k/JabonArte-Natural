@@ -1,33 +1,31 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// app/layout.tsx
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "sonner";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import { Geist, Geist_Mono } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const queryClient = new QueryClient();
 
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Regalos del corazóń",
+export const metadata = {
+  title: "Regalos del corazón",
   description: "Welcome to my ecommerce Regalos del corazón",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <ClerkProvider
       signInUrl="/sign-in"
@@ -35,7 +33,7 @@ export default function RootLayout({
       afterSignOutUrl="/"
       appearance={{
         variables: {
-          colorPrimary: "#db2777", // Ajusta al color de tu marca
+          colorPrimary: "#db2777",
         },
       }}
     >
@@ -43,17 +41,14 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          {/* <QueryClientProvider client={queryClient}> */}
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster richColors position="bottom-right" />
             <Navbar />
             {children}
             <Footer />
           </ThemeProvider>
+          {/* </QueryClientProvider> */}
         </body>
       </html>
     </ClerkProvider>

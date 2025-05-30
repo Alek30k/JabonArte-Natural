@@ -47,6 +47,8 @@ const CartItemsComplete = (props: CartItemProps) => {
 
   const totalPrice = product.price * quantity;
 
+  //P3615XAC
+
   return (
     <li className="flex flex-col sm:flex-row py-4 sm:py-6 border-b w-full">
       {/* Layout móvil: imagen y botón eliminar en la parte superior */}

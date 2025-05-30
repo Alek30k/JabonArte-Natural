@@ -106,7 +106,7 @@ const Navbar = () => {
       <nav
         className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isFloating
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-13"
+            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xs shadow-2xl border border-white/20 dark:border-gray-700/30 -translate-y-13"
             : isScrolled
             ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg"
             : "bg-white dark:bg-gray-900 shadow-sm pb-3"
@@ -147,6 +147,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
             {/* Logo */}
@@ -241,6 +242,8 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-1 sm:space-x-2">
+              {/* User Menu */}
+
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
@@ -250,56 +253,6 @@ const Navbar = () => {
               >
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
-
-              {/* User Menu */}
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="p-2 cursor-pointer"
-                  >
-                    {isSignedIn ? (
-                      <UserButton
-                        afterSignOutUrl="/"
-                        appearance={{
-                          elements: {
-                            avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
-                          },
-                        }}
-                      />
-                    ) : (
-                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
-                    )}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  {isSignedIn ? (
-                    <>
-                      {userMenuItems.map((item) => (
-                        <DropdownMenuItem key={item.name} asChild>
-                          <Link href={item.href} className="cursor-pointer">
-                            {item.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <DropdownMenuItem asChild>
-                        <Link href="/sign-in" className="cursor-pointer">
-                          Iniciar Sesión
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href="/sign-up" className="cursor-pointer">
-                          Registrarse
-                        </Link>
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu> */}
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -328,19 +281,13 @@ const Navbar = () => {
                       Iniciar Sesión
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem asChild>
-                    <Link href="/register" className="cursor-pointer">
+                    <Link href="/sign-up" className="cursor-pointer">
                       Registrarse
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  {userMenuItems.map((item) => (
-                    <DropdownMenuItem key={item.name} asChild>
-                      <Link href={item.href} className="cursor-pointer">
-                        {item.name}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
 
@@ -529,7 +476,7 @@ const Navbar = () => {
 
         {/* Mobile Search Bar */}
         {showMobileSearch && (
-          <div className="md:hidden border-t bg-white dark:bg-gray-900 px-3 py-3">
+          <div className="sm:hidden border-t bg-white dark:bg-gray-900 px-3 py-3">
             <form onSubmit={handleSearch}>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />

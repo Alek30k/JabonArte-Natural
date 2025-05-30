@@ -141,7 +141,7 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen mt-40 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen mt-28 bg-gray-50 dark:bg-gray-900">
       {/* Header de la categoría */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -237,15 +237,6 @@ export default function CategoryPage() {
             {hasActiveFilters && (
               <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                 <div className="flex items-center justify-between">
-                  {/* <div className="flex items-center space-x-2">
-                    <Filter className="w-4 h-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                      Filtrando por origen:
-                    </span>
-                    <Badge className="bg-blue-600 text-white">
-                      {filterOrigin}
-                    </Badge>
-                  </div> */}
                   <Button
                     variant="ghost"
                     size="sm"
@@ -265,7 +256,7 @@ export default function CategoryPage() {
               <div
                 className={
                   viewMode === "grid"
-                    ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                    ? "grid grid-cols-2  gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                     : "space-y-4"
                 }
               >

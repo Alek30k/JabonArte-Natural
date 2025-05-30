@@ -123,13 +123,13 @@ export default function CheckoutPage() {
         <div className="order-2 lg:order-1">
           <Card>
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center text-lg sm:text-xl">
+              <CardTitle className="flex mt-5 items-center text-lg sm:text-xl">
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-500" />
                 Resumen del pedido
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-3 p-5 sm:space-y-4">
                 {items.map((item) => (
                   <div
                     key={item.id}
@@ -140,7 +140,7 @@ export default function CheckoutPage() {
                         {item.productName}
                       </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground">
-                        Cantidad: 1
+                        Cantidad: {item.quantity}
                       </p>
                     </div>
                     <span className="font-medium text-sm sm:text-base flex-shrink-0">
@@ -162,12 +162,12 @@ export default function CheckoutPage() {
         <div className="order-1 lg:order-2 space-y-4 sm:space-y-6">
           <Card>
             <CardHeader className="pb-4">
-              <CardTitle className="flex items-center text-lg sm:text-xl">
+              <CardTitle className="flex mt-5 items-center text-lg sm:text-xl">
                 <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-500" />
                 Instrucciones de pago
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-0 space-y-4">
+            <CardContent className="pt-0 space-y-4 pb-5">
               <Alert>
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription className="text-sm">

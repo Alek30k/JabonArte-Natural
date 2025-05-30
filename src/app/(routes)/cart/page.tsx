@@ -17,21 +17,25 @@ import {
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import OrderSummary from "./components/OrderSummary";
+import ShippingMethods from "@/components/ShippingMethods";
 
 export default function CartPage() {
   const { items, removeAll } = UseCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
-  // const totalPrice = product.price * quantity;
-
-  const totalPrice = items.reduce((total, product) => total + product.price, 0);
-  const itemCount = items.length;
+  // Calcular el subtotal considerando la cantidad de cada producto
+  const totalPrice = items.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
+  const itemCount = items.reduce(
+    (total, product) => total + product.quantity,
+    0
+  );
 
   const handleCheckout = () => {
     setIsProcessing(true);
-
-    // Simular procesamiento y redirigir al checkout
     setTimeout(() => {
       router.push("/checkout");
       setIsProcessing(false);
@@ -39,7 +43,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="max-w-6xl mt-40 overflow-x-hidden  px-4 py-8 mx-auto sm:px-6 lg:px-8">
+    <div className="max-w-6xl mt-40 overflow-x-hidden px-4 py-8 mx-auto sm:px-6 lg:px-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold sm:text-3xl">Carrito de compras</h1>
         <span className="text-sm text-muted-foreground">
@@ -77,7 +81,7 @@ export default function CartPage() {
               </Button>
             </div>
 
-            <div className="space-y-4 ">
+            <div className="space-y-4">
               {items.map((item) => (
                 <CartItems key={item.id} product={item} />
               ))}
@@ -111,8 +115,6 @@ export default function CartPage() {
                   <Separator />
                   <div className="">
                     <OrderSummary />
-
-                    {/* <span>{formatPrice(totalPrice)}</span> */}
                   </div>
                 </div>
               </CardContent>
@@ -154,6 +156,7 @@ export default function CartPage() {
                 </Button>
               </CardFooter>
             </Card>
+            <ShippingMethods />
           </div>
         </div>
       )}

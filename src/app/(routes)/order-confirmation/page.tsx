@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function OrderConfirmationPage() {
   return (
-    <div className="max-w-2xl px-4 py-16 mx-auto sm:px-6 lg:px-8 text-center">
+    <div className="max-w-2xl px-4 py-36 mx-auto sm:px-6 lg:px-8 text-center">
       <div className="mb-8">
         <CheckCircle className="w-16 h-16 mx-auto mb-4 text-green-500" />
         <h1 className="text-3xl font-bold text-green-600 mb-2">

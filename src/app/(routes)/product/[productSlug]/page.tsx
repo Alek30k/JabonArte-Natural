@@ -9,7 +9,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  // BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
@@ -100,9 +99,7 @@ export default function ProductPage() {
               <BreadcrumbLink href="/productos">Productos</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              {/* <BreadcrumbPage>{product.productName}</BreadcrumbPage> */}
-            </BreadcrumbItem>
+            <BreadcrumbItem></BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
@@ -173,38 +170,6 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
-
-      {/* Product Features */}
-      {/* <div className="bg-gray-50 dark:bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              ¿Por qué elegir nuestros jabones?
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Cada jabón está cuidadosamente elaborado con los mejores
-              ingredientes naturales
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {productFeatures.map((feature, index) => (
-              <Card
-                key={index}
-                className="text-center hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="p-6">
-                  <div className="flex justify-center mb-4">{feature.icon}</div>
-                  <h4 className="font-semibold mb-2">{feature.title}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </div> */}
 
       {/* Product Details Tabs */}
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12">
@@ -439,16 +404,12 @@ export default function ProductPage() {
         </Tabs>
       </div>
 
-      {/* FAQ Section */}
-      {/* <div className="bg-gray-50 dark:bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ProductFAQ />
-        </div>
-      </div> */}
-
       {/* Related Products */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <RelatedProducts />
+        <RelatedProducts
+          category={product.category?.categoryName || ""}
+          currentSlug={productSlug}
+        />
       </div>
     </div>
   );

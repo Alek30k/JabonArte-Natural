@@ -17,8 +17,6 @@ export function useGetFeaturedProductsUniversal(): ResponseType {
 
         const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products?populate=*`;
 
-        console.log("🔍 Fetching products (Universal):", url);
-
         const response = await fetch(url, {
           headers: {
             "Content-Type": "application/json",
@@ -33,23 +31,17 @@ export function useGetFeaturedProductsUniversal(): ResponseType {
         }
 
         const data = await response.json();
-        console.log("📦 Raw data:", data);
 
         // Función para detectar la versión de Strapi y procesar accordingly
         const processProducts = (rawData: any): ProductType[] => {
           if (!rawData.data || !Array.isArray(rawData.data)) {
-            console.log("❌ No data array found");
             return [];
           }
 
           return rawData.data.map((item: any, index: number) => {
-            console.log(`🔧 Processing product ${index + 1}:`, item);
-
             // Detectar si es Strapi v4 (con attributes) o v5 (sin attributes)
             const isV4 = item.attributes !== undefined;
             const productData = isV4 ? item.attributes : item;
-
-            console.log(`📋 Detected Strapi v${isV4 ? "4" : "5"} format`);
 
             // Procesar imágenes según la versión
             let processedImages: any[] = [];
@@ -108,13 +100,11 @@ export function useGetFeaturedProductsUniversal(): ResponseType {
               images: processedImages,
             };
 
-            console.log(`✅ Processed product ${index + 1}:`, processed);
             return processed;
           });
         };
 
         const products = processProducts(data);
-        console.log("✅ All products processed:", products);
 
         setResult(products);
         setLoading(false);

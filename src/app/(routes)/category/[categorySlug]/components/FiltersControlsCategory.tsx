@@ -31,7 +31,6 @@ const FiltersControlsCategory = ({
   setFilterOrigin,
 
   onClearFilters,
-  productCount = 0,
   loading = false,
   products = [],
 }: FilterProps) => {
@@ -176,7 +175,7 @@ const FiltersControlsCategory = ({
 
   return (
     <Card className="sticky top-4 shadow-lg border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-      <CardContent className="p-6">
+      <CardContent className="p-6 ">
         {/* Botón limpiar filtros */}
         {hasActiveFilter && (
           <div className="mb-6">
@@ -193,7 +192,7 @@ const FiltersControlsCategory = ({
         )}
 
         {/* Lista de origins */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {loading ? (
             <CategorySkeleton />
           ) : availableOrigins.length > 0 ? (
@@ -221,17 +220,7 @@ const FiltersControlsCategory = ({
                     `}
                     onClick={() => handleOriginChange(origin.name, !isSelected)}
                   >
-                    <div className="flex items-center space-x-4 p-4">
-                      {/* Checkbox */}
-                      <Checkbox
-                        id={origin.id}
-                        checked={isSelected}
-                        onCheckedChange={(checked) =>
-                          handleOriginChange(origin.name, checked as boolean)
-                        }
-                        className="data-[state=checked]:bg-current data-[state=checked]:border-current"
-                      />
-
+                    <div className="flex items-center space-x-4">
                       {/* Icono */}
                       <div
                         className={`
@@ -311,45 +300,6 @@ const FiltersControlsCategory = ({
             </div>
           )}
         </div>
-
-        {/* Origin seleccionado */}
-        {hasActiveFilter && (
-          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center">
-              <Sparkles className="w-4 h-4 mr-2 text-blue-600" />
-              Origen seleccionado
-            </h4>
-            <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-blue-600" />
-                <span className="font-medium text-blue-900 dark:text-blue-100">
-                  {selectedOrigin}
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-auto p-1 hover:bg-blue-100 text-blue-600"
-                onClick={handleClearAll}
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {/* Mensaje cuando no hay filtros */}
-        {!hasActiveFilter && !loading && availableOrigins.length > 0 && (
-          <div className="mt-6 text-center py-6">
-            <div className="text-gray-400 dark:text-gray-500 mb-3">
-              <Filter className="w-8 h-8 mx-auto mb-2 opacity-50" />
-            </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-              Selecciona un origen para filtrar los productos según su
-              procedencia
-            </p>
-          </div>
-        )}
       </CardContent>
     </Card>
   );

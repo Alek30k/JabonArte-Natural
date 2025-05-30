@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useGetAllProducts } from "@/api/getProductsAll";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -18,8 +17,6 @@ import type { ResponseType } from "@/types/response";
 import type { ProductType } from "@/types/product";
 import ProductCard from "../category/[categorySlug]/components/ProductCard";
 import {
-  Grid3X3,
-  List,
   Search,
   Filter,
   ArrowUpDown,
@@ -30,7 +27,6 @@ import {
   Star,
   DollarSign,
   Package,
-  Sparkles,
   X,
   ChevronLeft,
   ChevronRight,
@@ -234,7 +230,7 @@ const AllProducts = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-24 md:mt-32">
         {/* Filtros y búsqueda */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-2 space-y-4">
           {/* Filtros en línea */}
           <div className="flex flex-wrap gap-4 items-center">
             {/* Origen */}
@@ -381,7 +377,7 @@ const AllProducts = () => {
             <div
               className={
                 viewMode === "grid"
-                  ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  ? "grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                   : "space-y-4"
               }
             >
@@ -389,7 +385,6 @@ const AllProducts = () => {
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
-
             {/* Paginación */}
             {totalPages > 1 && (
               <div className="mt-12 flex items-center justify-center space-x-4">

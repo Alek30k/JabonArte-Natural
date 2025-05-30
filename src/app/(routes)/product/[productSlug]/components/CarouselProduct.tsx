@@ -34,25 +34,19 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   const getImageUrl = (imageUrl: string) => {
     if (!imageUrl) return "/placeholder.svg?height=400&width=400";
 
-    console.log("🖼️ Procesando URL de imagen:", imageUrl);
-    console.log("🌍 Backend URL:", process.env.NEXT_PUBLIC_BACKEND_URL);
-
     // Si ya es una URL completa (Cloudinary o externa)
     if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-      console.log("✅ URL completa detectada:", imageUrl);
       return imageUrl;
     }
 
     // Si es una URL relativa, construir la URL completa
     if (imageUrl.startsWith("/uploads/")) {
       const fullUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
-      console.log("🔧 URL relativa convertida:", fullUrl);
       return fullUrl;
     }
 
     // Si no empieza con /, agregar /uploads/
     const constructedUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imageUrl}`;
-    console.log("🔧 URL construida:", constructedUrl);
     return constructedUrl;
   };
 
