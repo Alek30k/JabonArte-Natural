@@ -1,7 +1,7 @@
 "use client";
 
-// import { useGetRelatedProducts } from "@/api/getRelatedProducts";
-import { ProductType } from "@/types/product";
+import { useGetRelatedProducts } from "@/api/useGetRelatedProducts";
+import type { ProductType } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,38 +13,69 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "@/lib/formatPrice";
-import { useGetRelatedProducts } from "@/api/useGetRelatedProducts";
 
 interface RelatedProductsProps {
   category: string;
   currentSlug: string;
+  currentProduct?: {
+    taste?: string;
+    origin?: string;
+    price?: number;
+  };
 }
 
 export default function RelatedProducts({
   category,
   currentSlug,
+  currentProduct,
 }: RelatedProductsProps) {
   const {
-    data: products,
-    isLoading,
+    result: products,
+    loading,
     error,
-  } = useGetRelatedProducts(category, currentSlug);
+  } = useGetRelatedProducts(category, currentSlug, currentProduct);
 
   if (!category) return null;
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Productos Relacionados</h2>
-      {isLoading ? (
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Productos Relacionados</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+            Basado en la categoría "{category}"
+          </p>
+        </div>
+        {products && products.length > 0 && (
+          <div className="text-sm text-gray-500">
+            {products.length} producto{products.length !== 1 ? "s" : ""}{" "}
+            encontrado{products.length !== 1 ? "s" : ""}
+          </div>
+        )}
+      </div>
+
+      {loading ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[...Array(4)].map((_, index) => (
             <SkeletonCard key={index} />
           ))}
         </div>
-      ) : error || !products || products.length === 0 ? (
-        <p className="text-gray-500">
-          No se encontraron productos relacionados.
-        </p>
+      ) : error ? (
+        <div className="text-center py-8">
+          <p className="text-red-500 mb-2">
+            Error al cargar productos relacionados
+          </p>
+          <p className="text-sm text-gray-500">{error}</p>
+        </div>
+      ) : !products || products.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-gray-500 mb-2">
+            No se encontraron productos relacionados
+          </p>
+          <p className="text-sm text-gray-400">
+            Intenta explorar otras categorías o productos
+          </p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product: ProductType) => (
@@ -57,29 +88,63 @@ export default function RelatedProducts({
 }
 
 function ProductCard({ product }: { product: ProductType }) {
+  const getImageUrl = (imageUrl: string) => {
+    if (!imageUrl) return "/placeholder.svg?height=300&width=300";
+
+    if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+      return imageUrl;
+    }
+
+    if (imageUrl.startsWith("/uploads/")) {
+      return `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
+    }
+
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imageUrl}`;
+  };
+
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
       <CardHeader className="p-0">
-        <div className="relative w-full h-48">
+        <div className="relative w-full h-48 overflow-hidden">
           <Image
-            src={product.images?.[0]?.url || "/placeholder-image.jpg"}
+            src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
             alt={product.productName}
             fill
-            className="object-cover"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
+
+          {/* Badges de información */}
+          <div className="absolute top-2 left-2 flex flex-col gap-1">
+            {product.taste && (
+              <span className="px-2 py-1 text-xs bg-black/70 text-white rounded-full">
+                {product.taste}
+              </span>
+            )}
+            {product.origin && (
+              <span className="px-2 py-1 text-xs bg-yellow-600/80 text-white rounded-full">
+                {product.origin}
+              </span>
+            )}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="p-4">
-        <h3 className="text-lg font-semibold truncate">
+        <h3 className="text-lg font-semibold truncate mb-2">
           {product.productName}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300">
+        {product.features && (
+          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">
+            {product.features}
+          </p>
+        )}
+        <p className="text-lg font-bold text-green-600">
           {formatPrice(product.price)}
         </p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Button asChild variant="outline" className="w-full">
-          <Link href={`/products/${product.slug}`}>Ver Producto</Link>
+          <Link href={`/productos/${product.slug}`}>Ver Producto</Link>
         </Button>
       </CardFooter>
     </Card>
@@ -94,6 +159,8 @@ function SkeletonCard() {
       </CardHeader>
       <CardContent className="p-4 space-y-2">
         <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-3 w-full" />
+        <Skeleton className="h-3 w-2/3" />
         <Skeleton className="h-4 w-1/2" />
       </CardContent>
       <CardFooter className="p-4 pt-0">

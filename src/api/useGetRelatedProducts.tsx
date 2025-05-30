@@ -1,125 +1,207 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ProductType } from "@/types/product";
 
-interface UseGetRelatedProductsReturn {
-  data: ProductType[] | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
 export function useGetRelatedProducts(
-  category: string,
-  currentSlug: string
-): UseGetRelatedProductsReturn {
-  const [data, setData] = useState<ProductType[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  categorySlug: string | string[],
+  currentSlug: string,
+  currentProduct?: { taste?: string; origin?: string; price?: number }
+) {
+  const [result, setResult] = useState<ProductType[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    setData(null);
-    setError(null);
-
-    console.log(currentSlug);
-
-    if (!category || !currentSlug) {
+    if (!categorySlug || !currentSlug) {
+      setLoading(false);
       return;
     }
-
-    const fetchRelatedProducts = async () => {
-      setIsLoading(true);
-      setError(null);
-
+    (async () => {
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_BACKEND_URL ||
-          "https://jabonarte.onrender.com";
+        setLoading(true);
+        setError("");
 
-        // Opción 1: Intentar endpoint específico de productos relacionados
-        let url = `${baseUrl}/api/products/related?category=${encodeURIComponent(
-          category
-        )}&exclude=${encodeURIComponent(currentSlug)}&limit=4`;
+        const baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const allRelatedProducts: ProductType[] = [];
+        const maxProducts = 4;
 
-        console.log("🔍 Trying related products endpoint:", url);
+        // Estrategia 1: Productos de la misma categoría
+        console.log("🔍 Strategy 1: Same category products");
+        const categoryUrl = `${baseUrl}/api/products?populate=*&filters[category][slug][$eq]=${categorySlug}&filters[slug][$ne]=${currentSlug}&pagination[limit]=6`;
 
-        let response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const categoryRes = await fetch(categoryUrl);
+        const categoryJson = await categoryRes.json();
+        const categoryProducts = categoryJson.data || [];
+
+        allRelatedProducts.push(...categoryProducts);
+        console.log(`✅ Category products: ${categoryProducts.length}`);
+
+        // Estrategia 2: Productos con el mismo sabor (si está disponible)
+        if (currentProduct?.taste && allRelatedProducts.length < maxProducts) {
+          console.log("🔍 Strategy 2: Same taste products");
+          const tasteUrl = `${baseUrl}/api/products?populate=*&filters[taste][$eq]=${encodeURIComponent(
+            currentProduct.taste
+          )}&filters[slug][$ne]=${currentSlug}&pagination[limit]=4`;
+
+          try {
+            const tasteRes = await fetch(tasteUrl);
+            const tasteJson = await tasteRes.json();
+            const tasteProducts = tasteJson.data || [];
+
+            // Agregar productos que no estén ya en la lista
+            const existingIds = new Set(allRelatedProducts.map((p) => p.id));
+            const newTasteProducts = tasteProducts.filter(
+              (p: ProductType) => !existingIds.has(p.id)
+            );
+
+            allRelatedProducts.push(...newTasteProducts);
+            console.log(`✅ Taste products added: ${newTasteProducts.length}`);
+          } catch (tasteError) {
+            console.warn("⚠️ Taste query failed:", tasteError);
+          }
+        }
+
+        // Estrategia 3: Productos del mismo origen (si está disponible)
+        if (currentProduct?.origin && allRelatedProducts.length < maxProducts) {
+          console.log("🔍 Strategy 3: Same origin products");
+          const originUrl = `${baseUrl}/api/products?populate=*&filters[origin][$eq]=${encodeURIComponent(
+            currentProduct.origin
+          )}&filters[slug][$ne]=${currentSlug}&pagination[limit]=4`;
+
+          try {
+            const originRes = await fetch(originUrl);
+            const originJson = await originRes.json();
+            const originProducts = originJson.data || [];
+
+            const existingIds = new Set(allRelatedProducts.map((p) => p.id));
+            const newOriginProducts = originProducts.filter(
+              (p: ProductType) => !existingIds.has(p.id)
+            );
+
+            allRelatedProducts.push(...newOriginProducts);
+            console.log(
+              `✅ Origin products added: ${newOriginProducts.length}`
+            );
+          } catch (originError) {
+            console.warn("⚠️ Origin query failed:", originError);
+          }
+        }
+
+        // Estrategia 4: Productos en rango de precio similar (si está disponible)
+        if (currentProduct?.price && allRelatedProducts.length < maxProducts) {
+          console.log("🔍 Strategy 4: Similar price range products");
+          const priceMin = Math.floor(currentProduct.price * 0.7); // -30%
+          const priceMax = Math.ceil(currentProduct.price * 1.3); // +30%
+
+          const priceUrl = `${baseUrl}/api/products?populate=*&filters[price][$gte]=${priceMin}&filters[price][$lte]=${priceMax}&filters[slug][$ne]=${currentSlug}&pagination[limit]=4`;
+
+          try {
+            const priceRes = await fetch(priceUrl);
+            const priceJson = await priceRes.json();
+            const priceProducts = priceJson.data || [];
+
+            const existingIds = new Set(allRelatedProducts.map((p) => p.id));
+            const newPriceProducts = priceProducts.filter(
+              (p: ProductType) => !existingIds.has(p.id)
+            );
+
+            allRelatedProducts.push(...newPriceProducts);
+            console.log(
+              `✅ Price range products added: ${newPriceProducts.length}`
+            );
+          } catch (priceError) {
+            console.warn("⚠️ Price range query failed:", priceError);
+          }
+        }
+
+        // Estrategia 5: Productos populares/recientes como fallback
+        if (allRelatedProducts.length < maxProducts) {
+          console.log("🔍 Strategy 5: Popular/recent products fallback");
+          const fallbackUrl = `${baseUrl}/api/products?populate=*&filters[slug][$ne]=${currentSlug}&sort[0]=createdAt:desc&pagination[limit]=${maxProducts}`;
+
+          try {
+            const fallbackRes = await fetch(fallbackUrl);
+            const fallbackJson = await fallbackRes.json();
+            const fallbackProducts = fallbackJson.data || [];
+
+            const existingIds = new Set(allRelatedProducts.map((p) => p.id));
+            const newFallbackProducts = fallbackProducts.filter(
+              (p: ProductType) => !existingIds.has(p.id)
+            );
+
+            allRelatedProducts.push(...newFallbackProducts);
+            console.log(
+              `✅ Fallback products added: ${newFallbackProducts.length}`
+            );
+          } catch (fallbackError) {
+            console.warn("⚠️ Fallback query failed:", fallbackError);
+          }
+        }
+
+        // Algoritmo de puntuación para ordenar por relevancia
+        const scoredProducts = allRelatedProducts.map((product) => {
+          let score = 0;
+
+          // Puntuación por categoría (máxima prioridad)
+          if (categoryProducts.some((p) => p.id === product.id)) {
+            score += 10;
+          }
+
+          // Puntuación por características similares
+          if (currentProduct?.taste && product.taste === currentProduct.taste) {
+            score += 5;
+          }
+
+          if (
+            currentProduct?.origin &&
+            product.origin === currentProduct.origin
+          ) {
+            score += 3;
+          }
+
+          // Puntuación por rango de precio similar
+          if (currentProduct?.price && product.price) {
+            const priceDiff =
+              Math.abs(product.price - currentProduct.price) /
+              currentProduct.price;
+            if (priceDiff <= 0.3) score += 2;
+          }
+
+          return { ...product, score };
         });
 
-        // Si el endpoint específico no existe, usar endpoint general
-        if (response.status === 404) {
-          console.log(
-            "⚠️ Related endpoint not found, trying general products endpoint"
-          );
+        // Ordenar por puntuación y limitar a 4 productos
+        const finalProducts = scoredProducts
+          .sort((a, b) => (b.score || 0) - (a.score || 0))
+          .slice(0, maxProducts)
+          .map(({ score, ...product }) => product); // Remover el score del resultado final
 
-          // Opción 2: Usar endpoint general de productos y filtrar en el cliente
-          url = `${baseUrl}/api/products`;
-          response = await fetch(url, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-        }
+        console.log(
+          "✅ Final related products with scoring:",
+          finalProducts.length
+        );
+        console.log("📊 Products breakdown:", {
+          category: categoryProducts.length,
+          total: allRelatedProducts.length,
+          final: finalProducts.length,
+        });
 
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
+        setResult(finalProducts);
+        setLoading(false);
+      } catch (error: unknown) {
+        console.error("❌ Error fetching related products:", error);
 
-        const result = await response.json();
-        let products: ProductType[] = [];
-
-        // Manejar diferentes estructuras de respuesta
-        if (result && Array.isArray(result.data)) {
-          products = result.data;
-        } else if (Array.isArray(result)) {
-          products = result;
-        } else if (
-          result &&
-          result.products &&
-          Array.isArray(result.products)
-        ) {
-          products = result.products;
+        if (error instanceof Error) {
+          setError(error.message);
         } else {
-          console.warn("⚠️ Unexpected API response structure:", result);
-          products = [];
+          setError("An unknown error occurred");
         }
-
-        // Filtrar productos relacionados en el cliente
-        const relatedProducts = products
-          .filter((product: ProductType) => {
-            // Excluir el producto actual
-            if (product.category.slug === currentSlug) return false;
-
-            // Filtrar por categoría (si existe el campo)
-            if (product.category.slug && product.category.slug === category)
-              return true;
-            if (product.category && product.category.categoryName === category)
-              return true;
-
-            // Si no hay campo de categoría específico, usar otros criterios
-            // Por ejemplo, mismo origen o características similares
-            return true;
-          })
-          .slice(0, 4); // Limitar a 4 productos
-
-        console.log("✅ Related products found:", relatedProducts.length);
-        setData(relatedProducts);
-      } catch (err) {
-        console.error("❌ Error fetching related products:", err);
-        setError(err instanceof Error ? err.message : "Error desconocido");
-        setData([]);
-      } finally {
-        setIsLoading(false);
+        setResult([]);
+        setLoading(false);
       }
-    };
+    })();
+  }, [categorySlug, currentSlug, currentProduct]);
 
-    fetchRelatedProducts();
-  }, [category, currentSlug]);
-
-  return { data, isLoading, error };
+  return { loading, result, error };
 }

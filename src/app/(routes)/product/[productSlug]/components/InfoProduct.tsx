@@ -54,7 +54,7 @@ const InfoProductAnimated = (props: InfoProductProps) => {
           className="flex-1 cursor-pointer"
           onClick={() => addItem(product)}
         >
-          Comprar
+          AGREGAR AL CARRITO{" "}
         </Button>
         <div className="flex-shrink-0">
           <Heart

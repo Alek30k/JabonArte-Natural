@@ -77,7 +77,7 @@ const AllProducts = () => {
     const cats: string[] = [
       ...new Set(
         products
-          .map((p: ProductType) => p.category?.data?.attributes?.categoryName)
+          .map((p: ProductType) => p.category?.categoryName)
           .filter(Boolean) as string[]
       ),
     ];
@@ -114,7 +114,7 @@ const AllProducts = () => {
         .includes(searchQuery.toLowerCase());
       const matchesCategory =
         selectedCategory === "" ||
-        product.category?.data?.attributes?.categoryName === selectedCategory;
+        product.category?.categoryName === selectedCategory;
       const matchesOrigin =
         selectedOrigin === "" || product.origin === selectedOrigin;
       const matchesPrice =
