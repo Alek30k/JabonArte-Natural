@@ -67,13 +67,13 @@ export default function ProductPage() {
     {
       icon: <Truck className="w-5 h-5" />,
       title: "Envío Gratis",
-      description: "En compras +$15.000",
+      description: "En compras +$75.000",
     },
-    {
-      icon: <RotateCcw className="w-5 h-5" />,
-      title: "Devolución Fácil",
-      description: "30 días para devolver",
-    },
+    // {
+    //   icon: <RotateCcw className="w-5 h-5" />,
+    //   title: "Devolución Fácil",
+    //   description: "30 días para devolver",
+    // },
     {
       icon: <Shield className="w-5 h-5" />,
       title: "Compra Segura",

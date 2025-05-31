@@ -8,12 +8,17 @@ import { formatPrice } from "@/lib/formatPrice";
 import type { ProductType } from "@/types/product";
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import PaymentInfo from "./PaymentInfo";
+import PaymentInfoCompact from "./PaymentInfoCompact";
+import CardInfo from "./cardInfo";
 
 export type InfoProductProps = {
   product: ProductType;
 };
 
 const InfoProductAnimated = (props: InfoProductProps) => {
+  const productPrice = 45000;
+
   const { product } = props;
   const { addItem } = UseCart();
   const { addLovedItem, removeLovedItem, lovedItems } = UseLovedProducts();
@@ -46,11 +51,9 @@ const InfoProductAnimated = (props: InfoProductProps) => {
         </div>
       </div>
       <Separator className="my-4" />
-      <p className="font-semibold ">Lo que tenés que saber de este producto</p>
-      <br />
-      <p>{product.features}</p>
-      <Separator className="my-4" />
-      <p className="my-4 text-2xl">{formatPrice(product.price)}</p>
+      <CardInfo />
+
+      <p className="text-3xl mb-4">{formatPrice(product.price)}</p>
       <div className="flex items-center gap-3">
         <Button
           className="flex-1 cursor-pointer"

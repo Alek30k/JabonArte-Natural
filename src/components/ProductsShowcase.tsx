@@ -72,7 +72,7 @@ const ProductsShowcase = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8 mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8 mb-5">
           {displayProducts.map((product: ProductType, index) => {
             const { id, slug, images, productName, price } = product;
             const originalImageUrl =
@@ -182,7 +182,7 @@ const ProductsShowcase = () => {
           <Button
             onClick={() => router.push("/productos")}
             size="lg"
-            className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 px-12 py-4 text-xl font-semibold rounded-full"
+            className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 cursor-pointer hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 px-12 py-4 text-xl font-semibold rounded-full"
           >
             <Sparkles className="mr-3 w-6 h-6" />
             Ver todos los productos
