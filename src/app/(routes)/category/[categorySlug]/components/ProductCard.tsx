@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,13 +21,20 @@ import {
   Check,
   ShoppingCartIcon,
 } from "lucide-react";
+import { getBlurDataUrl, getImageUrl } from "@/utils/imagenUtils";
+// import { getImageUrl, getBlurDataUrl } from "@/utils/imageUtils";
 
 type ProductCardProps = {
   product: ProductType;
   isLoading?: boolean;
+  isAboveFold?: boolean; // New prop to indicate if card is above the fold
 };
 
-const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  isLoading = false,
+  isAboveFold = false,
+}: ProductCardProps) => {
   const { addItem } = UseCart();
   const { addLovedItem, removeLovedItem, lovedItems } = UseLovedProducts();
   const router = useRouter();
@@ -44,19 +50,22 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
   const isOnSale = Math.random() > 0.8; // 20% chance de estar en oferta
   const originalPrice = isOnSale ? product.price * 1.3 : null;
 
+  const imageUrl = product.images?.[currentImageIndex]?.url
+    ? getImageUrl(product.images[currentImageIndex].url, 400, 400)
+    : "/placeholder.svg?height=400&width=400";
+  const blurDataUrl = product.images?.[currentImageIndex]?.url
+    ? getBlurDataUrl(product.images[currentImageIndex].url)
+    : "/placeholder.svg";
+
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     setIsAddingToCart(true);
-
-    // Simular delay de API
     setTimeout(() => {
       addItem(product);
       setIsAddingToCart(false);
       setJustAdded(true);
-
-      // Reset del estado después de 2 segundos
       setTimeout(() => setJustAdded(false), 2000);
     }, 500);
   };
@@ -113,38 +122,35 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardContent className="p-0 ">
-        {/* Imagen del producto */}
+      <CardContent className="p-0">
         <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
           <Link href={`/product/${product.slug}`}>
             <Image
-              src={`${product.images[currentImageIndex]?.url}`}
+              src={imageUrl}
               alt={product.productName}
-              width={500}
-              height={300}
+              width={400}
+              height={400}
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading={isAboveFold ? undefined : "lazy"}
+              priority={isAboveFold}
+              placeholder="blur"
+              blurDataURL={blurDataUrl}
             />
           </Link>
-
-          {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-          {/* Badge de origen */}
           <div className="absolute top-3 right-3">
             <Badge className="bg-amber-500/90 hover:bg-amber-600 text-white shadow-lg backdrop-blur-sm">
               <Award className="w-3 h-3 mr-1" />
               {product.origin}
             </Badge>
           </div>
-
-          {/* Controles de imagen */}
           {hasMultipleImages && isHovered && (
             <>
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute cursor-pointer left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg dark:text-black"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg dark:text-black"
                 onClick={prevImage}
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -152,13 +158,11 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute right-2 cursor-pointer dark:text-black top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg dark:text-black"
                 onClick={nextImage}
               >
                 <ChevronRight className="w-4 h-4" />
               </Button>
-
-              {/* Indicadores de imagen */}
               <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1">
                 {product.images.map((_, index) => (
                   <div
@@ -173,8 +177,6 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
               </div>
             </>
           )}
-
-          {/* Acciones flotantes */}
           <div
             className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-2 transition-all duration-300 ${
               isHovered
@@ -182,41 +184,32 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
                 : "opacity-0 translate-y-4"
             }`}
           >
-            {/* Botón favoritos */}
             <Button
               variant="secondary"
               size="icon"
-              className={`w-10 h-10 cursor-pointer rounded-full shadow-lg transition-all duration-300 ${
+              className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
                 isLoved
                   ? "bg-red-500 hover:bg-red-600 text-white"
                   : "bg-white/90 hover:bg-white text-gray-700 hover:text-red-500"
               }`}
               onClick={handleToggleLove}
             >
-              <Heart
-                className={`w-4 h-4 ${
-                  isLoved ? "fill-current cursor-pointer" : ""
-                }`}
-              />
+              <Heart className={`w-4 h-4 ${isLoved ? "fill-current" : ""}`} />
             </Button>
-
-            {/* Botón ver producto */}
             <Button
               variant="secondary"
               size="icon"
-              className="w-10 h-10 rounded-full cursor-pointer bg-white/90 hover:bg-white text-gray-700 hover:text-blue-500 shadow-lg transition-all duration-300"
+              className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-blue-500 shadow-lg transition-all duration-300"
               onClick={handleViewProduct}
             >
               <Eye className="w-4 h-4" />
             </Button>
-
-            {/* Botón agregar al carrito */}
             <Button
               size="icon"
               className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
                 justAdded
                   ? "bg-green-500 hover:bg-green-600"
-                  : "bg-orange-400 hover:bg-orange-500 hover:scale-110 cursor-pointer"
+                  : "bg-orange-400 hover:bg-orange-500 hover:scale-110"
               }`}
               onClick={handleAddToCart}
               disabled={isAddingToCart}
@@ -231,17 +224,12 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
             </Button>
           </div>
         </div>
-
-        {/* Información del producto */}
         <div className="p-4 space-y-3">
-          {/* Nombre del producto */}
           <Link href={`/product/${product.slug}`}>
-            <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 hover:text-blue-600 transition-colors cursor-pointer group-hover:text-blue-600">
+            <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 hover:text-blue-600 transition-colors group-hover:text-blue-600">
               {product.productName}
             </h3>
           </Link>
-
-          {/* Precio */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-lg font-bold text-gray-900 dark:text-white">
