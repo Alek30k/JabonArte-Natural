@@ -22,7 +22,6 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { getBlurDataUrl, getImageUrl } from "@/utils/imagenUtils";
-// import { getImageUrl, getBlurDataUrl } from "@/utils/imageUtils";
 
 type ProductCardProps = {
   product: ProductType;

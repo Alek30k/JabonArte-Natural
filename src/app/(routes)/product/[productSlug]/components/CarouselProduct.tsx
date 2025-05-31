@@ -15,6 +15,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { getBlurDataUrl, getImageUrl } from "@/utils/imagenUtils";
 
 interface CarouselProductFixedProps {
   images: Array<{
@@ -30,27 +31,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Agregar más logging para debug en producción
-  const getImageUrl = (imageUrl: string) => {
-    if (!imageUrl) return "/placeholder.svg?height=400&width=400";
-
-    // Si ya es una URL completa (Cloudinary o externa)
-    if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-      return imageUrl;
-    }
-
-    // Si es una URL relativa, construir la URL completa
-    if (imageUrl.startsWith("/uploads/")) {
-      const fullUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
-      return fullUrl;
-    }
-
-    // Si no empieza con /, agregar /uploads/
-    const constructedUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imageUrl}`;
-    return constructedUrl;
-  };
-
-  // Función para manejar el zoom con lupa (solo desktop)
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageRef.current) return;
 
@@ -58,10 +38,9 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-    setZoomPosition({ x, y });
+    setZoomPosition > { x, y };
   }, []);
 
-  // Si no hay imágenes, mostrar placeholder
   if (!images || images.length === 0) {
     return (
       <div className="flex gap-4">
@@ -73,8 +52,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   }
 
   const currentImage = images[selectedImageIndex];
-
-  // Número máximo de thumbnails visibles
   const maxVisibleThumbnails = 4;
   const showScrollButtons = images.length > maxVisibleThumbnails;
 
@@ -93,7 +70,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
   };
 
   const handleMouseEnter = () => {
-    // Solo habilitar zoom en desktop
     if (window.innerWidth >= 768) {
       setIsZooming(true);
     }
@@ -110,10 +86,8 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
 
   return (
     <div className="flex gap-4 mt-20">
-      {/* Thumbnails Column - Solo si hay más de 1 imagen y no es móvil */}
       {images.length > 1 && (
         <div className="hidden md:flex flex-col w-20 sm:w-24">
-          {/* Botón scroll up */}
           {showScrollButtons && thumbnailStartIndex > 0 && (
             <Button
               variant="outline"
@@ -124,11 +98,11 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               <ChevronUp className="w-4 h-4" />
             </Button>
           )}
-
-          {/* Thumbnails */}
           <div className="flex flex-col gap-2 flex-1">
             {visibleThumbnails.map((image, index) => {
               const actualIndex = thumbnailStartIndex + index;
+              const thumbnailUrl = getImageUrl(image.url, 96, 96);
+              const thumbnailBlurUrl = getBlurDataUrl(image.url);
               return (
                 <Card
                   key={image.id}
@@ -141,28 +115,27 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                 >
                   <div className="relative aspect-square">
                     <Image
-                      src={getImageUrl(image.url) || "/placeholder.svg"}
+                      src={thumbnailUrl}
                       alt={`Thumbnail ${actualIndex + 1}`}
-                      width={500}
-                      height={300}
+                      width={96}
+                      height={96}
                       className="object-cover transition-transform duration-200 hover:scale-110"
-                      sizes="(max-width: 640px) 80px, 96px"
+                      sizes="96px"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={thumbnailBlurUrl}
                       onError={(e) => {
                         console.error(
                           "❌ Error cargando thumbnail:",
-                          getImageUrl(image.url)
+                          thumbnailUrl
                         );
                         e.currentTarget.src =
                           "/placeholder.svg?height=96&width=96";
                       }}
                     />
-
-                    {/* Overlay para imagen no seleccionada */}
                     {selectedImageIndex !== actualIndex && (
                       <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors duration-200" />
                     )}
-
-                    {/* Indicador de imagen actual */}
                     {selectedImageIndex === actualIndex && (
                       <div className="absolute bottom-1 right-1">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -173,8 +146,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               );
             })}
           </div>
-
-          {/* Botón scroll down */}
           {showScrollButtons &&
             thumbnailStartIndex + maxVisibleThumbnails < images.length && (
               <Button
@@ -186,8 +157,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                 <ChevronDown className="w-4 h-4" />
               </Button>
             )}
-
-          {/* Contador de imágenes */}
           <div className="text-center mt-2">
             <span className="text-xs text-gray-500 dark:text-gray-400">
               {selectedImageIndex + 1}/{images.length}
@@ -195,23 +164,21 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
           </div>
         </div>
       )}
-
-      {/* Imagen Principal */}
-      <div className="flex-1 ">
-        <div className="relative group ">
-          <Card className="overflow-hidden bg-gray-50 dark:bg-gray-800 ">
+      <div className="flex-1">
+        <div className="relative group">
+          <Card className="overflow-hidden bg-gray-50 dark:bg-gray-800">
             <div
               ref={imageRef}
-              className="relative aspect-square cursor-zoom-in "
+              className="relative aspect-square cursor-zoom-in"
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <Image
-                src={getImageUrl(currentImage.url) || "/placeholder.svg"}
+                src={getImageUrl(currentImage.url, 400, 400)}
                 alt={`Producto imagen ${selectedImageIndex + 1}`}
-                width={500}
-                height={300}
+                width={400}
+                height={400}
                 className={`object-cover transition-transform duration-300 ${
                   isZooming ? "scale-150" : "md:group-hover:scale-110"
                 }`}
@@ -225,20 +192,16 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                 sizes="(max-width: 768px) 100vw, 60vw"
                 priority={selectedImageIndex === 0}
                 placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                blurDataURL={getBlurDataUrl(currentImage.url)}
                 onError={(e) => {
                   console.error(
                     "❌ Error cargando imagen principal:",
-                    getImageUrl(currentImage.url)
+                    getImageUrl(currentImage.url, 400, 400)
                   );
                   e.currentTarget.src = "/placeholder.svg?height=400&width=400";
                 }}
               />
-
-              {/* Overlay con controles */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 " />
-
-              {/* Badges */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
               <div className="absolute top-4 left-4 space-x-2 space-y-2">
                 <Badge className="bg-green-500 hover:bg-green-600 text-white">
                   100% Natural
@@ -247,8 +210,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                   Artesanal
                 </Badge>
               </div>
-
-              {/* Acciones superiores */}
               <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                 <Button
                   variant="secondary"
@@ -274,24 +235,31 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                       <Expand className="w-4 h-4" />
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl w-full p-0 ">
+                  <DialogContent className="max-w-4xl w-full p-0">
                     <div className="relative aspect-square">
                       <Image
-                        src={
-                          getImageUrl(currentImage.url) || "/placeholder.svg"
-                        }
+                        src={getImageUrl(currentImage.url, 800, 800)}
                         alt={`Producto imagen ${selectedImageIndex + 1}`}
-                        width={500}
-                        height={300}
+                        width={800}
+                        height={800}
                         className="object-contain"
                         sizes="90vw"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL={getBlurDataUrl(currentImage.url)}
+                        onError={(e) => {
+                          console.error(
+                            "❌ Error cargando imagen de diálogo:",
+                            getImageUrl(currentImage.url, 800, 800)
+                          );
+                          e.currentTarget.src =
+                            "/placeholder.svg?height=800&width=800";
+                        }}
                       />
                     </div>
                   </DialogContent>
                 </Dialog>
               </div>
-
-              {/* Indicador de zoom (solo desktop) */}
               {isZooming && (
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
                   <div className="bg-black/70 text-white px-3 py-1 rounded-full text-xs flex items-center space-x-1">
@@ -303,8 +271,6 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
             </div>
           </Card>
         </div>
-
-        {/* Thumbnails horizontales para móvil */}
         {images.length > 1 && (
           <div className="md:hidden mt-4 p-1 flex space-x-2 overflow-x-auto pb-2">
             {images.map((image, index) => (
@@ -319,12 +285,23 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               >
                 <div className="relative w-16 h-16">
                   <Image
-                    src={getImageUrl(image.url) || "/placeholder.svg"}
+                    src={getImageUrl(image.url, 64, 64)}
                     alt={`Thumbnail ${index + 1}`}
-                    width={500}
-                    height={300}
+                    width={64}
+                    height={64}
                     className="object-cover"
                     sizes="64px"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataUrl(image.url)}
+                    onError={(e) => {
+                      console.error(
+                        "❌ Error cargando thumbnail móvil:",
+                        getImageUrl(image.url, 64, 64)
+                      );
+                      e.currentTarget.src =
+                        "/placeholder.svg?height=64&width=64";
+                    }}
                   />
                 </div>
               </Card>

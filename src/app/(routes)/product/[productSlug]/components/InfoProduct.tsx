@@ -8,8 +8,6 @@ import { formatPrice } from "@/lib/formatPrice";
 import type { ProductType } from "@/types/product";
 import { Heart } from "lucide-react";
 import { useState } from "react";
-import PaymentInfo from "./PaymentInfo";
-import PaymentInfoCompact from "./PaymentInfoCompact";
 import CardInfo from "./cardInfo";
 
 export type InfoProductProps = {
@@ -17,8 +15,6 @@ export type InfoProductProps = {
 };
 
 const InfoProductAnimated = (props: InfoProductProps) => {
-  const productPrice = 45000;
-
   const { product } = props;
   const { addItem } = UseCart();
   const { addLovedItem, removeLovedItem, lovedItems } = UseLovedProducts();

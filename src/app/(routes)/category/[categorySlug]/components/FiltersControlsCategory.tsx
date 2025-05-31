@@ -15,7 +15,7 @@ type FilterProps = {
   onClearFilters?: () => void;
   productCount?: number;
   loading?: boolean;
-  products?: ProductType[]; // Agregamos los productos para extraer los origins
+  products?: ProductType[];
 };
 
 const FiltersControlsCategory = ({

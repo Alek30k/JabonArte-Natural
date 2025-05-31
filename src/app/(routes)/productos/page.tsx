@@ -61,7 +61,7 @@ const AllProducts = () => {
   const [productsPerPage] = useState(12);
 
   // Extraer categorías y orígenes únicos
-  const { categories, origins, priceStats } = useMemo(() => {
+  const { origins, priceStats } = useMemo(() => {
     if (
       !products ||
       !Array.isArray(products) ||
