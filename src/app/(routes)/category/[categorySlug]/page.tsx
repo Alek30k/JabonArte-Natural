@@ -19,8 +19,6 @@ import type { ProductType } from "@/types/product";
 import FiltersControlsCategory from "./components/FiltersControlsCategory";
 import ProductCard from "./components/ProductCard";
 import {
-  Grid3X3,
-  List,
   ArrowUpDown,
   RefreshCw,
   AlertCircle,
@@ -29,7 +27,6 @@ import {
   Star,
   DollarSign,
   Package,
-  Sparkles,
   Filter,
 } from "lucide-react";
 

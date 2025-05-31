@@ -77,6 +77,12 @@ function ProductCard({ product }: { product: ProductType }) {
     if (!imageUrl) return "/placeholder.svg?height=300&width=300";
 
     if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+      // Agrega parámetros de optimización para Cloudinary
+      if (imageUrl.includes("res.cloudinary.com")) {
+        const parts = imageUrl.split("/upload/");
+        return `${parts[0]}/upload/q_auto,f_auto,w_500/${parts[1]}`;
+      }
+
       return imageUrl;
     }
 
@@ -84,7 +90,9 @@ function ProductCard({ product }: { product: ProductType }) {
       return `${process.env.NEXT_PUBLIC_BACKEND_URL}${imageUrl}`;
     }
 
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${imageUrl}`;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}${
+      imageUrl.startsWith("/uploads/") ? imageUrl : `/uploads/${imageUrl}`
+    }`;
   };
 
   return (

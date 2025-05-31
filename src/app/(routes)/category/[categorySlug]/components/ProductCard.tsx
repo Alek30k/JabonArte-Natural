@@ -120,7 +120,8 @@ const ProductCard = ({ product, isLoading = false }: ProductCardProps) => {
             <Image
               src={`${product.images[currentImageIndex]?.url}`}
               alt={product.productName}
-              fill
+              width={500}
+              height={300}
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />

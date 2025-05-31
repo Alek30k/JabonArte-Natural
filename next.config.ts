@@ -21,6 +21,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  compress: true,
 };
 
 module.exports = nextConfig;

@@ -64,7 +64,8 @@ const CartItemsComplete = (props: CartItemProps) => {
               <Image
                 src={`${product.images[0].url}`}
                 alt={product.productName || "Producto"}
-                fill
+                width={500}
+                height={300}
                 className="object-cover hover:scale-105 transition-transform duration-200"
                 sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 128px"
               />

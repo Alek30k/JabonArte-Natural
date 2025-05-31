@@ -143,7 +143,8 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                     <Image
                       src={getImageUrl(image.url) || "/placeholder.svg"}
                       alt={`Thumbnail ${actualIndex + 1}`}
-                      fill
+                      width={500}
+                      height={300}
                       className="object-cover transition-transform duration-200 hover:scale-110"
                       sizes="(max-width: 640px) 80px, 96px"
                       onError={(e) => {
@@ -209,7 +210,8 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               <Image
                 src={getImageUrl(currentImage.url) || "/placeholder.svg"}
                 alt={`Producto imagen ${selectedImageIndex + 1}`}
-                fill
+                width={500}
+                height={300}
                 className={`object-cover transition-transform duration-300 ${
                   isZooming ? "scale-150" : "md:group-hover:scale-110"
                 }`}
@@ -279,7 +281,8 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                           getImageUrl(currentImage.url) || "/placeholder.svg"
                         }
                         alt={`Producto imagen ${selectedImageIndex + 1}`}
-                        fill
+                        width={500}
+                        height={300}
                         className="object-contain"
                         sizes="90vw"
                       />
@@ -318,7 +321,8 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                   <Image
                     src={getImageUrl(image.url) || "/placeholder.svg"}
                     alt={`Thumbnail ${index + 1}`}
-                    fill
+                    width={500}
+                    height={300}
                     className="object-cover"
                     sizes="64px"
                   />

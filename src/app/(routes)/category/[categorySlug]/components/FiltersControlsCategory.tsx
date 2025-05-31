@@ -4,18 +4,9 @@ import { useState, useMemo } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Filter,
-  X,
-  RotateCcw,
-  Sparkles,
-  Grid3X3,
-  Package,
-  MapPin,
-} from "lucide-react";
+import { RotateCcw, Package } from "lucide-react";
 import type { ProductType } from "@/types/product";
 
 type FilterProps = {

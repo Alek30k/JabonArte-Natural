@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { UseCart } from "@/hooks/UseCart";
 import Image from "next/image";
 import { useState } from "react";
-
 import { useGetFeaturedProductsUniversal } from "@/api/useGetFeaturedProductsUniversal";
 import { formatPrice } from "@/lib/formatPrice";
 
@@ -97,7 +96,8 @@ const ProductsShowcase = () => {
                     <Image
                       src={imageUrl || "/placeholder.svg"}
                       alt={productName || "Producto"}
-                      fill
+                      width={500}
+                      height={300}
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                       onError={() =>
