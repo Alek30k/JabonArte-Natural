@@ -53,22 +53,22 @@ const ProductsShowcase = () => {
   }
 
   return (
-    <section className="min-h-screen  dark:from-gray-900 dark:to-gray-800 py-16">
+    <section className="min-h-screen  dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+          <h1 className="text-2xl sm:text-5xl lg:text-6xl  text-gray-900 dark:text-white mb-6">
             Descubre Nuestros
             <span className="block bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               Productos Estrella
             </span>
           </h1>
 
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          {/* <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Una colección cuidadosamente seleccionada de nuestros productos más
             populares, creados con ingredientes naturales y mucho amor
             artesanal.
-          </p>
+          </p> */}
         </div>
 
         {/* Products Grid */}
@@ -149,10 +149,10 @@ const ProductsShowcase = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-4 md:p-6">
+                  <div className="p-2 md:p-4 lg:p-6">
                     <div className="space-y-4">
                       {/* Product Name */}
-                      <h2 className=" text-xl text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
+                      <h2 className=" text-gray-600 dark:text-white line-clamp-2 leading-tight group-hover:text-pink-600 transition-colors">
                         {productName}
                       </h2>
 
@@ -160,7 +160,7 @@ const ProductsShowcase = () => {
                       <div className="flex items-center md:justify-between ">
                         {price ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl  hover:text-pink-600 dark:text-pink-400">
+                            <span className="text-xl  hover:text-pink-600 dark:text-white">
                               {formatPrice(price)}
                             </span>
                           </div>
@@ -169,23 +169,6 @@ const ProductsShowcase = () => {
                             Consultar precio
                           </span>
                         )}
-
-                        <Badge
-                          variant="secondary"
-                          className="hidden md:flex bg-green-100 text-green-800"
-                        >
-                          Disponible
-                        </Badge>
-                      </div>
-
-                      {/* Features */}
-                      <div className="flex flex-wrap gap-2">
-                        <span className="text-xs bg-pink-100 dark:bg-pink-900/30 text-pink-800 dark:text-pink-200 px-2 py-1 rounded-full">
-                          🌿 Natural
-                        </span>
-                        <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full">
-                          ✋ Artesanal
-                        </span>
                       </div>
                     </div>
                   </div>
