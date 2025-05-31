@@ -80,7 +80,7 @@ function ProductCard({ product }: { product: ProductType }) {
       // Agrega parámetros de optimización para Cloudinary
       if (imageUrl.includes("res.cloudinary.com")) {
         const parts = imageUrl.split("/upload/");
-        return `${parts[0]}/upload/q_auto,f_auto,w_500/${parts[1]}`;
+        return `${parts[0]}/upload/q_auto,f_auto,w_300,h_224,c_fill/${parts[1]}`;
       }
 
       return imageUrl;
@@ -99,15 +99,25 @@ function ProductCard({ product }: { product: ProductType }) {
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
       <CardHeader className="p-0 ">
         <Link href={`/product/${product.slug}`}>
-          <div className="relative w-full h-32 overflow-hidden">
+          <div className="relative w-full h-56 overflow-hidden">
             <Image
               src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
               alt={product.productName}
-              width={500}
-              height={300}
+              width={300}
+              height={224}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               loading="lazy"
+              placeholder="blur"
+              blurDataURL={
+                product.images?.[0]?.url
+                  ? `${
+                      product.images[0].url.split("/upload/")[0]
+                    }/upload/q_10,w_20/${
+                      product.images[0].url.split("/upload/")[1]
+                    }`
+                  : "/placeholder.svg"
+              }
             />
 
             {/* Badges de información */}
@@ -126,7 +136,7 @@ function ProductCard({ product }: { product: ProductType }) {
                 {product.features}
               </p>
             )}
-            <p className="text-lg font-bold text-orange-600">
+            <p className="text-lg text-gray-600">
               {formatPrice(product.price)}
             </p>
           </CardContent>
