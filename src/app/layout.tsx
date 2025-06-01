@@ -5,8 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
-
-// const queryClient = new QueryClient();
+import CookieConsent from "@/components/CookieConsent";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -44,6 +43,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <CookieConsent />
           </ThemeProvider>
         </body>
       </html>
