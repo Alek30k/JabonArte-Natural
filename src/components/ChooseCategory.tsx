@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowRight, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 import { useState } from "react";
 import { getBlurDataUrl, getImageUrl } from "@/utils/imagenUtils";
 
@@ -38,14 +38,14 @@ const ChooseCategory = () => {
   return (
     <section className="max-w-7xl py-8 mx-auto sm:py-16 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl gap-2 md:gap-3 flex items-center justify-center sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+        <div className="text-center">
+          <h1 className="text-3xl gap-2 md:gap-3 flex items-center justify-center sm:text-4xl  font-bold text-gray-900 dark:text-white mb-6">
             <span className="block bg-gradient-to-r from-orange-800 to-green-600 bg-clip-text text-transparent">
               Encuentra el regalo perfecto
             </span>
           </h1>
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 mx-auto">
           Explora nuestras categorías para encontrar ese regalo especial que
           hará sonreír a tus seres queridos
         </p>
