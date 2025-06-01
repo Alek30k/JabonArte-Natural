@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import {
   BaggageClaim,
   Heart,
@@ -47,13 +47,6 @@ const categories = [
   { name: "Regalos de Cumpleaños", href: "/productos/cumpleanos" },
   { name: "Regalos Corporativos", href: "/productos/corporativos" },
   { name: "Ofertas Especiales", href: "/ofertas" },
-];
-
-const userMenuItems = [
-  { name: "Mi Perfil", href: "/profile" },
-  { name: "Mis Pedidos", href: "/orders" },
-  { name: "Lista de Deseos", href: "/wishlist" },
-  { name: "Configuración", href: "/settings" },
 ];
 
 const Navbar = () => {
@@ -166,6 +159,8 @@ const Navbar = () => {
                   alt="RDC"
                   width={200}
                   height={80}
+                  decoding="async"
+                  data-nimg="1"
                   priority
                   className="hidden md:block h-[55px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
                   sizes="(max-width: 768px) 160px, 200px"
@@ -266,20 +261,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   {isSignedIn ? (
-                    <Suspense
-                      fallback={
-                        <div className="h-6 w-6 animate-pulse bg-gray-300 rounded-full" />
-                      }
-                    >
-                      <UserButton
-                        afterSignOutUrl="/"
-                        appearance={{
-                          elements: {
-                            avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
-                          },
-                        }}
-                      />
-                    </Suspense>
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
+                        },
+                      }}
+                    />
                   ) : (
                     <Button
                       variant="ghost"

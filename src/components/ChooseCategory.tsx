@@ -43,7 +43,6 @@ const ChooseCategory = () => {
             <span className="block bg-gradient-to-r from-orange-800 to-green-600 bg-clip-text text-transparent">
               Encuentra el regalo perfecto
             </span>
-            <Sparkles className="mr-3 w-6 h-6 stroke-red-400" />
           </h1>
         </div>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

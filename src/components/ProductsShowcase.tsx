@@ -43,7 +43,7 @@ const ProductsShowcase = () => {
     <section className="min-h-screen dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-2xl sm:text-5xl lg:text-6xl text-gray-900 dark:text-white mb-6">
+          <h1 className="text-2xl sm:text-5xl lg:text-5xl text-gray-500 dark:text-white mb-6">
             Descubre Nuestros
             <span className="block bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
               Productos Estrella

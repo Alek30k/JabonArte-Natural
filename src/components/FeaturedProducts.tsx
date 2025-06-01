@@ -25,8 +25,10 @@ const FeaturedProducts = () => {
   const { addItem } = UseCart();
 
   return (
-    <div className="max-w-6xl mx-auto sm:px-24 mt-36 md:mt-44">
-      <h3 className="px-6 text-3xl sm:pb-8">Productos destacados</h3>
+    <div className="max-w-6xl mx-auto sm:px-24 mt-36 ">
+      <h3 className="px-6 py-4 text-2xl  text-gray-500 dark:text-white  ">
+        Productos destacados
+      </h3>
 
       <div className="relative">
         <Carousel className="w-full">
