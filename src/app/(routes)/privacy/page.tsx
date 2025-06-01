@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 pt-44">
       <h1 className="text-3xl font-bold mb-6">Política de Privacidad</h1>
       <p className="text-gray-600 dark:text-gray-300 mb-4">
         En Jabón Arte Natural, usamos cookies para mejorar tu experiencia de
@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
           href="mailto:info@jabonartenatural.com"
           className="text-blue-600 hover:underline"
         >
-          info@jabonartenatural.com
+          info@regalosdelcorazon.com
         </a>{" "}
         para más información.
       </p>
