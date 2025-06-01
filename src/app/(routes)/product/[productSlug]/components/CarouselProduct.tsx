@@ -121,7 +121,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                       height={96}
                       className="object-cover transition-transform duration-200 hover:scale-110"
                       sizes="96px"
-                      // loading="lazy"
+                      loading="lazy"
                       placeholder="blur"
                       blurDataURL={thumbnailBlurUrl}
                       onError={(e) => {
@@ -175,11 +175,10 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
               onMouseLeave={handleMouseLeave}
             >
               <Image
-                src={getImageUrl(currentImage.url, 400, 400)}
+                src={getImageUrl(currentImage.url, 800, 800)}
                 alt={`Producto imagen ${selectedImageIndex + 1}`}
-                width={400}
-                height={400}
-                className={`object-cover transition-transform duration-300 ${
+                fill
+                className={`object-contain transition-transform duration-300 ${
                   isZooming ? "scale-150" : "md:group-hover:scale-110"
                 }`}
                 style={
@@ -196,9 +195,9 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                 onError={(e) => {
                   console.error(
                     "❌ Error cargando imagen principal:",
-                    getImageUrl(currentImage.url, 400, 400)
+                    getImageUrl(currentImage.url, 800, 800)
                   );
-                  e.currentTarget.src = "/placeholder.svg?height=400&width=400";
+                  e.currentTarget.src = "/placeholder.svg?height=800&width=800";
                 }}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
@@ -238,10 +237,9 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                   <DialogContent className="max-w-4xl w-full p-0">
                     <div className="relative aspect-square">
                       <Image
-                        src={getImageUrl(currentImage.url, 800, 800)}
+                        src={getImageUrl(currentImage.url, 1200, 1200)}
                         alt={`Producto imagen ${selectedImageIndex + 1}`}
-                        width={800}
-                        height={800}
+                        fill
                         className="object-contain"
                         sizes="90vw"
                         // loading="lazy"
