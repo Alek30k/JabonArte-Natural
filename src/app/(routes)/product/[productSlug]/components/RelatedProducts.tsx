@@ -99,7 +99,7 @@ function ProductCard({ product }: { product: ProductType }) {
     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
       <CardHeader className="p-0 ">
         <Link href={`/product/${product.slug}`}>
-          <div className="relative w-full h-56 overflow-hidden">
+          <div className="relative w-full overflow-hidden">
             <Image
               src={getImageUrl(product.images?.[0]?.url) || "/placeholder.svg"}
               alt={product.productName}
