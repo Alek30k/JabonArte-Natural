@@ -121,7 +121,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                       height={96}
                       className="object-cover transition-transform duration-200 hover:scale-110"
                       sizes="96px"
-                      loading="lazy"
+                      // loading="lazy"
                       placeholder="blur"
                       blurDataURL={thumbnailBlurUrl}
                       onError={(e) => {
@@ -244,7 +244,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                         height={800}
                         className="object-contain"
                         sizes="90vw"
-                        loading="lazy"
+                        // loading="lazy"
                         placeholder="blur"
                         blurDataURL={getBlurDataUrl(currentImage.url)}
                         onError={(e) => {
@@ -291,7 +291,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                     height={64}
                     className="object-cover"
                     sizes="64px"
-                    loading="lazy"
+                    // loading="lazy"
                     placeholder="blur"
                     blurDataURL={getBlurDataUrl(image.url)}
                     onError={(e) => {

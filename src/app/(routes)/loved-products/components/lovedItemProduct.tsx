@@ -53,7 +53,7 @@ const LovedItemProductCompact = (props: LovedItemProductProps) => {
               height={128}
               className="object-cover hover:scale-105 transition-transform duration-200"
               sizes="(max-width: 640px) 96px, 128px"
-              loading="lazy"
+              // loading="lazy"
               placeholder="blur"
               blurDataURL={blurDataUrl}
               onError={(e) => {

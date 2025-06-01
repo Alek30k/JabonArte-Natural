@@ -22,6 +22,9 @@ const nextConfig = {
     unoptimized: true,
     minimumCacheTTL: 31536000,
   },
+  experimental: {
+    optimizePackageImports: ["@clerk/nextjs", "@clerk/clerk-react"],
+  },
   compress: true,
 };
 

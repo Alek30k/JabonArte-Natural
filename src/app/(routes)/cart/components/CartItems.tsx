@@ -71,7 +71,7 @@ const CartItemsComplete = (props: CartItemProps) => {
                 height={128}
                 className="object-cover hover:scale-105 transition-transform duration-200"
                 sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, 128px"
-                loading="lazy"
+                // loading="lazy"
                 placeholder="blur"
                 blurDataURL={blurDataUrl}
                 onError={(e) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import {
   BaggageClaim,
   Heart,
@@ -38,8 +38,14 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import Link from "next/link";
+// import { UserButton, useUser } from "@clerk/clerk-react";
 import Image from "next/image";
-import { UserButton, useUser } from "@clerk/clerk-react";
+
+// Dynamic imports
+const UserButton = lazy(() =>
+  import("@clerk/clerk-react").then((mod) => ({ default: mod.UserButton }))
+);
+const useUser = () => import("@clerk/clerk-react").then((mod) => mod.useUser());
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -67,7 +73,6 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
-  // Clerk hook to check if user is logged in
   const { isSignedIn } = useUser();
 
   // Detectar scroll para cambiar el estilo de la navbar
@@ -156,18 +161,28 @@ const Navbar = () => {
                 <Image
                   src="/rdc5.png"
                   alt="RDC Mobile"
-                  width={1920}
-                  height={960}
+                  width={160}
+                  height={50}
                   priority
                   className="block md:hidden h-[45px] ml-6 sm:h-[50px] w-auto hover:scale-110 transition-transform duration-200"
+                  sizes="(max-width: 768px) 160px, 200px"
                 />
                 <Image
                   src="/rdc4.png"
                   alt="RDC"
-                  width={1920}
-                  height={960}
+                  width={200}
+                  height={80}
                   priority
                   className="hidden md:block h-[55px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
+                  sizes="(max-width: 768px) 160px, 200px"
+                  // onError={(e) => {
+                  //   console.error(
+                  //     "❌ Failed to load desktop logo:",
+                  //     desktopLogo
+                  //   );
+                  //   e.currentTarget.src =
+                  //     "/placeholder.svg?height=80&width=200";
+                  // }}
                 />
               </div>
             </div>

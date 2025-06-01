@@ -1,5 +1,3 @@
-// app/layout.tsx
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -41,14 +39,12 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {/* <QueryClientProvider client={queryClient}> */}
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster richColors position="bottom-right" />
             <Navbar />
             {children}
             <Footer />
           </ThemeProvider>
-          {/* </QueryClientProvider> */}
         </body>
       </html>
     </ClerkProvider>
