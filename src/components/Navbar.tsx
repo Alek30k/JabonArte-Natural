@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, Suspense } from "react";
 import {
   BaggageClaim,
   Heart,
@@ -38,14 +38,8 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import Link from "next/link";
-// import { UserButton, useUser } from "@clerk/clerk-react";
+import { UserButton, useUser } from "@clerk/clerk-react";
 import Image from "next/image";
-
-// Dynamic imports
-const UserButton = lazy(() =>
-  import("@clerk/clerk-react").then((mod) => ({ default: mod.UserButton }))
-);
-const useUser = () => import("@clerk/clerk-react").then((mod) => mod.useUser());
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -272,14 +266,20 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   {isSignedIn ? (
-                    <UserButton
-                      afterSignOutUrl="/"
-                      appearance={{
-                        elements: {
-                          avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
-                        },
-                      }}
-                    />
+                    <Suspense
+                      fallback={
+                        <div className="h-6 w-6 animate-pulse bg-gray-300 rounded-full" />
+                      }
+                    >
+                      <UserButton
+                        afterSignOutUrl="/"
+                        appearance={{
+                          elements: {
+                            avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
+                          },
+                        }}
+                      />
+                    </Suspense>
                   ) : (
                     <Button
                       variant="ghost"
@@ -436,7 +436,7 @@ const Navbar = () => {
                     </nav>
 
                     {/* Mobile User Actions */}
-                    <div className="border-t pt-4 space-y-3">
+                    {/* <div className="border-t pt-4 space-y-3">
                       <h4 className="font-medium text-gray-900 dark:text-gray-100">
                         Mi Cuenta
                       </h4>
@@ -471,7 +471,22 @@ const Navbar = () => {
                           </Link>
                         </>
                       )}
-                    </div>
+                    </div> */}
+
+                    <Link
+                      href="/sign-in"
+                      className="block text-gray-600 dark:text-gray-300 py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Iniciar Sesión
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className="block text-gray-600 dark:text-gray-300 py-1"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Registrarse
+                    </Link>
 
                     {/* Theme Toggle in Mobile Menu */}
                     <div className="border-t pt-4">
