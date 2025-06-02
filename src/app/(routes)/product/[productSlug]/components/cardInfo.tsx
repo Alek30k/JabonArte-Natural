@@ -1,6 +1,5 @@
 "use client";
 
-import PaymentInfo from "../components/PaymentInfo";
 import PaymentInfoCompact from "../components/PaymentInfoCompact";
 
 export default function CardInfo() {
