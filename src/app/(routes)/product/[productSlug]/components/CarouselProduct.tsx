@@ -191,6 +191,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                   src={getImageUrl(currentImage.url, 800, 800)}
                   alt={`Producto imagen ${selectedImageIndex + 1}`}
                   fill
+                  fetchPriority={selectedImageIndex === 0 ? "high" : undefined}
                   className={`object-contain transition-transform duration-300 ${
                     isZooming ? "scale-150" : "md:group-hover:scale-110"
                   }`}
@@ -251,7 +252,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                     <DialogContent className="max-w-4xl w-full p-0">
                       <div className="relative aspect-square">
                         <Image
-                          src={getImageUrl(currentImage.url, 1200, 1200)}
+                          src={getImageUrl(currentImage.url, 1200, 768)}
                           alt={`Producto imagen ${selectedImageIndex + 1}`}
                           fill
                           className="object-contain"

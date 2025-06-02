@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import CookieConsent from "@/components/CookieConsent";
+import Head from "next/head";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -38,6 +39,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <Head>
+            <link
+              rel="preconnect"
+              href="https://res.cloudinary.com"
+              crossOrigin="anonymous"
+            />
+          </Head>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster richColors position="bottom-right" />
             <Navbar />
