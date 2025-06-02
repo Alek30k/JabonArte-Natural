@@ -51,7 +51,7 @@ const ProductsShowcase = () => {
           </h1>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-8 mb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 mb-5">
           {displayProducts.map((product: ProductType, index) => {
             const { id, slug, images, productName, price } = product;
             const originalImageUrl =

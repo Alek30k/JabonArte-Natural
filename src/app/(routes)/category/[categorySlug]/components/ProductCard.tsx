@@ -14,8 +14,6 @@ import { formatPrice } from "@/lib/formatPrice";
 import type { ProductType } from "@/types/product";
 import {
   Heart,
-  Eye,
-  Award,
   ChevronLeft,
   ChevronRight,
   Check,
@@ -71,7 +69,6 @@ const ActionButtons = memo(
     isAddingToCart,
     justAdded,
     onToggleLove,
-    onViewProduct,
     onAddToCart,
   }: {
     isLoved: boolean;
@@ -81,7 +78,7 @@ const ActionButtons = memo(
     onViewProduct: (e: React.MouseEvent) => void;
     onAddToCart: (e: React.MouseEvent) => void;
   }) => (
-    <div className="flex items-center space-x-2">
+    <div className="flex  items-center space-x-16 ">
       <Button
         variant="secondary"
         size="icon"
@@ -94,14 +91,14 @@ const ActionButtons = memo(
       >
         <Heart className={`w-4 h-4 ${isLoved ? "fill-current" : ""}`} />
       </Button>
-      <Button
+      {/* <Button
         variant="secondary"
         size="icon"
         className="w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-blue-500 shadow-lg transition-all duration-300"
         onClick={onViewProduct}
       >
         <Eye className="w-4 h-4" />
-      </Button>
+      </Button> */}
       <Button
         size="icon"
         className={`w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
@@ -240,7 +237,7 @@ const ProductCard = memo<ProductCardProps>(
 
     return (
       <Card
-        className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white dark:bg-gray-900"
+        className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-500 transform  bg-white dark:bg-gray-900"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -268,7 +265,6 @@ const ProductCard = memo<ProductCardProps>(
             {/* Badge de origen */}
             <div className="absolute top-3 right-3">
               <Badge className="bg-amber-500/90 hover:bg-amber-600 text-white shadow-lg backdrop-blur-sm">
-                <Award className="w-3 h-3 mr-1" />
                 {product.origin}
               </Badge>
             </div>
@@ -279,7 +275,7 @@ const ProductCard = memo<ProductCardProps>(
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white shadow-lg dark:text-black"
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/90  hover:bg-white shadow-lg dark:text-black"
                   onClick={prevImage}
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -298,12 +294,11 @@ const ProductCard = memo<ProductCardProps>(
                 />
               </>
             )}
-
             {/* Botones de acción */}
             <div
-              className={`absolute bottom-4 left-1/2 transform -translate-x-1/2 transition-all duration-300 ${
+              className={`absolute bottom-1 left-1/2 transform -translate-x-1/2 transition-all duration-300  ${
                 isHovered
-                  ? "opacity-100 translate-y-0"
+                  ? "opacity-100 translate-y-0 "
                   : "opacity-0 translate-y-4"
               }`}
             >
@@ -321,7 +316,7 @@ const ProductCard = memo<ProductCardProps>(
           {/* Información del producto */}
           <div className="p-4 space-y-3">
             <Link href={`/product/${product.slug}`} prefetch={false}>
-              <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 hover:text-blue-600 transition-colors group-hover:text-blue-600">
+              <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2 transition-colors ">
                 {product.productName}
               </h3>
             </Link>
