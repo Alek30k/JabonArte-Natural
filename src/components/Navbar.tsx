@@ -6,7 +6,6 @@ import {
   BaggageClaim,
   Heart,
   ShoppingCart,
-  User,
   Search,
   Menu,
   ChevronDown,
@@ -38,18 +37,8 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import Image from "next/image";
-
-// Importar Clerk de forma optimizada
-const ClerkComponents = dynamic(() => import("@/components/ClerkComponents"), {
-  ssr: false,
-  loading: () => (
-    <Button variant="ghost" size="sm" className="p-2 cursor-pointer">
-      <User className="h-4 w-4 sm:h-5 sm:w-5" />
-    </Button>
-  ),
-});
+import AuthButton from "./auth/AuthButton";
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -233,8 +222,6 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-1 sm:space-x-2">
-              {/* User Menu */}
-
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
@@ -245,8 +232,8 @@ const Navbar = () => {
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
 
-              {/* Clerk Components - Cargado dinámicamente */}
-              <ClerkComponents />
+              {/* Auth Button - Reemplaza los componentes de Clerk */}
+              <AuthButton />
 
               {/* Wishlist */}
               <Button
