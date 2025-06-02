@@ -128,16 +128,6 @@ export default function SearchPage() {
       case "price-high":
         filtered.sort((a: ProductType, b: ProductType) => b.price - a.price);
         break;
-      case "rating":
-        filtered.sort(() => Math.random() - 0.5);
-        break;
-      case "newest":
-        filtered.sort(() => Math.random() - 0.5);
-        break;
-      case "popular":
-      default:
-        filtered.sort(() => Math.random() - 0.5);
-        break;
     }
 
     return filtered;

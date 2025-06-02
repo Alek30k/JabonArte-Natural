@@ -136,16 +136,6 @@ const AllProducts = () => {
       case "price-high":
         filtered.sort((a: ProductType, b: ProductType) => b.price - a.price);
         break;
-      case "rating":
-        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper rating sort if data is available
-        break;
-      case "newest":
-        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper date sort if data is available
-        break;
-      case "popular":
-      default:
-        filtered.sort(() => Math.random() - 0.5); // Consider adding a proper popularity sort if data is available
-        break;
     }
 
     return filtered;
