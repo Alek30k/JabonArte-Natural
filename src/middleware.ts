@@ -34,4 +34,5 @@ export default clerkMiddleware(async (auth) => {
 
 export const config = {
   matcher: ["/profile(.*)", "/orders(.*)"], // Solo proteger estas rutas
+  "Cache-Control": "public, max-age=300",
 };
