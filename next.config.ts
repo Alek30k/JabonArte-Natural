@@ -26,6 +26,7 @@ const nextConfig = {
     optimizePackageImports: ["@clerk/nextjs", "@clerk/clerk-react"],
   },
   compress: true,
+  trailingSlash: false,
 };
 
 module.exports = nextConfig;

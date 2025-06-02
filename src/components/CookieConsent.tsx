@@ -19,8 +19,10 @@ const CookieConsent = () => {
   const handleAccept = () => {
     localStorage.setItem("cookieConsent", "accepted");
     setIsVisible(false);
-    // Optionally initialize analytics here
-    // e.g., window.gtag('consent', 'update', { analytics_storage: 'granted' });
+    const script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-YOUR_GA_ID";
+    script.async = true;
+    document.head.appendChild(script);
   };
 
   if (!isVisible) return null;
