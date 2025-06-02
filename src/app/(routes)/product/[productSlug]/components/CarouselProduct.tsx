@@ -85,19 +85,24 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
     thumbnailStartIndex + maxVisibleThumbnails
   );
 
+  const lcpImageUrl = getImageUrl(currentImage.url, 800, 512);
+
   return (
     <>
+      {/* Preload LCP image */}
       {/* Preload LCP image */}
       {selectedImageIndex === 0 && (
         <Head>
           <link
             rel="preload"
-            href={getImageUrl(currentImage.url, 800, 512)} // Match LCP dimensions
+            href={lcpImageUrl}
             as="image"
-            fetchPriority="high"
+            fetchpriority="high"
+            type="image/avif"
           />
         </Head>
       )}
+
       <div className="flex gap-4 mt-20">
         {images.length > 1 && (
           <div className="hidden md:flex flex-col w-20 sm:w-24">
@@ -250,7 +255,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl w-full p-0">
-                      <div className="relative aspect-square">
+                      <div className="relative w-full h-[80vh]">
                         <Image
                           src={getImageUrl(currentImage.url, 1200, 768)}
                           alt={`Producto imagen ${selectedImageIndex + 1}`}
