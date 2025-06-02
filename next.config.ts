@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -25,6 +26,25 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@clerk/nextjs", "@clerk/clerk-react"],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Optimización para Clerk en el cliente
+      config.optimization.splitChunks = {
+        ...config.optimization.splitChunks,
+        cacheGroups: {
+          ...config.optimization.splitChunks.cacheGroups,
+          clerk: {
+            test: /[\\/]node_modules[\\/]@clerk[\\/]/,
+            name: "clerk",
+            priority: 10,
+            chunks: "async", // Cambiar de 'all' a 'async' para cargar solo cuando se necesite
+          },
+        },
+      };
+    }
+    return config;
+  },
+
   compress: true,
   trailingSlash: false,
 };

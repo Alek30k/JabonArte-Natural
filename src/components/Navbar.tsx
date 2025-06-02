@@ -202,19 +202,6 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-
-              {/* <Link
-                href="/blog"
-                className="text-gray-700 dark:text-gray-200 hover:text-orange-600 transition-colors"
-              >
-                Blog
-              </Link>
-              <Link
-                href="/contact"
-                className="text-gray-700 dark:text-gray-200 hover:text-orange-600 transition-colors"
-              >
-                Contacto
-              </Link> */}
             </div>
 
             {/* Search Bar - Desktop */}

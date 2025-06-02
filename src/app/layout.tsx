@@ -32,8 +32,14 @@ export default function RootLayout({
       signUpUrl="/sign-up"
       afterSignOutUrl="/"
       appearance={{
+        baseTheme: undefined,
         variables: {
           colorPrimary: "#db2777",
+        },
+        elements: {
+          // Solo configurar elementos esenciales
+          card: "shadow-md rounded-lg",
+          formButtonPrimary: "bg-pink-500 hover:bg-pink-600",
         },
       }}
     >
