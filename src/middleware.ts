@@ -1,18 +1,17 @@
-// import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// export default clerkMiddleware(async (auth) => {
-//   await auth.protect();
-// });
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/category/:slug",
+  "/products",
+  "/privacy",
+  "/contact",
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+]);
 
-// export const config = {
-//   matcher: ["/profile(.*)", "/orders(.*)"], // Solo proteger estas rutas
-// };
-
-// middleware.ts
-import { clerkMiddleware } from "@clerk/nextjs/server";
-
-export default clerkMiddleware({
-  publicRoutes: ["/", "/productos", "/blog", "/contact", "/buscar"],
+export default clerkMiddleware((auth, req) => {
+  if (!isPublicRoute(req)) auth().protect();
 });
 
 export const config = {

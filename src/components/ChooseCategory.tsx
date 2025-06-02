@@ -21,10 +21,10 @@ const ChooseCategory = () => {
   ) as CategoryType[];
 
   const CategorySkeleton = () => (
-    <Card className="group overflow-hidden">
+    <Card className="group overflow-hidden border-0 shadow-lg">
       <CardContent className="p-0">
-        <div className="relative">
-          <Skeleton className="w-full h-64 rounded-t-lg" />
+        <div className="relative h-72 w-full">
+          <Skeleton className="w-full h-full rounded-t-lg" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute bottom-4 left-4 right-4">
             <Skeleton className="h-6 w-3/4 bg-white/20" />
@@ -36,18 +36,15 @@ const ChooseCategory = () => {
   );
 
   return (
-    <section className="max-w-7xl py-8 mx-auto sm:py-16 px-4 sm:px-6 lg:px-8">
+    <section className="max-w-7xl py-8 mx-auto sm:py-16 px-4 sm:px-6 lg:px-8 min-h-[600px]">
       <div className="text-center mb-12">
-        <div className="text-center">
-          <h1 className="text-3xl gap-2 md:gap-3 flex items-center justify-center sm:text-4xl  font-bold text-gray-900 dark:text-white mb-6">
-            <span className="block bg-gradient-to-r from-orange-800 to-green-600 bg-clip-text text-transparent">
-              Encuentra el regalo perfecto
-            </span>
-          </h1>
-        </div>
+        <h1 className="text-3xl md:gap-3 flex items-center justify-center sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-orange-800 to-green-600 bg-clip-text text-transparent">
+            Encuentra el regalo perfecto
+          </span>
+        </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 mx-auto">
-          Explora nuestras categorías para encontrar ese regalo especial que
-          hará sonreír a tus seres queridos
+          Explore nuestro catálogo de productos
         </p>
       </div>
       <div className="grid gap-6 sm:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -71,15 +68,16 @@ const ChooseCategory = () => {
                   onMouseEnter={() => setHoveredCategory(category.id)}
                   onMouseLeave={() => setHoveredCategory(null)}
                 >
-                  <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                  <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow duration-300">
                     <CardContent className="p-0 relative">
-                      <div className="relative h-64 sm:h-72 overflow-hidden">
+                      <div className="relative h-72 w-full overflow-hidden">
                         <Image
                           src={imageUrl}
                           alt={category.categoryName}
                           width={400}
                           height={288}
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          style={{ aspectRatio: "400 / 288" }}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           loading={index >= 3 ? "lazy" : undefined}
                           priority={index < 3}
@@ -119,7 +117,7 @@ const ChooseCategory = () => {
                             <div
                               className={`flex items-center justify-center w-8 h-8 bg-white/20 rounded-full backdrop-blur-sm transition-all duration-300 ${
                                 hoveredCategory === category.id
-                                  ? "bg-orange-500 scale-110 rotate-45"
+                                  ? "bg-orange-500 scale-110"
                                   : "group-hover:bg-white/30"
                               }`}
                             >
@@ -139,7 +137,7 @@ const ChooseCategory = () => {
         (!categories ||
           !Array.isArray(categories) ||
           categories.length === 0) && (
-          <div className="text-center py-12">
+          <div className="text-center py-12 min-h-[200px]">
             <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
               <Heart className="w-12 h-12 text-gray-400" />
             </div>
