@@ -146,7 +146,7 @@ const Navbar = () => {
             <div className="flex items-center pl-3 flex-shrink-0">
               <div className="cursor-pointer" onClick={() => router.push("/")}>
                 <Image
-                  src="/rdc5.png"
+                  src="/rdc5.webp"
                   alt="RDC Mobile"
                   width={160}
                   height={50}
@@ -155,7 +155,7 @@ const Navbar = () => {
                   sizes="(max-width: 768px) 160px, 200px"
                 />
                 <Image
-                  src="/rdc4.png"
+                  src="/rdc4.webp"
                   alt="RDC"
                   width={200}
                   height={80}

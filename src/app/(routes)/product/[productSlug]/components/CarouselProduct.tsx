@@ -97,7 +97,7 @@ const CarouselProductFixed = ({ images }: CarouselProductFixedProps) => {
             rel="preload"
             href={lcpImageUrl}
             as="image"
-            fetchpriority="high"
+            // fetchpriority="high"
             type="image/avif"
           />
         </Head>
