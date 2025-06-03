@@ -6,6 +6,7 @@ import {
   BaggageClaim,
   Heart,
   ShoppingCart,
+  User,
   Search,
   Menu,
   ChevronDown,
@@ -37,8 +38,8 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 import Link from "next/link";
+import { UserButton, useUser } from "@clerk/clerk-react";
 import Image from "next/image";
-import AuthButton from "./auth/AuthButton";
 
 const categories = [
   { name: "Regalos Personalizados", href: "/productos/personalizados" },
@@ -58,6 +59,8 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+
+  const { isSignedIn } = useUser();
 
   // Detectar scroll para cambiar el estilo de la navbar
   useEffect(() => {
@@ -161,6 +164,14 @@ const Navbar = () => {
                   priority
                   className="hidden md:block h-[55px] lg:h-[75px] w-auto hover:scale-110 transition-transform duration-200"
                   sizes="(max-width: 768px) 160px, 200px"
+                  // onError={(e) => {
+                  //   console.error(
+                  //     "❌ Failed to load desktop logo:",
+                  //     desktopLogo
+                  //   );
+                  //   e.currentTarget.src =
+                  //     "/placeholder.svg?height=80&width=200";
+                  // }}
                 />
               </div>
             </div>
@@ -222,6 +233,8 @@ const Navbar = () => {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-1 sm:space-x-2">
+              {/* User Menu */}
+
               {/* Search Icon for Mobile */}
               <Button
                 variant="ghost"
@@ -232,8 +245,42 @@ const Navbar = () => {
                 <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
 
-              {/* Auth Button - Reemplaza los componentes de Clerk */}
-              <AuthButton />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  {isSignedIn ? (
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-6 w-6 sm:h-7 sm:w-7",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="p-2 cursor-pointer"
+                    >
+                      <User className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
+                  )}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/sign-in" className="cursor-pointer">
+                      Iniciar Sesión
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem asChild>
+                    <Link href="/sign-up" className="cursor-pointer">
+                      Registrarse
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               {/* Wishlist */}
               <Button
@@ -363,6 +410,44 @@ const Navbar = () => {
                         </div>
                       </div>
                     </nav>
+
+                    {/* Mobile User Actions */}
+                    {/* <div className="border-t pt-4 space-y-3">
+                      <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                        Mi Cuenta
+                      </h4>
+                      {isSignedIn ? (
+                        <>
+                          {userMenuItems.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="block text-gray-600 dark:text-gray-300 py-1"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            href="/sign-in"
+                            className="block text-gray-600 dark:text-gray-300 py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Iniciar Sesión
+                          </Link>
+                          <Link
+                            href="/sign-up"
+                            className="block text-gray-600 dark:text-gray-300 py-1"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Registrarse
+                          </Link>
+                        </>
+                      )}
+                    </div> */}
 
                     <Link
                       href="/sign-in"
